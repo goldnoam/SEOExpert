@@ -9,7 +9,7 @@ export const getSubmissionSites = async (url: string): Promise<SubmissionSite[]>
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       // FIX: Refined the prompt to request only HTTPS endpoints compatible with browser fetch to prevent CORS/network errors.
-      contents: `Generate a list of the top 5-7 major search engine *programmatic ping services* for submitting a URL for indexing. The endpoints provided MUST be callable directly from a web browser's 'fetch' API in 'no-cors' mode.
+      contents: `Generate a list of the top 10-15 major search engine *programmatic ping services* for submitting a URL for indexing. The endpoints provided MUST be callable directly from a web browser's 'fetch' API in 'no-cors' mode.
 
 For each service, provide its name, a brief one-sentence description, and the exact ping URL template. The template must be a direct API endpoint for automated submissions and contain '{URL}' as a placeholder for the URL to be submitted.
 
