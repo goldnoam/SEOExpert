@@ -21,6 +21,13 @@ export const performSubmissions = async (url: string, logUpdateCallback: (messag
         logUpdateCallback(`  ⚠️ No valid submission URL for ${endpoint.name}. Skipping.`);
         return;
     }
+    
+    // FIX: Prevent "Mixed Content" errors by skipping insecure HTTP endpoints on a secure (HTTPS) page.
+    if (window.location.protocol === 'https:' && endpoint.urlTemplate.startsWith('http://')) {
+        logUpdateCallback(`  ⚠️ Skipping ${endpoint.name} (Insecure HTTP endpoint cannot be called from a secure page).`);
+        return;
+    }
+
     const submissionUrl = endpoint.urlTemplate.replace('{URL}', encodedUrl);
 
     logUpdateCallback(`Pinging ${endpoint.name}...`);
