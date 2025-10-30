@@ -2,6 +2,7 @@ import { SubmissionSite } from './types';
 
 export const LANGUAGES = [
   { code: 'en', name: 'English' },
+  { code: 'he', name: 'עברית' },
   { code: 'es', name: 'Español' },
   { code: 'fr', name: 'Français' },
   { code: 'de', name: 'Deutsch' },
