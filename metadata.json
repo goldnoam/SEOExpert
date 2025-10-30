@@ -1,0 +1,5 @@
+{
+  "name": "SEOExpert",
+  "description": "An application to help users discover major sites for URL submission to improve SEO. It features a URL input with drag-and-drop, a theme switcher, language selection, and uses the Gemini API to generate a list of relevant submission sites.",
+  "requestFramePermissions": []
+}
