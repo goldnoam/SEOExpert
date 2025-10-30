@@ -72,18 +72,11 @@ const App: React.FC = () => {
         logUpdateCallback(`--- Finished: ${singleUrl} ---\n`);
       }
       logUpdateCallback(`All submissions completed.`);
+      logUpdateCallback('\nDisclaimer: Your URL(s) have been submitted to public "ping" services. This asks search engines to crawl your site, but does not guarantee indexing. For best results, use Google Search Console and Bing Webmaster Tools.');
     } catch (e: unknown) {
       const errorMessage = e instanceof Error ? e.message : 'An unknown error occurred.';
-      // FIX: Add specific error handling for the missing API key.
-      // This provides a clear, actionable message to the user instead of a generic error.
-      if (errorMessage.startsWith('API_KEY_MISSING')) {
-        const friendlyMessage = errorMessage.replace('API_KEY_MISSING: ', '');
-        setError(friendlyMessage);
-        logUpdateCallback(`Critical Error: ${friendlyMessage}`);
-      } else {
-        setError(`An unexpected error occurred during submission. ${errorMessage}`);
-        logUpdateCallback(`Error: An unexpected error occurred. Please check the console.`);
-      }
+      setError(`An unexpected error occurred during submission. ${errorMessage}`);
+      logUpdateCallback(`Error: An unexpected error occurred. Please check the console.`);
     } finally {
       setIsLoading(false);
     }

@@ -1,22 +1,18 @@
-import { getSubmissionSites } from './geminiService';
+import { SUBMISSION_SITES } from '../constants';
 
 export const performSubmissions = async (url: string, logUpdateCallback: (message: string) => void): Promise<void> => {
-  // FIX: Fetch submission sites dynamically from the Gemini API instead of using a hardcoded list.
-  logUpdateCallback('Fetching submission sites from AI...\n');
-  
-  const submissionSites = await getSubmissionSites(url);
+  const submissionSites = SUBMISSION_SITES;
 
   if (!submissionSites || submissionSites.length === 0) {
-      logUpdateCallback('Could not retrieve any submission sites from AI. Aborting.');
+      logUpdateCallback('No submission sites are configured. Aborting.');
       return;
   }
   
-  logUpdateCallback(`Found ${submissionSites.length} sites to ping. Starting submission process...\n`);
+  logUpdateCallback(`Found ${submissionSites.length} services to ping.`);
   
   const encodedUrl = encodeURIComponent(url);
 
   const promises = submissionSites.map(async (endpoint) => {
-    // FIX: Use the urlTemplate from the dynamically fetched site data and validate it.
     if (!endpoint.urlTemplate || !endpoint.urlTemplate.includes('{URL}')) {
         logUpdateCallback(`  ⚠️ No valid submission URL for ${endpoint.name}. Skipping.`);
         return;
@@ -39,7 +35,4 @@ export const performSubmissions = async (url: string, logUpdateCallback: (messag
   });
 
   await Promise.all(promises);
-
-  logUpdateCallback('\nSubmission process completed.');
-  logUpdateCallback('\nDisclaimer: Your URL has been submitted to public "ping" services. This asks search engines to crawl your site, but does not guarantee indexing. For best results, use Google Search Console and Bing Webmaster Tools.');
 };
