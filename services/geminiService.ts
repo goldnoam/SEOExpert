@@ -1,11 +1,23 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { SubmissionSite } from '../types';
 
-// FIX: Initialize GoogleGenAI with apiKey from process.env as per guidelines, removing fallback and warning.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const getGenAIClient = () => {
+  // FIX: The API key is not available in `process.env` in some browser environments or if blocked by extensions.
+  // This check prevents the app from crashing and provides a user-friendly error message.
+  if (!process.env.API_KEY) {
+    throw new Error(
+      "API_KEY_MISSING: Your Gemini API key is not configured. This might be due to a browser extension (like an ad-blocker) preventing it from loading. Please try disabling it for this site and refresh the page."
+    );
+  }
+  return new GoogleGenAI({ apiKey: process.env.API_KEY });
+};
+
 
 export const getSubmissionSites = async (url: string): Promise<SubmissionSite[]> => {
   try {
+    // FIX: Lazily initialize the client only when needed to catch the missing API key error gracefully.
+    const ai = getGenAIClient();
+
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       // FIX: Refined the prompt to request only HTTPS endpoints compatible with browser fetch to prevent CORS/network errors.
@@ -64,6 +76,10 @@ An invalid example is: 'https://search.google.com/search-console' (it's a user w
     }
   } catch (error) {
     console.error("Error calling Gemini API:", error);
+    // FIX: Re-throw the specific API key error to be handled by the UI.
+    if (error instanceof Error && error.message.startsWith('API_KEY_MISSING')) {
+        throw error;
+    }
     throw new Error("Failed to communicate with the Gemini API. Please check the console for more details.");
   }
 };

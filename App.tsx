@@ -31,7 +31,6 @@ const App: React.FC = () => {
     if (!urls.trim() || isLoading) return;
     
     // Split by newline, trim, filter empty lines, and get unique URLs
-    // FIX: Explicitly specify the generic type for `new Set` to prevent TypeScript from inferring the array as `unknown[]`.
     const urlList: string[] = [...new Set<string>(urls.split('\n').map(u => u.trim()).filter(Boolean))];
 
     if (urlList.length === 0) {
@@ -72,14 +71,21 @@ const App: React.FC = () => {
         await performSubmissions(singleUrl, logUpdateCallback);
         logUpdateCallback(`--- Finished: ${singleUrl} ---\n`);
       }
+      logUpdateCallback(`All submissions completed.`);
     } catch (e: unknown) {
-      // FIX: Explicitly type the caught error as 'unknown' for better type safety.
       const errorMessage = e instanceof Error ? e.message : 'An unknown error occurred.';
-      setError(`An unexpected error occurred during submission. ${errorMessage}`);
-      logUpdateCallback(`Error: An unexpected error occurred. Please check the console.`);
+      // FIX: Add specific error handling for the missing API key.
+      // This provides a clear, actionable message to the user instead of a generic error.
+      if (errorMessage.startsWith('API_KEY_MISSING')) {
+        const friendlyMessage = errorMessage.replace('API_KEY_MISSING: ', '');
+        setError(friendlyMessage);
+        logUpdateCallback(`Critical Error: ${friendlyMessage}`);
+      } else {
+        setError(`An unexpected error occurred during submission. ${errorMessage}`);
+        logUpdateCallback(`Error: An unexpected error occurred. Please check the console.`);
+      }
     } finally {
       setIsLoading(false);
-      logUpdateCallback(`All submissions completed.`);
     }
   };
 
