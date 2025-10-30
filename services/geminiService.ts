@@ -8,13 +8,18 @@ export const getSubmissionSites = async (url: string): Promise<SubmissionSite[]>
   try {
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
-      // FIX: Refined the prompt to request only machine-callable ping endpoints and exclude user-facing web pages to prevent fetch errors.
-      contents: `Generate a list of the top 5-7 major search engine *programmatic ping services* for submitting a URL for indexing. For each service, provide its name, a brief one-sentence description, and the exact ping URL template. The template must be a direct API endpoint for automated submissions and contain '{URL}' as a placeholder for the URL to be submitted.
+      // FIX: Refined the prompt to request only HTTPS endpoints compatible with browser fetch to prevent CORS/network errors.
+      contents: `Generate a list of the top 5-7 major search engine *programmatic ping services* for submitting a URL for indexing. The endpoints provided MUST be callable directly from a web browser's 'fetch' API in 'no-cors' mode.
 
-**Crucially, do NOT include links to web pages, user dashboards, sitemap submission forms, or any URL that requires manual user interaction (e.g., Google Search Console, Bing Webmaster Tools, Pinterest Pin Creator).** Only include machine-callable ping endpoints.
+For each service, provide its name, a brief one-sentence description, and the exact ping URL template. The template must be a direct API endpoint for automated submissions and contain '{URL}' as a placeholder for the URL to be submitted.
+
+**Crucially, all endpoints MUST use the HTTPS protocol.** Do NOT include any HTTP URLs.
+Endpoints should ideally respond to a simple GET request without requiring a request body or complex headers.
+Do NOT include links to web pages, user dashboards, sitemap submission forms, or any URL that requires manual user interaction (e.g., Google Search Console, Bing Webmaster Tools). Only include machine-callable ping endpoints designed for this purpose.
 
 A valid example is: 'https://www.google.com/ping?sitemap={URL}'.
-An invalid example is: 'https://search.google.com/search-console'.`,
+An invalid example is: 'http://ping.baidu.com/ping/RPC2' (it uses HTTP).
+An invalid example is: 'https://search.google.com/search-console' (it's a user webpage).`,
       config: {
         responseMimeType: "application/json",
         responseSchema: {

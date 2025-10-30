@@ -31,8 +31,8 @@ const App: React.FC = () => {
     if (!urls.trim() || isLoading) return;
     
     // Split by newline, trim, filter empty lines, and get unique URLs
-    // FIX: Explicitly type urlList as string[] to prevent type inference issues where elements were being treated as 'unknown'.
-    const urlList: string[] = [...new Set(urls.split('\n').map(u => u.trim()).filter(Boolean))];
+    // FIX: Explicitly specify the generic type for `new Set` to prevent TypeScript from inferring the array as `unknown[]`.
+    const urlList: string[] = [...new Set<string>(urls.split('\n').map(u => u.trim()).filter(Boolean))];
 
     if (urlList.length === 0) {
       setError('Please enter at least one valid URL.');
