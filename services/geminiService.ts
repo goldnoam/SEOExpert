@@ -8,8 +8,13 @@ export const getSubmissionSites = async (url: string): Promise<SubmissionSite[]>
   try {
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
-      // FIX: Updated prompt to request for the ping service URL template.
-      contents: `For the website URL '${url}', generate a list of the top 10 most important search engines and website indexing services where this URL should be submitted for SEO purposes. For each service, provide its name, a brief one-sentence description of its purpose, and the ping service URL template. The URL template should contain '{URL}' as a placeholder for the website URL to be submitted. For example: 'https://www.google.com/ping?sitemap={URL}'.`,
+      // FIX: Refined the prompt to request only machine-callable ping endpoints and exclude user-facing web pages to prevent fetch errors.
+      contents: `Generate a list of the top 5-7 major search engine *programmatic ping services* for submitting a URL for indexing. For each service, provide its name, a brief one-sentence description, and the exact ping URL template. The template must be a direct API endpoint for automated submissions and contain '{URL}' as a placeholder for the URL to be submitted.
+
+**Crucially, do NOT include links to web pages, user dashboards, sitemap submission forms, or any URL that requires manual user interaction (e.g., Google Search Console, Bing Webmaster Tools, Pinterest Pin Creator).** Only include machine-callable ping endpoints.
+
+A valid example is: 'https://www.google.com/ping?sitemap={URL}'.
+An invalid example is: 'https://search.google.com/search-console'.`,
       config: {
         responseMimeType: "application/json",
         responseSchema: {
