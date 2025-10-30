@@ -3,7 +3,7 @@ import { Header } from './components/Header';
 import { UrlInput } from './components/UrlInput';
 import { LogViewer } from './components/LogViewer';
 import { SpinnerIcon } from './components/icons/SpinnerIcon';
-import { getSubmissionSites } from './services/geminiService';
+import { performSubmissions } from './services/submissionService';
 import { Theme } from './types';
 
 const App: React.FC = () => {
@@ -41,20 +41,18 @@ const App: React.FC = () => {
 
     setIsLoading(true);
     setError(null);
-    setLogs('');
+    setLogs(''); // Clear logs at the beginning
+
+    const logUpdateCallback = (message: string) => {
+        setLogs(prevLogs => prevLogs + message + '\n');
+    };
 
     try {
-      const sites = await getSubmissionSites(url);
-      let logOutput = `Simulating submission of ${url} to major sites:\n\n`;
-      sites.forEach((site, index) => {
-        logOutput += `${index + 1}. ${site.name}: ${site.description}\n`;
-      });
-      logOutput += '\nSubmission process simulated successfully.';
-      setLogs(logOutput);
+      await performSubmissions(url, logUpdateCallback);
     } catch (e) {
       const errorMessage = e instanceof Error ? e.message : 'An unknown error occurred.';
-      setError(`Failed to fetch submission sites. ${errorMessage}`);
-      setLogs(`Error: Could not retrieve site list. Please check your API key and network connection.`);
+      setError(`An unexpected error occurred during submission. ${errorMessage}`);
+      logUpdateCallback(`Error: An unexpected error occurred. Please check the console.`);
     } finally {
       setIsLoading(false);
     }
@@ -74,7 +72,7 @@ const App: React.FC = () => {
             SEO<span className="text-teal-500">Expert</span>
           </h1>
           <p className="text-center text-lg text-gray-600 dark:text-gray-400 mb-8">
-            Enter a URL to discover where to submit it for optimal search engine visibility.
+            Enter a URL to submit it to major search engine ping services for faster indexing.
           </p>
 
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
@@ -88,10 +86,10 @@ const App: React.FC = () => {
               {isLoading ? (
                 <>
                   <SpinnerIcon />
-                  Discovering Sites...
+                  Submitting...
                 </>
               ) : (
-                'Submit URL'
+                'Submit to Search Engines'
               )}
             </button>
           </div>
