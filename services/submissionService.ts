@@ -1,14 +1,15 @@
 import { SUBMISSION_SITES } from '../constants';
+import { SubmissionSite } from '../types';
 
 export const performSubmissions = async (url: string, logUpdateCallback: (message: string) => void): Promise<void> => {
-  const submissionSites = SUBMISSION_SITES;
+  const submissionSites: SubmissionSite[] = SUBMISSION_SITES;
+  
+  logUpdateCallback('Using the built-in list of submission sites...');
 
-  if (!submissionSites || submissionSites.length === 0) {
-      logUpdateCallback('No submission sites are configured. Aborting.');
+  if (submissionSites.length === 0) {
+      logUpdateCallback('No submission sites are available. Aborting.');
       return;
   }
-  
-  logUpdateCallback(`Found ${submissionSites.length} services to ping.`);
   
   const encodedUrl = encodeURIComponent(url);
 
@@ -18,7 +19,7 @@ export const performSubmissions = async (url: string, logUpdateCallback: (messag
         return;
     }
     
-    const submissionUrl = endpoint.urlTemplate.replace('{URL}', encodedUrl);
+    const submissionUrl = endpoint.urlTemplate.replace(/{URL}/g, encodedUrl);
 
     logUpdateCallback(`Pinging ${endpoint.name}...`);
     

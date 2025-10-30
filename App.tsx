@@ -9,12 +9,7 @@ import { performSubmissions } from './services/submissionService';
 import { translations } from './translations';
 
 function App() {
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return Theme.Dark;
-    }
-    return Theme.Light;
-  });
+  const [theme, setTheme] = useState<Theme>(Theme.Dark);
   const [language, setLanguage] = useState<string>('en');
   const [urls, setUrls] = useState<string>('');
   const [logs, setLogs] = useState<string[]>([]);
