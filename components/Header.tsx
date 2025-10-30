@@ -9,27 +9,25 @@ interface HeaderProps {
   toggleTheme: () => void;
   language: string;
   onLanguageChange: (lang: string) => void;
+  onAboutClick: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, language, onLanguageChange }) => {
-  const handleAboutClick = () => {
-    alert(ABOUT_TEXT);
-  };
-
+export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, language, onLanguageChange, onAboutClick }) => {
   return (
     <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-10 shadow-md dark:shadow-gray-800">
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 rtl:flex-row-reverse">
           <div className="flex items-center">
             <span className="font-bold text-xl text-gray-900 dark:text-white">
               SEO<span className="text-teal-500">Expert</span>
             </span>
           </div>
-          <div className="flex items-center space-x-2 sm:space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-4 rtl:space-x-reverse">
             <select
               value={language}
               onChange={(e) => onLanguageChange(e.target.value)}
               className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-md py-1 px-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              aria-label="Select language"
             >
               {LANGUAGES.map((lang) => (
                 <option key={lang.code} value={lang.code}>
@@ -38,7 +36,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, language, on
               ))}
             </select>
             <button
-              onClick={handleAboutClick}
+              onClick={onAboutClick}
               className="text-gray-600 dark:text-gray-400 hover:text-teal-500 dark:hover:text-teal-400 transition-colors"
               aria-label="About"
             >
