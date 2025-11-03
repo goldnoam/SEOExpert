@@ -1,10 +1,20 @@
 import { SUBMISSION_SITES } from '../constants';
 import { SubmissionSite } from '../types';
+import { getSubmissionSites } from './geminiService';
 
 export const performSubmissions = async (url: string, logUpdateCallback: (message: string) => void): Promise<void> => {
-  const submissionSites: SubmissionSite[] = SUBMISSION_SITES;
+  let submissionSites: SubmissionSite[] = [];
   
-  logUpdateCallback('Using the built-in list of submission sites...');
+  try {
+    logUpdateCallback('Fetching an up-to-date list of submission sites using the Gemini API...');
+    submissionSites = await getSubmissionSites(url);
+    logUpdateCallback(`✅ Successfully fetched ${submissionSites.length} sites from the API.`);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred.';
+    logUpdateCallback(`❌ Failed to fetch list from Gemini API: ${errorMessage}`);
+    logUpdateCallback('Falling back to the built-in list of submission sites...');
+    submissionSites = SUBMISSION_SITES;
+  }
 
   if (submissionSites.length === 0) {
       logUpdateCallback('No submission sites are available. Aborting.');

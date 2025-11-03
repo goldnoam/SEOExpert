@@ -4,6 +4,7 @@ import { Header } from './components/Header';
 import { UrlInput } from './components/UrlInput';
 import { LogViewer } from './components/LogViewer';
 import { AboutModal } from './components/AboutModal';
+import { ManualSubmissionLinks } from './components/ManualSubmissionLinks';
 import { Theme } from './types';
 import { performSubmissions } from './services/submissionService';
 import { translations } from './translations';
@@ -105,6 +106,8 @@ function App() {
           />
 
           <LogViewer logs={logs} language={language} />
+
+          <ManualSubmissionLinks language={language} />
         </div>
       </main>
 
