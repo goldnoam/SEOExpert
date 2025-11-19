@@ -34,6 +34,8 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     exportUrls: 'Export URLs',
     shareUrls: 'Share URLs',
     urlsCopied: 'URLs copied to clipboard',
+    shareTwitter: 'Share on Twitter',
+    shareFacebook: 'Share on Facebook',
   },
   he: {
     appSubtitle: 'הזן כתובת URL אחת או יותר לשליחה לשירותי פינג של מנועי חיפוש גדולים לאינדוקס מהיר יותר.',
@@ -69,6 +71,8 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     exportUrls: 'ייצא כתובות',
     shareUrls: 'שתף כתובות',
     urlsCopied: 'הכתובות הועתקו ללוח',
+    shareTwitter: 'שתף בטוויטר',
+    shareFacebook: 'שתף בפייסבוק',
   },
   es: {
     appSubtitle: 'Ingrese una o más URLs para enviarlas a los principales servicios de ping de motores de búsqueda para una indexación más rápida.',
@@ -104,6 +108,8 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     exportUrls: 'Exportar URLs',
     shareUrls: 'Compartir URLs',
     urlsCopied: 'URLs copiadas al portapapeles',
+    shareTwitter: 'Compartir en Twitter',
+    shareFacebook: 'Compartir en Facebook',
   },
   fr: {
     appSubtitle: 'Entrez une ou plusieurs URL à soumettre aux principaux services de ping des moteurs de recherche pour une indexation plus rapide.',
@@ -139,6 +145,8 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     exportUrls: 'Exporter les URL',
     shareUrls: 'Partager les URL',
     urlsCopied: 'URL copiées dans le presse-papiers',
+    shareTwitter: 'Partager sur Twitter',
+    shareFacebook: 'Partager sur Facebook',
   },
   de: {
     appSubtitle: 'Geben Sie eine oder mehrere URLs ein, um sie zur schnelleren Indizierung an die Ping-Dienste der großen Suchmaschinen zu senden.',
@@ -174,6 +182,8 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     exportUrls: 'URLs exportieren',
     shareUrls: 'URLs teilen',
     urlsCopied: 'URLs in die Zwischenablage kopiert',
+    shareTwitter: 'Auf Twitter teilen',
+    shareFacebook: 'Auf Facebook teilen',
   },
   ja: {
     appSubtitle: 'インデックス登録を高速化するために、主要な検索エンジンのpingサービスに送信するURLを1つ以上入力してください。',
@@ -209,5 +219,7 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     exportUrls: 'URLをエクスポート',
     shareUrls: 'URLを共有',
     urlsCopied: 'URLがクリップボードにコピーされました',
+    shareTwitter: 'Twitterで共有',
+    shareFacebook: 'Facebookで共有',
   },
 };
