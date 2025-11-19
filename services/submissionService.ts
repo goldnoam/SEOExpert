@@ -2,7 +2,11 @@ import { SUBMISSION_SITES } from '../constants';
 import { SubmissionSite } from '../types';
 import { getSubmissionSites } from './geminiService';
 
-export const performSubmissions = async (url: string, logUpdateCallback: (message: string) => void): Promise<void> => {
+export const performSubmissions = async (
+  url: string, 
+  logUpdateCallback: (message: string) => void,
+  extraSites: SubmissionSite[] = []
+): Promise<void> => {
   let submissionSites: SubmissionSite[] = [];
   
   try {
@@ -14,6 +18,12 @@ export const performSubmissions = async (url: string, logUpdateCallback: (messag
     logUpdateCallback(`❌ Failed to fetch list from Gemini API: ${errorMessage}`);
     logUpdateCallback('Falling back to the built-in list of submission sites...');
     submissionSites = SUBMISSION_SITES;
+  }
+
+  // Append custom sites if any
+  if (extraSites.length > 0) {
+      logUpdateCallback(`Added ${extraSites.length} custom submission sites.`);
+      submissionSites = [...submissionSites, ...extraSites];
   }
 
   if (submissionSites.length === 0) {

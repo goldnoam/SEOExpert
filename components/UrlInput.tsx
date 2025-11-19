@@ -1,4 +1,3 @@
-// FIX: Implement the UrlInput component for URL entry, drag-and-drop, and submission.
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { translations } from '../translations';
@@ -28,7 +27,12 @@ export const UrlInput: React.FC<UrlInputProps> = ({ urls, onUrlsChange, onSubmit
     let hasError = false;
     for (const url of urlList) {
       try {
-        new URL(url);
+        const parsedUrl = new URL(url);
+        // Strictly check for http or https protocols
+        if (parsedUrl.protocol !== 'http:' && parsedUrl.protocol !== 'https:') {
+          hasError = true;
+          break;
+        }
       } catch (_) {
         hasError = true;
         break;
