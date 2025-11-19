@@ -13,13 +13,31 @@ export const CustomSitesManager: React.FC<CustomSitesManagerProps> = ({ customSi
   const t = translations[language] || translations['en'];
   const [name, setName] = useState('');
   const [urlTemplate, setUrlTemplate] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
   const handleAdd = () => {
-    if (name.trim() && urlTemplate.trim()) {
-      onAddSite({ name: name.trim(), urlTemplate: urlTemplate.trim(), description: 'Custom site' });
-      setName('');
-      setUrlTemplate('');
+    setError(null);
+    const trimmedName = name.trim();
+    const trimmedTemplate = urlTemplate.trim();
+
+    if (!trimmedName) {
+        setError(t.customSiteNameError);
+        return;
     }
+
+    if (!trimmedTemplate) {
+        setError(t.customSiteTemplateError);
+        return;
+    }
+
+    if (!trimmedTemplate.includes('{URL}')) {
+        setError(t.customSitePlaceholderError);
+        return;
+    }
+
+    onAddSite({ name: trimmedName, urlTemplate: trimmedTemplate, description: 'Custom site' });
+    setName('');
+    setUrlTemplate('');
   };
 
   return (
@@ -44,28 +62,34 @@ export const CustomSitesManager: React.FC<CustomSitesManagerProps> = ({ customSi
         ))}
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-2 rtl:space-x-reverse">
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder={t.namePlaceholder}
-          className="flex-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-50 dark:bg-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-500 rtl:text-right"
-        />
-        <input
-          type="text"
-          value={urlTemplate}
-          onChange={(e) => setUrlTemplate(e.target.value)}
-          placeholder={t.templatePlaceholder}
-          className="flex-[2] p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-50 dark:bg-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-500 rtl:text-right"
-        />
-        <button
-          onClick={handleAdd}
-          disabled={!name.trim() || !urlTemplate.trim()}
-          className="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-md transition-colors disabled:bg-gray-300 dark:disabled:bg-gray-600 disabled:cursor-not-allowed"
-        >
-          {t.addSite}
-        </button>
+      <div className="flex flex-col gap-2">
+        <div className="flex flex-col sm:flex-row gap-2 rtl:space-x-reverse">
+            <input
+            type="text"
+            value={name}
+            onChange={(e) => { setName(e.target.value); setError(null); }}
+            placeholder={t.namePlaceholder}
+            className={`flex-1 p-2 border rounded-md bg-gray-50 dark:bg-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-500 rtl:text-right
+                ${error === t.customSiteNameError ? 'border-red-500 ring-1 ring-red-500' : 'border-gray-300 dark:border-gray-600'}`}
+            />
+            <input
+            type="text"
+            value={urlTemplate}
+            onChange={(e) => { setUrlTemplate(e.target.value); setError(null); }}
+            placeholder={t.templatePlaceholder}
+            className={`flex-[2] p-2 border rounded-md bg-gray-50 dark:bg-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-500 rtl:text-right
+                ${(error === t.customSiteTemplateError || error === t.customSitePlaceholderError) ? 'border-red-500 ring-1 ring-red-500' : 'border-gray-300 dark:border-gray-600'}`}
+            />
+            <button
+            onClick={handleAdd}
+            className="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-md transition-colors"
+            >
+            {t.addSite}
+            </button>
+        </div>
+        {error && (
+            <p className="text-red-500 text-sm rtl:text-right">{error}</p>
+        )}
       </div>
     </div>
   );

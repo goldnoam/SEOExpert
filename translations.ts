@@ -24,6 +24,9 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     templatePlaceholder: 'URL Template (use {URL})',
     remove: 'Remove',
     customSitesIntro: 'Add your own ping services to the submission list.',
+    customSiteNameError: 'Please enter a service name.',
+    customSiteTemplateError: 'Please enter a URL template.',
+    customSitePlaceholderError: 'Template must contain "{URL}".',
   },
   he: {
     appSubtitle: 'הזן כתובת URL אחת או יותר לשליחה לשירותי פינג של מנועי חיפוש גדולים לאינדוקס מהיר יותר.',
@@ -50,6 +53,9 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     templatePlaceholder: 'תבנית URL (השתמש ב-{URL})',
     remove: 'הסר',
     customSitesIntro: 'הוסף שירותי פינג משלך לרשימת השליחה.',
+    customSiteNameError: 'נא להזין שם שירות.',
+    customSiteTemplateError: 'נא להזין תבנית URL.',
+    customSitePlaceholderError: 'התבנית חייבת להכיל "{URL}".',
   },
   es: {
     appSubtitle: 'Ingrese una o más URLs para enviarlas a los principales servicios de ping de motores de búsqueda para una indexación más rápida.',
@@ -76,6 +82,9 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     templatePlaceholder: 'Plantilla de URL (use {URL})',
     remove: 'Eliminar',
     customSitesIntro: 'Añada sus propios servicios de ping a la lista de envíos.',
+    customSiteNameError: 'Por favor, ingrese un nombre de servicio.',
+    customSiteTemplateError: 'Por favor, ingrese una plantilla de URL.',
+    customSitePlaceholderError: 'La plantilla debe contener "{URL}".',
   },
   fr: {
     appSubtitle: 'Entrez une ou plusieurs URL à soumettre aux principaux services de ping des moteurs de recherche pour une indexation plus rapide.',
@@ -102,6 +111,9 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     templatePlaceholder: 'Modèle d\'URL (utilisez {URL})',
     remove: 'Supprimer',
     customSitesIntro: 'Ajoutez vos propres services de ping à la liste de soumission.',
+    customSiteNameError: 'Veuillez entrer un nom de service.',
+    customSiteTemplateError: 'Veuillez entrer un modèle d\'URL.',
+    customSitePlaceholderError: 'Le modèle doit contenir "{URL}".',
   },
   de: {
     appSubtitle: 'Geben Sie eine oder mehrere URLs ein, um sie zur schnelleren Indizierung an die Ping-Dienste der großen Suchmaschinen zu senden.',
@@ -128,6 +140,9 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     templatePlaceholder: 'URL-Vorlage (verwenden Sie {URL})',
     remove: 'Entfernen',
     customSitesIntro: 'Fügen Sie Ihre eigenen Ping-Dienste zur Einreichungsliste hinzu.',
+    customSiteNameError: 'Bitte geben Sie einen Dienstnamen ein.',
+    customSiteTemplateError: 'Bitte geben Sie eine URL-Vorlage ein.',
+    customSitePlaceholderError: 'Die Vorlage muss "{URL}" enthalten.',
   },
   ja: {
     appSubtitle: 'インデックス登録を高速化するために、主要な検索エンジンのpingサービスに送信するURLを1つ以上入力してください。',
@@ -154,5 +169,8 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     templatePlaceholder: 'URLテンプレート ({URL}を使用)',
     remove: '削除',
     customSitesIntro: '独自のpingサービスを送信リストに追加します。',
+    customSiteNameError: 'サービス名を入力してください。',
+    customSiteTemplateError: 'URLテンプレートを入力してください。',
+    customSitePlaceholderError: 'テンプレートには "{URL}" を含める必要があります。',
   },
 };
