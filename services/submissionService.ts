@@ -1,3 +1,4 @@
+
 import { SUBMISSION_SITES } from '../constants';
 import { SubmissionSite } from '../types';
 import { getSubmissionSites } from './geminiService';
@@ -41,7 +42,9 @@ export const performSubmissions = async (
     
     const submissionUrl = endpoint.urlTemplate.replace(/{URL}/g, encodedUrl);
 
-    logUpdateCallback(`Pinging ${endpoint.name}...`);
+    // Include description in the log message
+    const descriptionText = endpoint.description ? ` (${endpoint.description})` : '';
+    logUpdateCallback(`Pinging ${endpoint.name}${descriptionText}...`);
     
     try {
       // Using 'no-cors' as we are pinging external services and don't need to read the response body.
