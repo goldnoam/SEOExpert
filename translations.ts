@@ -13,6 +13,9 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     manualSubmissionIntro: 'For comprehensive SEO management, we recommend setting up your site with these essential services. They require manual verification and provide valuable insights beyond simple URL submission.',
     gscDescription: 'Monitor your site\'s performance in Google Search, submit sitemaps, and fix indexing issues.',
     bingDescription: 'Manage your site\'s presence in Bing and Yahoo search results, access reports, and use SEO tools.',
+    sendFeedback: 'Send Feedback',
+    progressStatus: 'Processing URL: {current} of {total}',
+    invalidUrlError: 'Please enter valid URLs (starting with http:// or https://).',
   },
   he: {
     appSubtitle: 'הזן כתובת URL אחת או יותר לשליחה לשירותי פינג של מנועי חיפוש גדולים לאינדוקס מהיר יותר.',
@@ -28,6 +31,9 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     manualSubmissionIntro: 'לניהול SEO מקיף, אנו ממליצים להגדיר את האתר שלכם עם שירותים חיוניים אלה. הם דורשים אימות ידני ומספקים תובנות יקרות ערך מעבר לשליחת URL פשוטה.',
     gscDescription: 'עקבו אחר ביצועי האתר שלכם בחיפוש גוגל, שלחו מפות אתר ותקנו בעיות אינדוקס.',
     bingDescription: 'נהלו את נוכחות האתר שלכם בתוצאות החיפוש של בינג ויאהו, גשו לדוחות והשתמשו בכלי SEO.',
+    sendFeedback: 'שלח משוב',
+    progressStatus: 'מעבד כתובת: {current} מתוך {total}',
+    invalidUrlError: 'נא להזין כתובות URL תקינות (המתחילות ב-http:// או https://).',
   },
   es: {
     appSubtitle: 'Ingrese una o más URLs para enviarlas a los principales servicios de ping de motores de búsqueda para una indexación más rápida.',
@@ -43,6 +49,9 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     manualSubmissionIntro: 'Para una gestión SEO completa, recomendamos configurar su sitio con estos servicios esenciales. Requieren verificación manual y brindan información valiosa más allá del simple envío de URL.',
     gscDescription: 'Supervise el rendimiento de su sitio en la Búsqueda de Google, envíe sitemaps y solucione problemas de indexación.',
     bingDescription: 'Administre la presencia de su sitio en los resultados de búsqueda de Bing y Yahoo, acceda a informes y utilice herramientas de SEO.',
+    sendFeedback: 'Enviar Comentarios',
+    progressStatus: 'Procesando URL: {current} de {total}',
+    invalidUrlError: 'Por favor, introduzca URLs válidas (empezando por http:// o https://).',
   },
   fr: {
     appSubtitle: 'Entrez une ou plusieurs URL à soumettre aux principaux services de ping des moteurs de recherche pour une indexation plus rapide.',
@@ -58,6 +67,9 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     manualSubmissionIntro: 'Pour une gestion SEO complète, nous vous recommandons de configurer votre site avec ces services essentiels. Ils nécessitent une vérification manuelle et fournissent des informations précieuses au-delà de la simple soumission d\'URL.',
     gscDescription: 'Surveillez les performances de votre site dans la recherche Google, soumettez des sitemaps et corrigez les problèmes d\'indexation.',
     bingDescription: 'Gérez la présence de votre site dans les résultats de recherche Bing et Yahoo, accédez à des rapports et utilisez des outils de référencement.',
+    sendFeedback: 'Envoyer un commentaire',
+    progressStatus: 'Traitement de l\'URL : {current} sur {total}',
+    invalidUrlError: 'Veuillez entrer des URL valides (commençant par http:// ou https://).',
   },
   de: {
     appSubtitle: 'Geben Sie eine oder mehrere URLs ein, um sie zur schnelleren Indizierung an die Ping-Dienste der großen Suchmaschinen zu senden.',
@@ -73,6 +85,9 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     manualSubmissionIntro: 'Für ein umfassendes SEO-Management empfehlen wir, Ihre Website mit diesen wesentlichen Diensten einzurichten. Sie erfordern eine manuelle Überprüfung und liefern wertvolle Einblicke, die über die einfache URL-Übermittlung hinausgehen.',
     gscDescription: 'Überwachen Sie die Leistung Ihrer Website in der Google-Suche, reichen Sie Sitemaps ein und beheben Sie Indexierungsprobleme.',
     bingDescription: 'Verwalten Sie die Präsenz Ihrer Website in den Suchergebnissen von Bing und Yahoo, greifen Sie auf Berichte zu und nutzen Sie SEO-Tools.',
+    sendFeedback: 'Feedback senden',
+    progressStatus: 'Verarbeite URL: {current} von {total}',
+    invalidUrlError: 'Bitte geben Sie gültige URLs ein (beginnend mit http:// oder https://).',
   },
   ja: {
     appSubtitle: 'インデックス登録を高速化するために、主要な検索エンジンのpingサービスに送信するURLを1つ以上入力してください。',
@@ -88,5 +103,8 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     manualSubmissionIntro: '包括的なSEO管理のために、これらの必須サービスでサイトを設定することをお勧めします。これらは手動での確認が必要であり、単純なURL送信以上の貴重な洞察を提供します。',
     gscDescription: 'Google検索でのサイトのパフォーマンスを監視し、サイトマップを送信し、インデックスの問題を修正します。',
     bingDescription: 'BingおよびYahooの検索結果でのサイトのプレゼンスを管理し、レポートにアクセスし、SEOツールを使用します。',
+    sendFeedback: 'フィードバックを送信',
+    progressStatus: 'URLを処理中: {current} / {total}',
+    invalidUrlError: '有効なURLを入力してください（http://またはhttps://で始まるもの）。',
   },
 };

@@ -9,7 +9,7 @@ export const LANGUAGES = [
   { code: 'ja', name: '日本語' },
 ];
 
-export const ABOUT_TEXT = "SEO Expert designed by Noam Gold 2025";
+export const ABOUT_TEXT = "© NOAM GOLD AI 2025";
 
 export const SUBMISSION_SITES: SubmissionSite[] = [
   {
