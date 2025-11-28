@@ -1,5 +1,5 @@
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useMemo } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { translations } from '../translations';
 import { SpinnerIcon } from './icons/SpinnerIcon';
@@ -10,6 +10,10 @@ import { DownloadIcon } from './icons/DownloadIcon';
 import { TwitterIcon } from './icons/TwitterIcon';
 import { FacebookIcon } from './icons/FacebookIcon';
 import { CopyIcon } from './icons/CopyIcon';
+import { CheckCircleIcon } from './icons/CheckCircleIcon';
+import { XCircleIcon } from './icons/XCircleIcon';
+import { ClockIcon } from './icons/ClockIcon';
+import { SubmissionItem } from '../types';
 
 interface UrlInputProps {
   urls: string;
@@ -17,19 +21,42 @@ interface UrlInputProps {
   onSubmit: () => void;
   isSubmitting: boolean;
   language: string;
+  submissionItems: SubmissionItem[];
+  onReset: () => void;
 }
 
-export const UrlInput: React.FC<UrlInputProps> = ({ urls, onUrlsChange, onSubmit, isSubmitting, language }) => {
+export const UrlInput: React.FC<UrlInputProps> = ({ 
+  urls, 
+  onUrlsChange, 
+  onSubmit, 
+  isSubmitting, 
+  language,
+  submissionItems,
+  onReset
+}) => {
   const t = translations[language] || translations['en'];
   const [error, setError] = useState<string | null>(null);
   const [shareCopySuccess, setShareCopySuccess] = useState(false);
   const [copyBtnSuccess, setCopyBtnSuccess] = useState(false);
 
+  // Calculate valid URLs count
+  const validUrlCount = useMemo(() => {
+    return urls.split('\n')
+      .map(u => u.trim())
+      .filter(u => {
+        try {
+          const parsed = new URL(u);
+          return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+        } catch {
+          return false;
+        }
+      }).length;
+  }, [urls]);
+
   const validateAndSubmit = () => {
     const urlList = urls.split('\n').map((u) => u.trim()).filter(Boolean);
 
     if (urlList.length === 0) {
-      // Pass to parent to handle empty logic or simply do nothing
       onSubmit();
       return;
     }
@@ -38,7 +65,6 @@ export const UrlInput: React.FC<UrlInputProps> = ({ urls, onUrlsChange, onSubmit
     for (const url of urlList) {
       try {
         const parsedUrl = new URL(url);
-        // Strictly check for http or https protocols
         if (parsedUrl.protocol !== 'http:' && parsedUrl.protocol !== 'https:') {
           hasError = true;
           break;
@@ -120,12 +146,8 @@ export const UrlInput: React.FC<UrlInputProps> = ({ urls, onUrlsChange, onSubmit
   const handleFacebookShare = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (!urls.trim()) return;
-    // Facebook requires a URL 'u' parameter to share. 
-    // We try to find the first URL in the text to share it, or fallback to current page.
-    // 'quote' can be used to pre-fill text in some contexts, though often ignored by FB.
     const urlMatch = urls.match(/https?:\/\/[^\s]+/);
     const urlToShare = urlMatch ? urlMatch[0] : window.location.href;
-    
     const u = encodeURIComponent(urlToShare);
     const quote = encodeURIComponent(urls);
     window.open(`https://www.facebook.com/sharer/sharer.php?u=${u}&quote=${quote}`, '_blank');
@@ -134,7 +156,6 @@ export const UrlInput: React.FC<UrlInputProps> = ({ urls, onUrlsChange, onSubmit
   const handleGenericShare = async (e: React.MouseEvent) => {
     e.stopPropagation();
     if (!urls.trim()) return;
-
     if (navigator.share) {
       try {
         await navigator.share({
@@ -156,6 +177,66 @@ export const UrlInput: React.FC<UrlInputProps> = ({ urls, onUrlsChange, onSubmit
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, noClick: true, noKeyboard: true });
+
+  // Render the progress list if active
+  if (submissionItems.length > 0) {
+    return (
+      <div className="mb-8">
+        <div className="bg-white dark:bg-gray-800 border rounded-lg p-4 shadow-sm space-y-4">
+          <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 border-b pb-2 dark:border-gray-700 rtl:text-right">
+            {isSubmitting ? t.submittingButton : t.statusSuccess}
+          </h2>
+          <div className="space-y-3 max-h-96 overflow-y-auto pr-1">
+            {submissionItems.map((item) => (
+              <div key={item.id} className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg border border-gray-100 dark:border-gray-700">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center space-x-2 rtl:space-x-reverse overflow-hidden">
+                    <span className="shrink-0">
+                      {item.status === 'pending' && <ClockIcon className="w-5 h-5 text-gray-400" />}
+                      {item.status === 'processing' && <SpinnerIcon />} 
+                      {/* SpinnerIcon uses text-white usually, let's override color if needed or rely on parent */}
+                      {item.status === 'success' && <CheckCircleIcon className="w-5 h-5 text-green-500" />}
+                      {item.status === 'failed' && <XCircleIcon className="w-5 h-5 text-red-500" />}
+                    </span>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-200 truncate" title={item.url}>
+                      {item.url}
+                    </span>
+                  </div>
+                  <span className={`text-xs font-bold uppercase shrink-0 ${
+                    item.status === 'success' ? 'text-green-600 dark:text-green-400' :
+                    item.status === 'failed' ? 'text-red-600 dark:text-red-400' :
+                    item.status === 'processing' ? 'text-teal-600 dark:text-teal-400 animate-pulse' :
+                    'text-gray-400'
+                  }`}>
+                    {t[`status${item.status.charAt(0).toUpperCase() + item.status.slice(1)}`]}
+                  </span>
+                </div>
+                
+                {/* Progress Bar */}
+                <div className="w-full bg-gray-200 rounded-full h-1.5 dark:bg-gray-600">
+                  <div 
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      item.status === 'failed' ? 'bg-red-500' : 'bg-teal-500'
+                    }`}
+                    style={{ width: `${item.progress}%` }}
+                  ></div>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          {!isSubmitting && (
+            <button
+              onClick={onReset}
+              className="w-full mt-4 bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+            >
+              {t.resetSubmission}
+            </button>
+          )}
+        </div>
+      </div>
+    );
+  }
 
   const dropzoneClasses = `bg-white dark:bg-gray-800 border-2 border-dashed rounded-lg p-4 mb-4 transition-all relative group
     ${isDragActive ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20' : (error ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600')}`;
@@ -190,6 +271,9 @@ export const UrlInput: React.FC<UrlInputProps> = ({ urls, onUrlsChange, onSubmit
                 aria-invalid={!!error}
                 aria-describedby={error ? "url-error" : undefined}
             />
+            <div className="absolute bottom-2 left-2 text-xs text-gray-400 dark:text-gray-500 pointer-events-none rtl:right-2 rtl:left-auto">
+                {t.urlCount.replace('{count}', validUrlCount.toString())}
+            </div>
             <div className="absolute bottom-2 right-2 flex space-x-2 rtl:space-x-reverse bg-gray-50 dark:bg-gray-700 pl-2 pt-1 rounded-tl-md">
                 <button
                     onClick={handleClear}

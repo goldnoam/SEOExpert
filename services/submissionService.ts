@@ -5,7 +5,8 @@ import { getSubmissionSites } from './geminiService';
 
 export const performSubmissions = async (
   url: string, 
-  logUpdateCallback: (message: string) => void
+  logUpdateCallback: (message: string) => void,
+  onProgress?: (current: number, total: number) => void
 ): Promise<void> => {
   let submissionSites: SubmissionSite[] = [];
   
@@ -22,17 +23,24 @@ export const performSubmissions = async (
 
   if (submissionSites.length === 0) {
       logUpdateCallback('No submission sites are available. Aborting.');
+      if (onProgress) onProgress(100, 100);
       return;
   }
   
   const encodedUrl = encodeURIComponent(url);
+  const validSites = submissionSites.filter(endpoint => endpoint.urlTemplate && endpoint.urlTemplate.includes('{URL}'));
+  const totalSites = validSites.length;
 
-  const promises = submissionSites.map(async (endpoint) => {
-    if (!endpoint.urlTemplate || !endpoint.urlTemplate.includes('{URL}')) {
-        logUpdateCallback(`  ⚠️ No valid submission URL for ${endpoint.name}. Skipping.`);
-        return;
-    }
-    
+  if (totalSites === 0) {
+      logUpdateCallback('No valid submission templates found.');
+      if (onProgress) onProgress(100, 100);
+      return;
+  }
+
+  let completed = 0;
+  if (onProgress) onProgress(0, totalSites);
+
+  const promises = validSites.map(async (endpoint) => {
     const submissionUrl = endpoint.urlTemplate.replace(/{URL}/g, encodedUrl);
 
     // Include description in the log message
@@ -48,6 +56,9 @@ export const performSubmissions = async (
     } catch (error) {
       logUpdateCallback(`  ❌ Failed to send request to ${endpoint.name}. See console for details.`);
       console.error(`Error submitting to ${endpoint.name}:`, error);
+    } finally {
+        completed++;
+        if (onProgress) onProgress(completed, totalSites);
     }
   });
 

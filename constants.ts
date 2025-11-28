@@ -12,6 +12,8 @@ export const LANGUAGES = [
 
 export const ABOUT_TEXT = "© NOAM GOLD AI 2025";
 
+export const SUBMISSION_DELAY = 2000; // 2 seconds delay between URL submissions
+
 export const SUBMISSION_SITES: SubmissionSite[] = [
   {
     name: "Google",

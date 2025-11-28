@@ -6,9 +6,10 @@ import { LogViewer } from './components/LogViewer';
 import { AboutModal } from './components/AboutModal';
 import { ManualSubmissionLinks } from './components/ManualSubmissionLinks';
 import { Footer } from './components/Footer';
-import { Theme } from './types';
+import { Theme, SubmissionItem } from './types';
 import { performSubmissions } from './services/submissionService';
 import { translations } from './translations';
+import { SUBMISSION_DELAY } from './constants';
 
 function App() {
   const [theme, setTheme] = useState<Theme>(Theme.Dark);
@@ -17,7 +18,7 @@ function App() {
   const [logs, setLogs] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState<boolean>(false);
-  const [submissionProgress, setSubmissionProgress] = useState<{ current: number; total: number }>({ current: 0, total: 0 });
+  const [submissionItems, setSubmissionItems] = useState<SubmissionItem[]>([]);
 
   useEffect(() => {
     if (theme === Theme.Dark) {
@@ -51,33 +52,76 @@ function App() {
     setLogs([]);
   };
 
-  const handleSubmit = async () => {
-    setIsSubmitting(true);
-    setLogs([]);
+  const handleReset = () => {
+      setSubmissionItems([]);
+      setUrls('');
+      setLogs([]);
+  };
 
+  const handleSubmit = async () => {
     const urlList = urls.split('\n').map((u) => u.trim()).filter(Boolean);
 
     if (urlList.length === 0) {
       logUpdateCallback('No valid URLs provided. Please enter at least one URL.');
-      setIsSubmitting(false);
       return;
     }
 
-    logUpdateCallback(`Processing ${urlList.length} URL(s)...`);
-    setSubmissionProgress({ current: 0, total: urlList.length });
+    setIsSubmitting(true);
+    setLogs([]);
+    
+    // Initialize submission items
+    const newItems: SubmissionItem[] = urlList.map(url => ({
+      id: Math.random().toString(36).substr(2, 9),
+      url,
+      status: 'pending',
+      progress: 0,
+    }));
+    setSubmissionItems(newItems);
 
-    let processedCount = 0;
-    for (const url of urlList) {
-      logUpdateCallback(`\n--- Submitting: ${url} ---`);
+    logUpdateCallback(`Processing ${urlList.length} URL(s)...`);
+
+    for (let i = 0; i < newItems.length; i++) {
+      const item = newItems[i];
+      
+      // Delay before starting next item (except the first one) to prevent rate limiting
+      if (i > 0) {
+         await new Promise(resolve => setTimeout(resolve, SUBMISSION_DELAY));
+      }
+
+      // Update status to processing
+      setSubmissionItems(prev => prev.map(p => 
+        p.id === item.id ? { ...p, status: 'processing' } : p
+      ));
+
+      logUpdateCallback(`\n--- Submitting: ${item.url} ---`);
+      
       try {
-        await performSubmissions(url, logUpdateCallback);
+        await performSubmissions(
+          item.url, 
+          logUpdateCallback,
+          (current, total) => {
+            // Update progress percentage
+            const percentage = Math.round((current / total) * 100);
+            setSubmissionItems(prev => prev.map(p => 
+                p.id === item.id ? { ...p, progress: percentage } : p
+            ));
+          }
+        );
+        
+        // Mark as success
+        setSubmissionItems(prev => prev.map(p => 
+            p.id === item.id ? { ...p, status: 'success', progress: 100 } : p
+        ));
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred.';
-        logUpdateCallback(`❌ Error submitting ${url}: ${errorMessage}`);
-        console.error(`Submission error for ${url}:`, error);
+        logUpdateCallback(`❌ Error submitting ${item.url}: ${errorMessage}`);
+        console.error(`Submission error for ${item.url}:`, error);
+        
+        // Mark as failed
+        setSubmissionItems(prev => prev.map(p => 
+            p.id === item.id ? { ...p, status: 'failed', progress: 100 } : p
+        ));
       }
-      processedCount++;
-      setSubmissionProgress({ current: processedCount, total: urlList.length });
     }
 
     logUpdateCallback('\n✅ Submission process finished.');
@@ -113,29 +157,9 @@ function App() {
             onSubmit={handleSubmit}
             isSubmitting={isSubmitting}
             language={language}
+            submissionItems={submissionItems}
+            onReset={handleReset}
           />
-
-          {isSubmitting && submissionProgress.total > 1 && (
-            <div className="my-4" aria-live="polite">
-              <div className="flex justify-between mb-1">
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {t.progressStatus
-                    .replace('{current}', submissionProgress.current.toString())
-                    .replace('{total}', submissionProgress.total.toString())}
-                </span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                <div
-                  className="bg-teal-500 h-2.5 rounded-full transition-all duration-300 ease-in-out"
-                  style={{ width: `${(submissionProgress.current / submissionProgress.total) * 100}%` }}
-                  role="progressbar"
-                  aria-valuenow={submissionProgress.current}
-                  aria-valuemin="0"
-                  aria-valuemax={submissionProgress.total}
-                ></div>
-              </div>
-            </div>
-          )}
 
           <LogViewer logs={logs} language={language} onClear={clearLogs} />
 

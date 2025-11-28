@@ -3,9 +3,17 @@ export enum Theme {
   Dark = 'dark',
 }
 
-// FIX: Define and export the SubmissionSite interface, which was missing.
 export interface SubmissionSite {
   name: string;
   description: string;
   urlTemplate: string;
+}
+
+export type SubmissionStatus = 'pending' | 'processing' | 'success' | 'failed';
+
+export interface SubmissionItem {
+  id: string;
+  url: string;
+  status: SubmissionStatus;
+  progress: number;
 }
