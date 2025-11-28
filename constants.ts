@@ -1,3 +1,4 @@
+
 import { SubmissionSite } from './types';
 
 export const LANGUAGES = [
@@ -33,8 +34,28 @@ export const SUBMISSION_SITES: SubmissionSite[] = [
     urlTemplate: "https://search.seznam.cz/ping?sitemap={URL}",
   },
   {
+    name: "Internet Archive",
+    description: "Saves your page to the Wayback Machine.",
+    urlTemplate: "https://web.archive.org/save/{URL}",
+  },
+  {
     name: "Weblogs.com",
     description: "A popular ping service for blogs and websites.",
     urlTemplate: "https://rpc.weblogs.com/pingSiteForm?name={URL}&url={URL}",
+  },
+  {
+    name: "FeedBurner",
+    description: "Google's feed management ping service.",
+    urlTemplate: "https://feedburner.google.com/fb/a/pingSubmit?bloglink={URL}",
+  },
+  {
+    name: "Google Blog Search",
+    description: "Notifies Google Blog Search of content updates.",
+    urlTemplate: "https://blogsearch.google.com/ping?url={URL}",
+  },
+  {
+    name: "Ping-O-Matic",
+    description: "Service that pings multiple search engines.",
+    urlTemplate: "https://pingomatic.com/ping/?title={URL}&blogurl={URL}&rssurl={URL}&chk_weblogscom=on&chk_blogs=on&chk_feedburner=on&chk_newsgator=on&chk_myyahoo=on&chk_pubsubcom=on&chk_blogdigger=on&chk_weblogalot=on&chk_newsisfree=on&chk_topicexchange=on&chk_google=on&chk_tailrank=on&chk_skygrid=on&chk_collecta=on&chk_superfeedr=on",
   },
 ];
