@@ -9,6 +9,7 @@ import { ShareIcon } from './icons/ShareIcon';
 import { DownloadIcon } from './icons/DownloadIcon';
 import { TwitterIcon } from './icons/TwitterIcon';
 import { FacebookIcon } from './icons/FacebookIcon';
+import { CopyIcon } from './icons/CopyIcon';
 
 interface UrlInputProps {
   urls: string;
@@ -21,7 +22,8 @@ interface UrlInputProps {
 export const UrlInput: React.FC<UrlInputProps> = ({ urls, onUrlsChange, onSubmit, isSubmitting, language }) => {
   const t = translations[language] || translations['en'];
   const [error, setError] = useState<string | null>(null);
-  const [copySuccess, setCopySuccess] = useState(false);
+  const [shareCopySuccess, setShareCopySuccess] = useState(false);
+  const [copyBtnSuccess, setCopyBtnSuccess] = useState(false);
 
   const validateAndSubmit = () => {
     const urlList = urls.split('\n').map((u) => u.trim()).filter(Boolean);
@@ -58,7 +60,8 @@ export const UrlInput: React.FC<UrlInputProps> = ({ urls, onUrlsChange, onSubmit
   const handleChange = (val: string) => {
     setError(null);
     onUrlsChange(val);
-    setCopySuccess(false);
+    setShareCopySuccess(false);
+    setCopyBtnSuccess(false);
   };
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -93,6 +96,18 @@ export const UrlInput: React.FC<UrlInputProps> = ({ urls, onUrlsChange, onSubmit
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+  };
+
+  const handleCopy = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!urls.trim()) return;
+    try {
+        await navigator.clipboard.writeText(urls);
+        setCopyBtnSuccess(true);
+        setTimeout(() => setCopyBtnSuccess(false), 2000);
+    } catch (err) {
+        console.error('Clipboard write failed:', err);
+    }
   };
 
   const handleTwitterShare = (e: React.MouseEvent) => {
@@ -132,8 +147,8 @@ export const UrlInput: React.FC<UrlInputProps> = ({ urls, onUrlsChange, onSubmit
     } else {
       try {
         await navigator.clipboard.writeText(urls);
-        setCopySuccess(true);
-        setTimeout(() => setCopySuccess(false), 2000);
+        setShareCopySuccess(true);
+        setTimeout(() => setShareCopySuccess(false), 2000);
       } catch (err) {
         console.error('Clipboard write failed:', err);
       }
@@ -194,6 +209,20 @@ export const UrlInput: React.FC<UrlInputProps> = ({ urls, onUrlsChange, onSubmit
                 >
                     <DownloadIcon className="w-4 h-4" />
                 </button>
+                <button
+                    onClick={handleCopy}
+                    disabled={!urls.trim() || isSubmitting}
+                    className="p-1.5 text-gray-500 hover:text-teal-500 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors disabled:opacity-30 relative"
+                    title={t.copyUrls}
+                    aria-label={t.copyUrls}
+                >
+                    <CopyIcon className="w-4 h-4" />
+                    {copyBtnSuccess && (
+                        <span className="absolute bottom-full right-0 mb-1 whitespace-nowrap bg-black text-white text-xs px-2 py-1 rounded shadow-lg z-10">
+                            {t.urlsCopied}
+                        </span>
+                    )}
+                </button>
                 <div className="w-px h-4 bg-gray-300 dark:bg-gray-600 my-auto mx-1"></div>
                 <button
                     onClick={handleTwitterShare}
@@ -221,8 +250,8 @@ export const UrlInput: React.FC<UrlInputProps> = ({ urls, onUrlsChange, onSubmit
                     aria-label={t.shareUrls}
                 >
                     <ShareIcon className="w-4 h-4" />
-                    {copySuccess && (
-                        <span className="absolute bottom-full right-0 mb-1 whitespace-nowrap bg-black text-white text-xs px-2 py-1 rounded shadow-lg">
+                    {shareCopySuccess && (
+                        <span className="absolute bottom-full right-0 mb-1 whitespace-nowrap bg-black text-white text-xs px-2 py-1 rounded shadow-lg z-10">
                             {t.urlsCopied}
                         </span>
                     )}

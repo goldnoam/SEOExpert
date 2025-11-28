@@ -1,12 +1,12 @@
+
 import React, { useState, useCallback, useEffect } from 'react';
 import { Header } from './components/Header';
 import { UrlInput } from './components/UrlInput';
 import { LogViewer } from './components/LogViewer';
 import { AboutModal } from './components/AboutModal';
 import { ManualSubmissionLinks } from './components/ManualSubmissionLinks';
-import { CustomSitesManager } from './components/CustomSitesManager';
 import { Footer } from './components/Footer';
-import { Theme, SubmissionSite } from './types';
+import { Theme } from './types';
 import { performSubmissions } from './services/submissionService';
 import { translations } from './translations';
 
@@ -18,7 +18,6 @@ function App() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState<boolean>(false);
   const [submissionProgress, setSubmissionProgress] = useState<{ current: number; total: number }>({ current: 0, total: 0 });
-  const [customSites, setCustomSites] = useState<SubmissionSite[]>([]);
 
   useEffect(() => {
     if (theme === Theme.Dark) {
@@ -52,14 +51,6 @@ function App() {
     setLogs([]);
   };
 
-  const handleAddCustomSite = (site: SubmissionSite) => {
-    setCustomSites((prev) => [...prev, site]);
-  };
-
-  const handleRemoveCustomSite = (index: number) => {
-    setCustomSites((prev) => prev.filter((_, i) => i !== index));
-  };
-
   const handleSubmit = async () => {
     setIsSubmitting(true);
     setLogs([]);
@@ -79,7 +70,7 @@ function App() {
     for (const url of urlList) {
       logUpdateCallback(`\n--- Submitting: ${url} ---`);
       try {
-        await performSubmissions(url, logUpdateCallback, customSites);
+        await performSubmissions(url, logUpdateCallback);
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred.';
         logUpdateCallback(`❌ Error submitting ${url}: ${errorMessage}`);
@@ -147,13 +138,6 @@ function App() {
           )}
 
           <LogViewer logs={logs} language={language} onClear={clearLogs} />
-
-          <CustomSitesManager 
-            customSites={customSites} 
-            onAddSite={handleAddCustomSite} 
-            onRemoveSite={handleRemoveCustomSite}
-            language={language} 
-          />
 
           <ManualSubmissionLinks language={language} />
         </div>
