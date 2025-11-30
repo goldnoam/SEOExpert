@@ -1,3 +1,4 @@
+
 export enum Theme {
   Light = 'light',
   Dark = 'dark',
@@ -16,4 +17,11 @@ export interface SubmissionItem {
   url: string;
   status: SubmissionStatus;
   progress: number;
+}
+
+export interface LogEntry {
+  id: string;
+  timestamp: number;
+  message: string;
+  siteDescription?: string;
 }

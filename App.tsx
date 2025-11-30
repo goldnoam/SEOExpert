@@ -6,7 +6,7 @@ import { LogViewer } from './components/LogViewer';
 import { AboutModal } from './components/AboutModal';
 import { ManualSubmissionLinks } from './components/ManualSubmissionLinks';
 import { Footer } from './components/Footer';
-import { Theme, SubmissionItem } from './types';
+import { Theme, SubmissionItem, LogEntry, SubmissionSite } from './types';
 import { performSubmissions } from './services/submissionService';
 import { translations } from './translations';
 import { SUBMISSION_DELAY } from './constants';
@@ -15,7 +15,7 @@ function App() {
   const [theme, setTheme] = useState<Theme>(Theme.Dark);
   const [language, setLanguage] = useState<string>('en');
   const [urls, setUrls] = useState<string>('');
-  const [logs, setLogs] = useState<string[]>([]);
+  const [logs, setLogs] = useState<LogEntry[]>([]);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState<boolean>(false);
   const [submissionItems, setSubmissionItems] = useState<SubmissionItem[]>([]);
@@ -44,8 +44,16 @@ function App() {
     setLanguage(lang);
   };
 
-  const logUpdateCallback = useCallback((message: string) => {
-    setLogs((prevLogs) => [...prevLogs, message]);
+  const logUpdateCallback = useCallback((message: string, site?: SubmissionSite) => {
+    setLogs((prevLogs) => [
+      ...prevLogs, 
+      { 
+        id: Math.random().toString(36).substr(2, 9),
+        timestamp: Date.now(),
+        message,
+        siteDescription: site?.description 
+      }
+    ]);
   }, []);
 
   const clearLogs = () => {

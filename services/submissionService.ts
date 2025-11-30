@@ -5,7 +5,7 @@ import { getSubmissionSites } from './geminiService';
 
 export const performSubmissions = async (
   url: string, 
-  logUpdateCallback: (message: string) => void,
+  logUpdateCallback: (message: string, site?: SubmissionSite) => void,
   onProgress?: (current: number, total: number) => void
 ): Promise<void> => {
   let submissionSites: SubmissionSite[] = [];
@@ -43,18 +43,17 @@ export const performSubmissions = async (
   const promises = validSites.map(async (endpoint) => {
     const submissionUrl = endpoint.urlTemplate.replace(/{URL}/g, encodedUrl);
 
-    // Include description in the log message
-    const descriptionText = endpoint.description ? ` (${endpoint.description})` : '';
-    logUpdateCallback(`Pinging ${endpoint.name}${descriptionText}...`);
+    // Pass the endpoint (SubmissionSite) to the callback so the UI can use the description
+    logUpdateCallback(`Pinging ${endpoint.name}...`, endpoint);
     
     try {
       // Using 'no-cors' as we are pinging external services and don't need to read the response body.
       // This prevents Cross-Origin Resource Sharing (CORS) errors in the browser.
       // The request is "fire and forget".
       await fetch(submissionUrl, { mode: 'no-cors' });
-      logUpdateCallback(`  ✅ Request sent to ${endpoint.name}.`);
+      logUpdateCallback(`  ✅ Request sent to ${endpoint.name}.`, endpoint);
     } catch (error) {
-      logUpdateCallback(`  ❌ Failed to send request to ${endpoint.name}. See console for details.`);
+      logUpdateCallback(`  ❌ Failed to send request to ${endpoint.name}. See console for details.`, endpoint);
       console.error(`Error submitting to ${endpoint.name}:`, error);
     } finally {
         completed++;

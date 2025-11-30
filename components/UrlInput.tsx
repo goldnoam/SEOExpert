@@ -180,12 +180,26 @@ export const UrlInput: React.FC<UrlInputProps> = ({
 
   // Render the progress list if active
   if (submissionItems.length > 0) {
+    const successCount = submissionItems.filter(i => i.status === 'success').length;
+    const failureCount = submissionItems.filter(i => i.status === 'failed').length;
+    const processedCount = successCount + failureCount;
+    const totalCount = submissionItems.length;
+
     return (
       <div className="mb-8">
         <div className="bg-white dark:bg-gray-800 border rounded-lg p-4 shadow-sm space-y-4">
-          <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 border-b pb-2 dark:border-gray-700 rtl:text-right">
-            {isSubmitting ? t.submittingButton : t.statusSuccess}
-          </h2>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-2 dark:border-gray-700 gap-2">
+            <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 rtl:text-right">
+                {isSubmitting ? t.submittingButton : t.statusSuccess}
+            </h2>
+            <div className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                {t.submissionSummary
+                  .replace('{processed}', processedCount.toString())
+                  .replace('{total}', totalCount.toString())
+                  .replace('{success}', successCount.toString())
+                  .replace('{failed}', failureCount.toString())}
+            </div>
+          </div>
           <div className="space-y-3 max-h-96 overflow-y-auto pr-1">
             {submissionItems.map((item) => (
               <div key={item.id} className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg border border-gray-100 dark:border-gray-700">
@@ -232,6 +246,234 @@ export const UrlInput: React.FC<UrlInputProps> = ({
             >
               {t.resetSubmission}
             </button>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  const dropzoneClasses = `bg-white dark:bg-gray-800 border-2 border-dashed rounded-lg p-4 mb-4 transition-all relative group
+    ${isDragActive ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20' : (error ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600')}`;
+
+  return (
+    <div className="mb-8">
+      <div {...getRootProps()} className={dropzoneClasses}>
+        <input {...getInputProps()} />
+        
+        {isDragActive && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-teal-50/90 dark:bg-gray-800/90 z-20 rounded-lg backdrop-blur-sm">
+            <UploadIcon className="w-12 h-12 text-teal-500 mb-2" />
+            <p className="text-xl font-semibold text-teal-600 dark:text-teal-400 animate-pulse">
+              {t.dragActiveHint}
+            </p>
+          </div>
+        )}
+
+        <div className={isDragActive ? 'opacity-20 blur-sm transition-all' : 'transition-all'}>
+          <p className="text-center text-gray-500 dark:text-gray-400 mb-2">{t.dropzoneHint}</p>
+          <div className="relative">
+            <textarea
+                value={urls}
+                onChange={(e) => handleChange(e.target.value)}
+                placeholder={t.urlPlaceholder}
+                className={`w-full h-32 p-3 pb-8 bg-gray-50 dark:bg-gray-700 border rounded-md focus:ring-2 focus:outline-none resize-y rtl:text-right
+                ${error 
+                    ? 'border-red-500 focus:ring-red-500 focus:border-red-500 dark:border-red-500' 
+                    : 'border-gray-300 dark:border-gray-600 focus:ring-teal-500'}`}
+                disabled={isSubmitting}
+                aria-label="URL input"
+                aria-invalid={!!error}
+                aria-describedby={error ? "url-error" : undefined}
+            />
+            <div className="absolute bottom-2 left-2 text-xs text-gray-400 dark:text-gray-500 pointer-events-none rtl:right-2 rtl:left-auto">
+                {t.urlCount.replace('{count}', validUrlCount.toString())}
+            </div>
+            <div className="absolute bottom-2 right-2 flex space-x-2 rtl:space-x-reverse bg-gray-50 dark:bg-gray-700 pl-2 pt-1 rounded-tl-md">
+                <button
+                    onClick={handleClear}
+                    disabled={!urls.trim() || isSubmitting}
+                    className="p-1.5 text-gray-500 hover:text-red-500 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors disabled:opacity-30"
+                    title={t.clearUrls}
+                    aria-label={t.clearUrls}
+                >
+                    <TrashIcon className="w-4 h-4" />
+                </button>
+                <button
+                    onClick={handleExport}
+                    disabled={!urls.trim() || isSubmitting}
+                    className="p-1.5 text-gray-500 hover:text-teal-500 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors disabled:opacity-30"
+                    title={t.exportUrls}
+                    aria-label={t.exportUrls}
+                >
+                    <DownloadIcon className="w-4 h-4" />
+                </button>
+                <button
+                    onClick={handleCopy}
+                    disabled={!urls.trim() || isSubmitting}
+                    className="p-1.5 text-gray-500 hover:text-teal-500 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors disabled:opacity-30 relative"
+                    title={t.copyUrls}
+                    aria-label={t.copyUrls}
+                >
+                    <CopyIcon className="w-4 h-4" />
+                    {copyBtnSuccess && (
+                        <span className="absolute bottom-full right-0 mb-1 whitespace-nowrap bg-black text-white text-xs px-2 py-1 rounded shadow-lg z-10">
+                            {t.urlsCopied}
+                        </span>
+                    )}
+                </button>
+                <div className="w-px h-4 bg-gray-300 dark:bg-gray-600 my-auto mx-1"></div>
+                <button
+                    onClick={handleTwitterShare}
+                    disabled={!urls.trim() || isSubmitting}
+                    className="p-1.5 text-gray-500 hover:text-blue-400 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors disabled:opacity-30"
+                    title={t.shareTwitter}
+                    aria-label={t.shareTwitter}
+                >
+                    <TwitterIcon className="w-4 h-4" />
+                </button>
+                <button
+                    onClick={handleFacebookShare}
+                    disabled={!urls.trim() || isSubmitting}
+                    className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors disabled:opacity-30"
+                    title={t.shareFacebook}
+                    aria-label={t.shareFacebook}
+                >
+                    <FacebookIcon className="w-4 h-4" />
+                </button>
+                <button
+                    onClick={handleGenericShare}
+                    disabled={!urls.trim() || isSubmitting}
+                    className="p-1.5 text-gray-500 hover:text-teal-500 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors disabled:opacity-30 relative"
+                    title={t.shareUrls}
+                    aria-label={t.shareUrls}
+                >
+                    <ShareIcon className="w-4 h-4" />
+                    {shareCopySuccess && (
+                        <span className="absolute bottom-full right-0 mb-1 whitespace-nowrap bg-black text-white text-xs px-2 py-1 rounded shadow-lg z-10">
+                            {t.urlsCopied}
+                        </span>
+                    )}
+                </button>
+            </div>
+          </div>
+          {error && (
+            <p id="url-error" className="mt-2 text-sm text-red-600 dark:text-red-400 rtl:text-right font-medium">
+              {error}
+            </p>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  const dropzoneClasses = `bg-white dark:bg-gray-800 border-2 border-dashed rounded-lg p-4 mb-4 transition-all relative group
+    ${isDragActive ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20' : (error ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600')}`;
+
+  return (
+    <div className="mb-8">
+      <div {...getRootProps()} className={dropzoneClasses}>
+        <input {...getInputProps()} />
+        
+        {isDragActive && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-teal-50/90 dark:bg-gray-800/90 z-20 rounded-lg backdrop-blur-sm">
+            <UploadIcon className="w-12 h-12 text-teal-500 mb-2" />
+            <p className="text-xl font-semibold text-teal-600 dark:text-teal-400 animate-pulse">
+              {t.dragActiveHint}
+            </p>
+          </div>
+        )}
+
+        <div className={isDragActive ? 'opacity-20 blur-sm transition-all' : 'transition-all'}>
+          <p className="text-center text-gray-500 dark:text-gray-400 mb-2">{t.dropzoneHint}</p>
+          <div className="relative">
+            <textarea
+                value={urls}
+                onChange={(e) => handleChange(e.target.value)}
+                placeholder={t.urlPlaceholder}
+                className={`w-full h-32 p-3 pb-8 bg-gray-50 dark:bg-gray-700 border rounded-md focus:ring-2 focus:outline-none resize-y rtl:text-right
+                ${error 
+                    ? 'border-red-500 focus:ring-red-500 focus:border-red-500 dark:border-red-500' 
+                    : 'border-gray-300 dark:border-gray-600 focus:ring-teal-500'}`}
+                disabled={isSubmitting}
+                aria-label="URL input"
+                aria-invalid={!!error}
+                aria-describedby={error ? "url-error" : undefined}
+            />
+            <div className="absolute bottom-2 left-2 text-xs text-gray-400 dark:text-gray-500 pointer-events-none rtl:right-2 rtl:left-auto">
+                {t.urlCount.replace('{count}', validUrlCount.toString())}
+            </div>
+            <div className="absolute bottom-2 right-2 flex space-x-2 rtl:space-x-reverse bg-gray-50 dark:bg-gray-700 pl-2 pt-1 rounded-tl-md">
+                <button
+                    onClick={handleClear}
+                    disabled={!urls.trim() || isSubmitting}
+                    className="p-1.5 text-gray-500 hover:text-red-500 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors disabled:opacity-30"
+                    title={t.clearUrls}
+                    aria-label={t.clearUrls}
+                >
+                    <TrashIcon className="w-4 h-4" />
+                </button>
+                <button
+                    onClick={handleExport}
+                    disabled={!urls.trim() || isSubmitting}
+                    className="p-1.5 text-gray-500 hover:text-teal-500 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors disabled:opacity-30"
+                    title={t.exportUrls}
+                    aria-label={t.exportUrls}
+                >
+                    <DownloadIcon className="w-4 h-4" />
+                </button>
+                <button
+                    onClick={handleCopy}
+                    disabled={!urls.trim() || isSubmitting}
+                    className="p-1.5 text-gray-500 hover:text-teal-500 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors disabled:opacity-30 relative"
+                    title={t.copyUrls}
+                    aria-label={t.copyUrls}
+                >
+                    <CopyIcon className="w-4 h-4" />
+                    {copyBtnSuccess && (
+                        <span className="absolute bottom-full right-0 mb-1 whitespace-nowrap bg-black text-white text-xs px-2 py-1 rounded shadow-lg z-10">
+                            {t.urlsCopied}
+                        </span>
+                    )}
+                </button>
+                <div className="w-px h-4 bg-gray-300 dark:bg-gray-600 my-auto mx-1"></div>
+                <button
+                    onClick={handleTwitterShare}
+                    disabled={!urls.trim() || isSubmitting}
+                    className="p-1.5 text-gray-500 hover:text-blue-400 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors disabled:opacity-30"
+                    title={t.shareTwitter}
+                    aria-label={t.shareTwitter}
+                >
+                    <TwitterIcon className="w-4 h-4" />
+                </button>
+                <button
+                    onClick={handleFacebookShare}
+                    disabled={!urls.trim() || isSubmitting}
+                    className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors disabled:opacity-30"
+                    title={t.shareFacebook}
+                    aria-label={t.shareFacebook}
+                >
+                    <FacebookIcon className="w-4 h-4" />
+                </button>
+                <button
+                    onClick={handleGenericShare}
+                    disabled={!urls.trim() || isSubmitting}
+                    className="p-1.5 text-gray-500 hover:text-teal-500 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors disabled:opacity-30 relative"
+                    title={t.shareUrls}
+                    aria-label={t.shareUrls}
+                >
+                    <ShareIcon className="w-4 h-4" />
+                    {shareCopySuccess && (
+                        <span className="absolute bottom-full right-0 mb-1 whitespace-nowrap bg-black text-white text-xs px-2 py-1 rounded shadow-lg z-10">
+                            {t.urlsCopied}
+                        </span>
+                    )}
+                </button>
+            </div>
+          </div>
+          {error && (
+            <p id="url-error" className="mt-2 text-sm text-red-600 dark:text-red-400 rtl:text-right font-medium">
+              {error}
+            </p>
           )}
         </div>
       </div>
