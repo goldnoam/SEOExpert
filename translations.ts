@@ -1,4 +1,3 @@
-
 export const translations: { [key: string]: { [key: string]: string } } = {
   en: {
     appSubtitle: 'Enter one or more URLs to submit to major search engine ping services for faster indexing.',
@@ -36,6 +35,7 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     submissionsSuccess: 'Successful: {count}',
     submissionsFailed: 'Failed: {count}',
     submissionSummary: 'Processed: {processed}/{total} • Success: {success} • Failed: {failed}',
+    clearSuccessful: 'Clear Successful Items',
   },
   he: {
     appSubtitle: 'הזן כתובת URL אחת או יותר לשליחה לשירותי פינג של מנועי חיפוש גדולים לאינדוקס מהיר יותר.',
@@ -73,6 +73,7 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     submissionsSuccess: 'הצליחו: {count}',
     submissionsFailed: 'נכשלו: {count}',
     submissionSummary: 'עובדו: {processed}/{total} • הצליחו: {success} • נכשלו: {failed}',
+    clearSuccessful: 'נקה פריטים שהצליחו',
   },
   es: {
     appSubtitle: 'Ingrese una o más URLs para enviarlas a los principales servicios de ping de motores de búsqueda para una indexación más rápida.',
@@ -110,6 +111,7 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     submissionsSuccess: 'Exitosos: {count}',
     submissionsFailed: 'Fallidos: {count}',
     submissionSummary: 'Procesados: {processed}/{total} • Éxito: {success} • Fallido: {failed}',
+    clearSuccessful: 'Limpiar elementos exitosos',
   },
   fr: {
     appSubtitle: 'Entrez une ou plusieurs URL à soumettre aux principaux services de ping des moteurs de recherche pour une indexation plus rapide.',
@@ -147,6 +149,7 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     submissionsSuccess: 'Réussis : {count}',
     submissionsFailed: 'Échoués : {count}',
     submissionSummary: 'Traités : {processed}/{total} • Succès : {success} • Échec : {failed}',
+    clearSuccessful: 'Effacer les éléments réussis',
   },
   de: {
     appSubtitle: 'Geben Sie eine oder mehrere URLs ein, um sie zur schnelleren Indizierung an die Ping-Dienste der großen Suchmaschinen zu senden.',
@@ -184,6 +187,7 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     submissionsSuccess: 'Erfolgreich: {count}',
     submissionsFailed: 'Fehlgeschlagen: {count}',
     submissionSummary: 'Verarbeitet: {processed}/{total} • Erfolg: {success} • Fehler: {failed}',
+    clearSuccessful: 'Erfolgreiche Elemente löschen',
   },
   ja: {
     appSubtitle: 'インデックス登録を高速化するために、主要な検索エンジンのpingサービスに送信するURLを1つ以上入力してください。',
@@ -221,5 +225,6 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     submissionsSuccess: '成功: {count}',
     submissionsFailed: '失敗: {count}',
     submissionSummary: '処理済み: {processed}/{total} • 成功: {success} • 失敗: {failed}',
+    clearSuccessful: '成功した項目をクリア',
   },
 };

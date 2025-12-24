@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useEffect } from 'react';
 import { Header } from './components/Header';
 import { UrlInput } from './components/UrlInput';
@@ -64,6 +63,10 @@ function App() {
       setSubmissionItems([]);
       setUrls('');
       setLogs([]);
+  };
+
+  const handleClearSuccessful = () => {
+    setSubmissionItems(prev => prev.filter(item => item.status !== 'success'));
   };
 
   const handleSubmit = async () => {
@@ -167,6 +170,7 @@ function App() {
             language={language}
             submissionItems={submissionItems}
             onReset={handleReset}
+            onClearSuccessful={handleClearSuccessful}
           />
 
           <LogViewer logs={logs} language={language} onClear={clearLogs} />
