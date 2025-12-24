@@ -109,4 +109,104 @@ export const SUBMISSION_SITES: SubmissionSite[] = [
     description: "Real-time information stream that indexes web content.",
     urlTemplate: "https://skygrid.com/ping?url={URL}",
   },
+  {
+    name: "Technorati",
+    description: "The leading search engine for blogs.",
+    urlTemplate: "https://technorati.com/ping?url={URL}",
+  },
+  {
+    name: "Newsisfree",
+    description: "A personalized news aggregator service.",
+    urlTemplate: "https://newsisfree.com/ping.php?url={URL}",
+  },
+  {
+    name: "PubSub.com",
+    description: "Real-time search and monitoring service.",
+    urlTemplate: "https://www.pubsub.com/ping?url={URL}",
+  },
+  {
+    name: "Topic Exchange",
+    description: "Topic-based blog aggregator.",
+    urlTemplate: "https://topicexchange.com/ping?url={URL}",
+  },
+  {
+    name: "Tailrank",
+    description: "Real-time news filtering and aggregation.",
+    urlTemplate: "https://tailrank.com/ping?url={URL}",
+  },
+  {
+    name: "Weblogalot",
+    description: "Blog tracking and monitoring service.",
+    urlTemplate: "https://www.weblogalot.com/ping?url={URL}",
+  },
+  {
+    name: "FocusLook",
+    description: "Content discovery and indexing service.",
+    urlTemplate: "https://focuslook.com/ping?url={URL}",
+  },
+  {
+    name: "Syndic8",
+    description: "The premier portal for XML-based content syndication.",
+    urlTemplate: "https://www.syndic8.com/ping.php?url={URL}",
+  },
+  {
+    name: "Blogvibe",
+    description: "Social networking and discovery for bloggers.",
+    urlTemplate: "https://blogvibe.com/ping?url={URL}",
+  },
+  {
+    name: "Bitacoras",
+    description: "Leading Spanish-language blog aggregator.",
+    urlTemplate: "https://bitacoras.com/ping?url={URL}",
+  },
+  {
+    name: "Pingler",
+    description: "Popular web-based service to alert search engines of site updates.",
+    urlTemplate: "https://pingler.com/ping/?title={URL}&url={URL}",
+  },
+  {
+    name: "TotalPing",
+    description: "A free service that notifies numerous search engines simultaneously.",
+    urlTemplate: "http://totalping.com/ping?url={URL}",
+  },
+  {
+    name: "PingMyLinks",
+    description: "Automated submission tool for various web directories.",
+    urlTemplate: "http://pingmylinks.com/ping?url={URL}",
+  },
+  {
+    name: "Prepostseo Ping",
+    description: "An SEO tool provider that offers efficient website pinging.",
+    urlTemplate: "https://www.prepostseo.com/ping-website-tool?url={URL}",
+  },
+  {
+    name: "GIGABlast",
+    description: "Open-source search engine providing content indexing pings.",
+    urlTemplate: "https://www.gigablast.com/addurl?url={URL}",
+  },
+  {
+    name: "Entireweb",
+    description: "Independent search engine that allows manual and automated URL pings.",
+    urlTemplate: "https://www.entireweb.com/free_submission/?url={URL}",
+  },
+  {
+    name: "Active Search Results",
+    description: "An Internet search engine and directory featuring automated pings.",
+    urlTemplate: "https://www.activesearchresults.com/addsearch.php?url={URL}",
+  },
+  {
+    name: "ExactSeek",
+    description: "Comprehensive search engine directory for web submissions.",
+    urlTemplate: "https://www.exactseek.com/add.adp?url={URL}",
+  },
+  {
+    name: "PingBomb",
+    description: "Massive ping service for blogs and websites.",
+    urlTemplate: "http://pingbomb.com/ping?url={URL}",
+  },
+  {
+    name: "Krozilo",
+    description: "Niche content aggregator and ping provider.",
+    urlTemplate: "http://krozilo.com/ping?url={URL}",
+  },
 ];

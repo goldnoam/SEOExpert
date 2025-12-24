@@ -2,8 +2,6 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { SubmissionSite } from '../types';
 
 const getGenAIClient = () => {
-  // FIX: The API key is not available in `process.env` in some browser environments or if blocked by extensions.
-  // This check prevents the app from crashing and provides a user-friendly error message.
   if (!process.env.API_KEY) {
     throw new Error(
       "API_KEY_MISSING: Your Gemini API key is not configured. This might be due to a browser extension (like an ad-blocker) preventing it from loading. Please try disabling it for this site and refresh the page."
@@ -12,26 +10,21 @@ const getGenAIClient = () => {
   return new GoogleGenAI({ apiKey: process.env.API_KEY });
 };
 
-
 export const getSubmissionSites = async (url: string): Promise<SubmissionSite[]> => {
   try {
-    // FIX: Lazily initialize the client only when needed to catch the missing API key error gracefully.
     const ai = getGenAIClient();
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      // FIX: Refined the prompt to request only HTTPS endpoints compatible with browser fetch to prevent CORS/network errors.
+      model: "gemini-3-flash-preview",
       contents: `Generate a list of the top 10-15 major search engine *programmatic ping services* for submitting a URL for indexing. The endpoints provided MUST be callable directly from a web browser's 'fetch' API in 'no-cors' mode.
 
 For each service, provide its name, a brief one-sentence description, and the exact ping URL template. The template must be a direct API endpoint for automated submissions and contain '{URL}' as a placeholder for the URL to be submitted.
 
 **Crucially, all endpoints MUST use the HTTPS protocol.** Do NOT include any HTTP URLs.
 Endpoints should ideally respond to a simple GET request without requiring a request body or complex headers.
-Do NOT include links to web pages, user dashboards, sitemap submission forms, or any URL that requires manual user interaction (e.g., Google Search Console, Bing Webmaster Tools). Only include machine-callable ping endpoints designed for this purpose.
+Do NOT include links to web pages, user dashboards, sitemap submission forms, or any URL that requires manual user interaction.
 
-A valid example is: 'https://www.google.com/ping?sitemap={URL}'.
-An invalid example is: 'http://ping.baidu.com/ping/RPC2' (it uses HTTP).
-An invalid example is: 'https://search.google.com/search-console' (it's a user webpage).`,
+A valid example is: 'https://www.google.com/ping?sitemap={URL}'.`,
       config: {
         responseMimeType: "application/json",
         responseSchema: {
@@ -51,7 +44,6 @@ An invalid example is: 'https://search.google.com/search-console' (it's a user w
                     type: Type.STRING,
                     description: "A brief one-sentence description of the service.",
                   },
-                  // FIX: Added urlTemplate to the schema to match the updated prompt.
                   urlTemplate: {
                     type: Type.STRING,
                     description: "The ping service URL template with a {URL} placeholder.",
@@ -66,20 +58,45 @@ An invalid example is: 'https://search.google.com/search-console' (it's a user w
       },
     });
 
-    const jsonString = response.text.trim();
+    const jsonString = response.text?.trim();
+    if (!jsonString) {
+      throw new Error("EMPTY_RESPONSE: The model returned an empty response.");
+    }
+
     const parsedResponse = JSON.parse(jsonString);
     
     if (parsedResponse && Array.isArray(parsedResponse.sites)) {
         return parsedResponse.sites as SubmissionSite[];
     } else {
-        throw new Error("Invalid JSON structure in API response.");
+        throw new Error("INVALID_FORMAT: Invalid JSON structure in API response.");
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error calling Gemini API:", error);
-    // FIX: Re-throw the specific API key error to be handled by the UI.
-    if (error instanceof Error && error.message.startsWith('API_KEY_MISSING')) {
-        throw error;
+    
+    // Map API error messages to user-friendly strings
+    const errorMessage = error?.message || "";
+    
+    if (errorMessage.startsWith('API_KEY_MISSING')) {
+      throw error;
     }
-    throw new Error("Failed to communicate with the Gemini API. Please check the console for more details.");
+    
+    // Check for common status codes or phrases in the error message
+    if (errorMessage.includes("429") || errorMessage.toLowerCase().includes("quota exceeded") || errorMessage.toLowerCase().includes("rate limit")) {
+      throw new Error("QUOTA_EXCEEDED: You've reached the free tier usage limit. Please wait a few minutes before trying again or use a paid API key.");
+    }
+    
+    if (errorMessage.includes("403") || errorMessage.toLowerCase().includes("api key not valid") || errorMessage.toLowerCase().includes("unauthorized")) {
+      throw new Error("INVALID_KEY: The API key is either invalid, expired, or doesn't have permissions for the Gemini service. Please check your configuration.");
+    }
+
+    if (errorMessage.includes("500") || errorMessage.includes("503") || errorMessage.toLowerCase().includes("internal error") || errorMessage.toLowerCase().includes("service unavailable")) {
+      throw new Error("SERVER_ERROR: Google's AI servers are currently under high load or maintenance. Please try again in a few moments.");
+    }
+
+    if (errorMessage.toLowerCase().includes("fetch")) {
+      throw new Error("NETWORK_ERROR: Could not reach the AI service. Please check your internet connection or browser security settings.");
+    }
+
+    throw new Error(`API_ERROR: An unexpected error occurred while communicating with Gemini (${errorMessage}). We will use the local backup list.`);
   }
 };

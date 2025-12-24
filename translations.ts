@@ -36,6 +36,8 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     submissionsFailed: 'Failed: {count}',
     submissionSummary: 'Processed: {processed}/{total} • Success: {success} • Failed: {failed}',
     clearSuccessful: 'Clear Successful Items',
+    retryFailed: 'Retry Failed',
+    serviceCount: 'Sending to {count} services per URL',
   },
   he: {
     appSubtitle: 'הזן כתובת URL אחת או יותר לשליחה לשירותי פינג של מנועי חיפוש גדולים לאינדוקס מהיר יותר.',
@@ -74,6 +76,8 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     submissionsFailed: 'נכשלו: {count}',
     submissionSummary: 'עובדו: {processed}/{total} • הצליחו: {success} • נכשלו: {failed}',
     clearSuccessful: 'נקה פריטים שהצליחו',
+    retryFailed: 'נסה שוב נכשלים',
+    serviceCount: 'שולח ל-{count} שירותים לכל URL',
   },
   es: {
     appSubtitle: 'Ingrese una o más URLs para enviarlas a los principales servicios de ping de motores de búsqueda para una indexación más rápida.',
@@ -89,7 +93,7 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     manualSubmissionTitle: 'Herramientas SEO importantes',
     manualSubmissionIntro: 'Para una gestión SEO completa, recomendamos configurar su sitio con estos servicios esenciales. Requieren verificación manual y brindan información valiosa más allá del simple envío de URL.',
     gscDescription: 'Supervise el rendimiento de su sitio en la Búsqueda de Google, envíe sitemaps y solucione problemas de indexación.',
-    bingDescription: 'Administre la presencia de su sitio en los resultados de búsqueda de Bing y Yahoo, acceda a informes y utilice herramientas de SEO.',
+    bingDescription: 'Administre la presencia de su sitio en los resultados de búsqueda de Bing y Yahoo, aceda a informes y utilice herramientas de SEO.',
     sendFeedback: 'Enviar Comentarios',
     progressStatus: 'Procesando URL: {current} de {total}',
     invalidUrlError: 'Por favor, introduzca URLs válidas (empezando por http:// o https://).',
@@ -112,6 +116,8 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     submissionsFailed: 'Fallidos: {count}',
     submissionSummary: 'Procesados: {processed}/{total} • Éxito: {success} • Fallido: {failed}',
     clearSuccessful: 'Limpiar elementos exitosos',
+    retryFailed: 'Reintentar fallidos',
+    serviceCount: 'Enviando a {count} servicios por URL',
   },
   fr: {
     appSubtitle: 'Entrez une ou plusieurs URL à soumettre aux principaux services de ping des moteurs de recherche pour une indexation plus rapide.',
@@ -150,6 +156,8 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     submissionsFailed: 'Échoués : {count}',
     submissionSummary: 'Traités : {processed}/{total} • Succès : {success} • Échec : {failed}',
     clearSuccessful: 'Effacer les éléments réussis',
+    retryFailed: 'Réessayer les échecs',
+    serviceCount: 'Envoi à {count} services par URL',
   },
   de: {
     appSubtitle: 'Geben Sie eine oder mehrere URLs ein, um sie zur schnelleren Indizierung an die Ping-Dienste der großen Suchmaschinen zu senden.',
@@ -188,6 +196,8 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     submissionsFailed: 'Fehlgeschlagen: {count}',
     submissionSummary: 'Verarbeitet: {processed}/{total} • Erfolg: {success} • Fehler: {failed}',
     clearSuccessful: 'Erfolgreiche Elemente löschen',
+    retryFailed: 'Fehlgeschlagene wiederholen',
+    serviceCount: 'Sendet an {count} Dienste pro URL',
   },
   ja: {
     appSubtitle: 'インデックス登録を高速化するために、主要な検索エンジンのpingサービスに送信するURLを1つ以上入力してください。',
@@ -226,5 +236,7 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     submissionsFailed: '失敗: {count}',
     submissionSummary: '処理済み: {processed}/{total} • 成功: {success} • 失敗: {failed}',
     clearSuccessful: '成功した項目をクリア',
+    retryFailed: '失敗した項目を再試行',
+    serviceCount: 'URLあたり{count}個のサービスに送信中',
   },
 };

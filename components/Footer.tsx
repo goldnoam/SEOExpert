@@ -13,7 +13,7 @@ export const Footer: React.FC<FooterProps> = ({ language }) => {
       <p className="text-sm text-gray-500 dark:text-gray-400">
         © NOAM GOLD AI 2025 |{' '}
         <a
-          href="mailto:gold.noam@gmail.com?subject=SEOExpert%20Feedback"
+          href="mailto:goldnoamai@gmail.com?subject=SEOExpert%20Feedback"
           className="text-teal-600 dark:text-teal-400 hover:underline"
         >
           {t.sendFeedback}

@@ -69,39 +69,20 @@ function App() {
     setSubmissionItems(prev => prev.filter(item => item.status !== 'success'));
   };
 
-  const handleSubmit = async () => {
-    const urlList = urls.split('\n').map((u) => u.trim()).filter(Boolean);
-
-    if (urlList.length === 0) {
-      logUpdateCallback('No valid URLs provided. Please enter at least one URL.');
-      return;
-    }
-
+  const runSubmissionProcess = async (itemsToSubmit: SubmissionItem[]) => {
     setIsSubmitting(true);
-    setLogs([]);
     
-    // Initialize submission items
-    const newItems: SubmissionItem[] = urlList.map(url => ({
-      id: Math.random().toString(36).substr(2, 9),
-      url,
-      status: 'pending',
-      progress: 0,
-    }));
-    setSubmissionItems(newItems);
+    logUpdateCallback(`\n--- Starting Submission Process for ${itemsToSubmit.length} URL(s) ---`);
 
-    logUpdateCallback(`Processing ${urlList.length} URL(s)...`);
-
-    for (let i = 0; i < newItems.length; i++) {
-      const item = newItems[i];
+    for (let i = 0; i < itemsToSubmit.length; i++) {
+      const item = itemsToSubmit[i];
       
-      // Delay before starting next item (except the first one) to prevent rate limiting
       if (i > 0) {
          await new Promise(resolve => setTimeout(resolve, SUBMISSION_DELAY));
       }
 
-      // Update status to processing
       setSubmissionItems(prev => prev.map(p => 
-        p.id === item.id ? { ...p, status: 'processing' } : p
+        p.id === item.id ? { ...p, status: 'processing', progress: 0 } : p
       ));
 
       logUpdateCallback(`\n--- Submitting: ${item.url} ---`);
@@ -111,7 +92,6 @@ function App() {
           item.url, 
           logUpdateCallback,
           (current, total) => {
-            // Update progress percentage
             const percentage = Math.round((current / total) * 100);
             setSubmissionItems(prev => prev.map(p => 
                 p.id === item.id ? { ...p, progress: percentage } : p
@@ -119,24 +99,52 @@ function App() {
           }
         );
         
-        // Mark as success
         setSubmissionItems(prev => prev.map(p => 
             p.id === item.id ? { ...p, status: 'success', progress: 100 } : p
         ));
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred.';
         logUpdateCallback(`❌ Error submitting ${item.url}: ${errorMessage}`);
-        console.error(`Submission error for ${item.url}:`, error);
         
-        // Mark as failed
         setSubmissionItems(prev => prev.map(p => 
             p.id === item.id ? { ...p, status: 'failed', progress: 100 } : p
         ));
       }
     }
 
-    logUpdateCallback('\n✅ Submission process finished.');
+    logUpdateCallback('\n✅ Process finished.');
     setIsSubmitting(false);
+  };
+
+  const handleSubmit = async () => {
+    const urlList = urls.split('\n').map((u) => u.trim()).filter(Boolean);
+
+    if (urlList.length === 0) {
+      logUpdateCallback('No valid URLs provided.');
+      return;
+    }
+
+    const newItems: SubmissionItem[] = urlList.map(url => ({
+      id: Math.random().toString(36).substr(2, 9),
+      url,
+      status: 'pending',
+      progress: 0,
+    }));
+    
+    setSubmissionItems(newItems);
+    await runSubmissionProcess(newItems);
+  };
+
+  const handleRetryFailed = async () => {
+    const failedItems = submissionItems.filter(item => item.status === 'failed');
+    if (failedItems.length === 0) return;
+
+    // Reset failed items status in UI
+    setSubmissionItems(prev => prev.map(p => 
+      p.status === 'failed' ? { ...p, status: 'pending', progress: 0 } : p
+    ));
+
+    await runSubmissionProcess(failedItems);
   };
 
   const openAboutModal = () => setIsAboutModalOpen(true);
@@ -171,6 +179,7 @@ function App() {
             submissionItems={submissionItems}
             onReset={handleReset}
             onClearSuccessful={handleClearSuccessful}
+            onRetryFailed={handleRetryFailed}
           />
 
           <LogViewer logs={logs} language={language} onClear={clearLogs} />

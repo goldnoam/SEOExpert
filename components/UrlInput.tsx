@@ -13,6 +13,7 @@ import { CheckCircleIcon } from './icons/CheckCircleIcon';
 import { XCircleIcon } from './icons/XCircleIcon';
 import { ClockIcon } from './icons/ClockIcon';
 import { SubmissionItem } from '../types';
+import { SUBMISSION_SITES } from '../constants';
 
 interface UrlInputProps {
   urls: string;
@@ -23,6 +24,7 @@ interface UrlInputProps {
   submissionItems: SubmissionItem[];
   onReset: () => void;
   onClearSuccessful?: () => void;
+  onRetryFailed?: () => void;
 }
 
 export const UrlInput: React.FC<UrlInputProps> = ({ 
@@ -33,7 +35,8 @@ export const UrlInput: React.FC<UrlInputProps> = ({
   language,
   submissionItems,
   onReset,
-  onClearSuccessful
+  onClearSuccessful,
+  onRetryFailed
 }) => {
   const t = translations[language] || translations['en'];
   const [error, setError] = useState<string | null>(null);
@@ -139,15 +142,22 @@ export const UrlInput: React.FC<UrlInputProps> = ({
     return (
       <div className="mb-8 bg-white dark:bg-gray-800 border rounded-lg p-6 shadow-sm space-y-4 animate-fade-in">
         <div className="flex justify-between items-center border-b pb-3 dark:border-gray-700">
-          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">
-            {isSubmitting ? t.submittingButton : t.statusSuccess}
-          </h2>
-          <div className="text-sm font-semibold text-gray-500 dark:text-gray-400">
-            {t.submissionSummary
-              .replace('{processed}', (successCount + failureCount).toString())
-              .replace('{total}', totalCount.toString())
-              .replace('{success}', successCount.toString())
-              .replace('{failed}', failureCount.toString())}
+          <div>
+            <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">
+              {isSubmitting ? t.submittingButton : t.statusSuccess}
+            </h2>
+            <p className="text-xs font-medium text-teal-600 dark:text-teal-400 mt-1 uppercase tracking-wider">
+              {t.serviceCount.replace('{count}', SUBMISSION_SITES.length.toString())}
+            </p>
+          </div>
+          <div className="text-right">
+            <div className="text-sm font-semibold text-gray-500 dark:text-gray-400">
+              {t.submissionSummary
+                .replace('{processed}', (successCount + failureCount).toString())
+                .replace('{total}', totalCount.toString())
+                .replace('{success}', successCount.toString())
+                .replace('{failed}', failureCount.toString())}
+            </div>
           </div>
         </div>
         <div className="space-y-3 max-h-80 overflow-y-auto pr-2 custom-scrollbar">
@@ -175,17 +185,25 @@ export const UrlInput: React.FC<UrlInputProps> = ({
           ))}
         </div>
         {!isSubmitting && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <button 
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+             <button 
               onClick={onClearSuccessful} 
               disabled={successCount === 0}
               className="py-3 px-4 border-2 border-teal-500 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20 font-bold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {t.clearSuccessful}
             </button>
+            {failureCount > 0 && (
+              <button 
+                onClick={onRetryFailed} 
+                className="py-3 px-4 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-lg transition-all shadow-md active:scale-[0.98]"
+              >
+                {t.retryFailed}
+              </button>
+            )}
             <button 
               onClick={onReset} 
-              className="py-3 px-4 bg-teal-500 hover:bg-teal-600 text-white font-bold rounded-lg transition-all shadow-md active:scale-[0.98]"
+              className={`py-3 px-4 bg-teal-500 hover:bg-teal-600 text-white font-bold rounded-lg transition-all shadow-md active:scale-[0.98] ${failureCount === 0 ? 'sm:col-span-1 lg:col-span-2' : ''}`}
             >
               {t.resetSubmission}
             </button>
