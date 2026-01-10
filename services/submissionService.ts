@@ -23,7 +23,7 @@ export const performSubmissions = async (
 
   if (submissionSites.length === 0) {
       logUpdateCallback('No submission sites are available. Aborting.');
-      if (onProgress) onProgress(100, 100);
+      if (onProgress) onProgress(0, 0);
       return;
   }
   
@@ -33,7 +33,7 @@ export const performSubmissions = async (
 
   if (totalSites === 0) {
       logUpdateCallback('No valid submission templates found.');
-      if (onProgress) onProgress(100, 100);
+      if (onProgress) onProgress(0, 0);
       return;
   }
 
@@ -43,17 +43,31 @@ export const performSubmissions = async (
   const promises = validSites.map(async (endpoint) => {
     const submissionUrl = endpoint.urlTemplate.replace(/{URL}/g, encodedUrl);
 
-    // Pass the endpoint (SubmissionSite) to the callback so the UI can use the description
     logUpdateCallback(`Pinging ${endpoint.name}...`, endpoint);
     
     try {
-      // Using 'no-cors' as we are pinging external services and don't need to read the response body.
-      // This prevents Cross-Origin Resource Sharing (CORS) errors in the browser.
-      // The request is "fire and forget".
-      await fetch(submissionUrl, { mode: 'no-cors' });
-      logUpdateCallback(`  ✅ Request sent to ${endpoint.name}.`, endpoint);
-    } catch (error) {
-      logUpdateCallback(`  ❌ Failed to send request to ${endpoint.name}. See console for details.`, endpoint);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 12000); // 12s timeout for opaque responses
+
+      await fetch(submissionUrl, { 
+        mode: 'no-cors',
+        signal: controller.signal
+      });
+      
+      clearTimeout(timeoutId);
+      logUpdateCallback(`  ✅ Request successfully sent to ${endpoint.name}.`, endpoint);
+    } catch (error: any) {
+      let errorMsg = `  ❌ Failed to send request to ${endpoint.name}.`;
+      
+      if (error.name === 'AbortError') {
+        errorMsg = `  ❌ Request to ${endpoint.name} timed out. The server might be slow or unresponsive.`;
+      } else if (!navigator.onLine) {
+        errorMsg = `  ❌ Network error: Your device seems to be offline.`;
+      } else {
+        errorMsg = `  ❌ Connection error to ${endpoint.name}: ${error.message || 'The service might be temporarily down'}.`;
+      }
+      
+      logUpdateCallback(errorMsg, endpoint);
       console.error(`Error submitting to ${endpoint.name}:`, error);
     } finally {
         completed++;

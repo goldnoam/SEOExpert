@@ -1,10 +1,10 @@
+
 import React, { useCallback, useState, useMemo } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { translations } from '../translations';
 import { SpinnerIcon } from './icons/SpinnerIcon';
 import { UploadIcon } from './icons/UploadIcon';
 import { TrashIcon } from './icons/TrashIcon';
-import { ShareIcon } from './icons/ShareIcon';
 import { DownloadIcon } from './icons/DownloadIcon';
 import { TwitterIcon } from './icons/TwitterIcon';
 import { FacebookIcon } from './icons/FacebookIcon';
@@ -14,6 +14,9 @@ import { XCircleIcon } from './icons/XCircleIcon';
 import { ClockIcon } from './icons/ClockIcon';
 import { SubmissionItem } from '../types';
 import { SUBMISSION_SITES } from '../constants';
+
+// Robust URL regex: Ensures http or https prefix and valid characters
+const URL_REGEX = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/;
 
 interface UrlInputProps {
   urls: string;
@@ -42,18 +45,11 @@ export const UrlInput: React.FC<UrlInputProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [copyBtnSuccess, setCopyBtnSuccess] = useState(false);
 
-  // Memoized URL count to prevent unnecessary recalculations
+  // Counter for valid URLs
   const validUrlCount = useMemo(() => {
     return urls.split('\n')
       .map(u => u.trim())
-      .filter(u => {
-        try {
-          const parsed = new URL(u);
-          return parsed.protocol === 'http:' || parsed.protocol === 'https:';
-        } catch {
-          return false;
-        }
-      }).length;
+      .filter(u => u && URL_REGEX.test(u)).length;
   }, [urls]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -75,32 +71,20 @@ export const UrlInput: React.FC<UrlInputProps> = ({
   });
 
   const validateAndSubmit = () => {
-    const urlList = urls.split('\n').map((u) => u.trim()).filter(Boolean);
-    if (urlList.length === 0) {
-      onSubmit();
+    const rawLines = urls.split('\n').map((u) => u.trim()).filter(Boolean);
+    if (rawLines.length === 0) {
+      setError(t.invalidUrlError);
       return;
     }
 
-    let hasError = false;
-    for (const url of urlList) {
-      try {
-        const parsed = new URL(url);
-        if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
-          hasError = true;
-          break;
-        }
-      } catch {
-        hasError = true;
-        break;
-      }
+    const invalid = rawLines.find(url => !URL_REGEX.test(url));
+    if (invalid) {
+      setError(`${t.invalidUrlError} Error near: "${invalid.substring(0, 20)}..." (URLs must start with http:// or https://)`);
+      return;
     }
 
-    if (hasError) {
-      setError(t.invalidUrlError);
-    } else {
-      setError(null);
-      onSubmit();
-    }
+    setError(null);
+    onSubmit();
   };
 
   const handleChange = (val: string) => {
@@ -140,18 +124,23 @@ export const UrlInput: React.FC<UrlInputProps> = ({
     const totalCount = submissionItems.length;
 
     return (
-      <div className="mb-8 bg-white dark:bg-gray-800 border rounded-lg p-6 shadow-sm space-y-4 animate-fade-in">
-        <div className="flex justify-between items-center border-b pb-3 dark:border-gray-700">
+      <div className="mb-8 bg-white dark:bg-gray-800 border-2 border-teal-500/20 dark:border-teal-400/10 rounded-2xl p-6 shadow-xl space-y-4 animate-fade-in backdrop-blur-sm">
+        <div className="flex justify-between items-center border-b pb-4 dark:border-gray-700/50">
           <div>
-            <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">
-              {isSubmitting ? t.submittingButton : t.statusSuccess}
+            <h2 className="text-xl font-black text-gray-800 dark:text-gray-100 flex items-center gap-2">
+              {isSubmitting ? (
+                 <>
+                   <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse"></span>
+                   {t.submittingButton}
+                 </>
+              ) : t.statusSuccess}
             </h2>
-            <p className="text-xs font-medium text-teal-600 dark:text-teal-400 mt-1 uppercase tracking-wider">
-              {t.serviceCount.replace('{count}', SUBMISSION_SITES.length.toString())}
+            <p className="text-[10px] font-bold text-teal-600 dark:text-teal-400 mt-1 uppercase tracking-widest bg-teal-50 dark:bg-teal-900/30 px-2 py-0.5 rounded-full inline-block">
+              {t.serviceCount.replace('{count}', (submissionItems[0]?.totalServices || SUBMISSION_SITES.length).toString())}
             </p>
           </div>
           <div className="text-right">
-            <div className="text-sm font-semibold text-gray-500 dark:text-gray-400">
+            <div className="text-sm font-bold text-gray-600 dark:text-gray-300">
               {t.submissionSummary
                 .replace('{processed}', (successCount + failureCount).toString())
                 .replace('{total}', totalCount.toString())
@@ -160,24 +149,33 @@ export const UrlInput: React.FC<UrlInputProps> = ({
             </div>
           </div>
         </div>
-        <div className="space-y-3 max-h-80 overflow-y-auto pr-2 custom-scrollbar">
+        <div className="space-y-4 max-h-96 overflow-y-auto pr-3 custom-scrollbar">
           {submissionItems.map((item) => (
-            <div key={item.id} className="bg-gray-50 dark:bg-gray-900/40 p-3 rounded-lg border dark:border-gray-700 transition-colors">
+            <div key={item.id} className="bg-gray-50/50 dark:bg-gray-900/40 p-4 rounded-xl border border-gray-100 dark:border-gray-700 transition-all hover:border-teal-500/30">
               <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center space-x-2 rtl:space-x-reverse overflow-hidden">
-                  {item.status === 'pending' && <ClockIcon className="w-4 h-4 text-gray-400" />}
-                  {item.status === 'processing' && <SpinnerIcon />}
-                  {item.status === 'success' && <CheckCircleIcon className="w-4 h-4 text-green-500" />}
-                  {item.status === 'failed' && <XCircleIcon className="w-4 h-4 text-red-500" />}
-                  <span className="text-sm font-medium truncate" title={item.url}>{item.url}</span>
+                <div className="flex items-center space-x-3 rtl:space-x-reverse overflow-hidden">
+                  {item.status === 'pending' && <ClockIcon className="w-5 h-5 text-gray-400" />}
+                  {item.status === 'processing' && <div className="w-5 h-5 border-2 border-teal-500 border-t-transparent rounded-full animate-spin"></div>}
+                  {item.status === 'success' && <CheckCircleIcon className="w-5 h-5 text-green-500" />}
+                  {item.status === 'failed' && <XCircleIcon className="w-5 h-5 text-red-500" />}
+                  <div className="flex flex-col">
+                    <span className="text-sm font-bold truncate text-gray-800 dark:text-gray-200" title={item.url}>{item.url}</span>
+                    <span className="text-[10px] font-semibold text-teal-600 dark:text-teal-400">
+                      {item.status === 'processing' ? (
+                        `Sending to ${item.completedServices || 0} of ${item.totalServices || '?'} sites...`
+                      ) : (
+                        t[`status${item.status.charAt(0).toUpperCase() + item.status.slice(1)}`]
+                      )}
+                    </span>
+                  </div>
                 </div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
-                  {t[`status${item.status.charAt(0).toUpperCase() + item.status.slice(1)}`]}
-                </span>
+                <div className="text-xs font-black text-teal-600 dark:text-teal-400 tabular-nums">
+                  {item.progress}%
+                </div>
               </div>
-              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 overflow-hidden">
+              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 overflow-hidden shadow-inner">
                 <div 
-                  className={`h-full transition-all duration-500 ${item.status === 'failed' ? 'bg-red-500' : 'bg-teal-500'}`}
+                  className={`h-full transition-all duration-700 ease-out shadow-sm ${item.status === 'failed' ? 'bg-red-500' : 'bg-teal-500'}`}
                   style={{ width: `${item.progress}%` }}
                 />
               </div>
@@ -185,25 +183,25 @@ export const UrlInput: React.FC<UrlInputProps> = ({
           ))}
         </div>
         {!isSubmitting && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-4 border-t dark:border-gray-700/50">
              <button 
               onClick={onClearSuccessful} 
               disabled={successCount === 0}
-              className="py-3 px-4 border-2 border-teal-500 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20 font-bold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="py-3 px-4 border-2 border-teal-500/50 text-teal-700 dark:text-teal-300 hover:bg-teal-50 dark:hover:bg-teal-900/20 font-black uppercase text-xs tracking-widest rounded-xl transition-all disabled:opacity-30 disabled:cursor-not-allowed"
             >
               {t.clearSuccessful}
             </button>
             {failureCount > 0 && (
               <button 
                 onClick={onRetryFailed} 
-                className="py-3 px-4 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-lg transition-all shadow-md active:scale-[0.98]"
+                className="py-3 px-4 bg-orange-500 hover:bg-orange-600 text-white font-black uppercase text-xs tracking-widest rounded-xl transition-all shadow-lg active:scale-95"
               >
                 {t.retryFailed}
               </button>
             )}
             <button 
               onClick={onReset} 
-              className={`py-3 px-4 bg-teal-500 hover:bg-teal-600 text-white font-bold rounded-lg transition-all shadow-md active:scale-[0.98] ${failureCount === 0 ? 'sm:col-span-1 lg:col-span-2' : ''}`}
+              className={`py-3 px-4 bg-teal-500 hover:bg-teal-600 text-white font-black uppercase text-xs tracking-widest rounded-xl transition-all shadow-lg active:scale-95 ${failureCount === 0 ? 'sm:col-span-1 lg:col-span-2' : ''}`}
             >
               {t.resetSubmission}
             </button>
@@ -214,62 +212,85 @@ export const UrlInput: React.FC<UrlInputProps> = ({
   }
 
   // RENDER: Input View
-  const dropzoneStyles = `relative group border-2 border-dashed rounded-xl p-5 mb-4 transition-all duration-200
-    ${isDragActive ? 'border-teal-500 bg-teal-50/50 dark:bg-teal-900/10' : error ? 'border-red-500' : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm'}`;
+  const dropzoneStyles = `relative group border-2 border-dashed rounded-3xl p-6 mb-6 transition-all duration-500 ease-out
+    ${isDragActive ? 'border-teal-500 bg-teal-50/50 dark:bg-teal-900/10 scale-[1.01]' : error ? 'border-red-500 bg-red-50/20' : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-xl'}`;
 
   return (
     <div className="mb-8">
+      {/* Prominent URL counter */}
+      <div className="flex items-center justify-between mb-3 px-1">
+        <div className="flex items-center gap-2">
+           <div className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2 shadow-sm border ${validUrlCount > 0 ? 'bg-teal-100 text-teal-700 border-teal-200 dark:bg-teal-900/40 dark:text-teal-300 dark:border-teal-800' : 'bg-gray-100 text-gray-500 border-gray-200 dark:bg-gray-800 dark:text-gray-500 dark:border-gray-700'}`}>
+              <span className={`w-2 h-2 rounded-full ${validUrlCount > 0 ? 'bg-teal-500 animate-pulse' : 'bg-gray-300'}`}></span>
+              {t.urlCount.replace('{count}', validUrlCount.toString())}
+           </div>
+        </div>
+      </div>
+
       <div {...getRootProps()} className={dropzoneStyles}>
         <input {...getInputProps()} />
         
         {isDragActive && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-teal-500/10 backdrop-blur-[2px] z-20 rounded-xl">
-            <UploadIcon className="w-12 h-12 text-teal-500 mb-2 animate-bounce" />
-            <p className="text-lg font-bold text-teal-600 dark:text-teal-400">{t.dragActiveHint}</p>
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-teal-500/10 backdrop-blur-[4px] z-20 rounded-3xl">
+            <UploadIcon className="w-16 h-16 text-teal-500 mb-3 animate-bounce" />
+            <p className="text-xl font-black text-teal-600 dark:text-teal-400 uppercase tracking-widest">{t.dragActiveHint}</p>
           </div>
         )}
 
         <div className={isDragActive ? 'opacity-20 blur-sm pointer-events-none' : ''}>
-          <p className="text-center text-gray-400 dark:text-gray-500 text-sm mb-4 font-medium uppercase tracking-widest">{t.dropzoneHint}</p>
+          <p className="text-center text-gray-400 dark:text-gray-500 text-xs mb-5 font-black uppercase tracking-[0.2em]">{t.dropzoneHint}</p>
           <div className="relative group/field">
             <textarea
               value={urls}
               onChange={(e) => handleChange(e.target.value)}
               placeholder={t.urlPlaceholder}
-              className={`w-full h-40 p-4 pb-12 bg-gray-50/50 dark:bg-gray-900/50 border rounded-xl focus:ring-2 focus:ring-teal-500/50 outline-none resize-none transition-all dark:text-gray-200
-              ${error ? 'border-red-500 ring-red-500/20' : 'border-gray-200 dark:border-gray-700'}`}
+              className={`w-full h-56 p-6 pb-14 bg-gray-50/50 dark:bg-gray-900/50 border-2 rounded-2xl focus:ring-4 focus:ring-teal-500/20 outline-none resize-none transition-all dark:text-gray-100 font-mono text-sm leading-relaxed
+              ${error ? 'border-red-500 shadow-[0_0_15px_rgba(239,68,68,0.2)]' : 'border-gray-100 dark:border-gray-800 focus:border-teal-500'}`}
               disabled={isSubmitting}
             />
             
             {/* Inner Bottom Controls */}
-            <div className="absolute bottom-2 left-3 right-3 flex justify-between items-center">
-              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter bg-white/80 dark:bg-gray-800/80 px-2 py-0.5 rounded shadow-sm">
-                {t.urlCount.replace('{count}', validUrlCount.toString())}
-              </span>
-              
-              <div className="flex items-center space-x-1 rtl:space-x-reverse bg-white/80 dark:bg-gray-800/80 p-1 rounded-lg shadow-sm border dark:border-gray-700">
-                <button onClick={handleAction(() => onUrlsChange(''))} className="p-1.5 text-gray-400 hover:text-red-500 transition-colors" title={t.clearUrls}><TrashIcon className="w-4 h-4" /></button>
-                <button onClick={handleAction(exportToFile)} className="p-1.5 text-gray-400 hover:text-teal-500 transition-colors" title={t.exportUrls}><DownloadIcon className="w-4 h-4" /></button>
-                <button onClick={handleAction(copyToClipboard)} className="relative p-1.5 text-gray-400 hover:text-teal-500 transition-colors" title={t.copyUrls}>
+            <div className="absolute bottom-3 left-4 right-4 flex justify-between items-center">
+              {/* Character Counter */}
+              <div className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-tighter bg-gray-100/50 dark:bg-gray-800/50 px-2 py-1 rounded-lg backdrop-blur-sm">
+                {urls.length} Chars
+              </div>
+
+              <div className="flex items-center space-x-1 rtl:space-x-reverse bg-white/90 dark:bg-gray-800/90 p-1.5 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 backdrop-blur-md">
+                <button onClick={handleAction(() => onUrlsChange(''))} className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all" title={t.clearUrls}><TrashIcon className="w-4 h-4" /></button>
+                <button onClick={handleAction(exportToFile)} className="p-2 text-gray-400 hover:text-teal-500 hover:bg-teal-50 dark:hover:bg-teal-900/20 rounded-lg transition-all" title={t.exportUrls}><DownloadIcon className="w-4 h-4" /></button>
+                <button onClick={handleAction(copyToClipboard)} className="relative p-2 text-gray-400 hover:text-teal-500 hover:bg-teal-50 dark:hover:bg-teal-900/20 rounded-lg transition-all" title={t.copyUrls}>
                   <CopyIcon className="w-4 h-4" />
-                  {copyBtnSuccess && <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-[10px] bg-black text-white px-2 py-1 rounded shadow-lg">{t.urlsCopied}</span>}
+                  {copyBtnSuccess && <span className="absolute -top-10 left-1/2 -translate-x-1/2 text-[10px] font-bold bg-gray-900 text-white px-3 py-1 rounded-full shadow-2xl z-30">{t.urlsCopied}</span>}
                 </button>
-                <div className="w-px h-3 bg-gray-200 dark:bg-gray-600 mx-1" />
-                <button onClick={handleAction(() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(urls)}`, '_blank'))} className="p-1.5 text-gray-400 hover:text-blue-400 transition-colors"><TwitterIcon className="w-4 h-4" /></button>
-                <button onClick={handleAction(() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(urls.match(/https?:\/\/[^\s]+/)?.[0] || window.location.href)}`, '_blank'))} className="p-1.5 text-gray-400 hover:text-blue-600 transition-colors"><FacebookIcon className="w-4 h-4" /></button>
+                <div className="w-px h-4 bg-gray-200 dark:bg-gray-700 mx-2" />
+                <button onClick={handleAction(() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(urls)}`, '_blank'))} className="p-2 text-gray-400 hover:text-sky-400 hover:bg-sky-50 dark:hover:bg-sky-900/20 rounded-lg transition-all"><TwitterIcon className="w-4 h-4" /></button>
+                <button onClick={handleAction(() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(urls.match(/https?:\/\/[^\s]+/)?.[0] || window.location.href)}`, '_blank'))} className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-all"><FacebookIcon className="w-4 h-4" /></button>
               </div>
             </div>
           </div>
-          {error && <p className="mt-2 text-xs font-bold text-red-500 uppercase tracking-tight">{error}</p>}
+          {error && <p className="mt-3 text-[11px] font-black text-red-500 uppercase tracking-wider bg-red-50 dark:bg-red-900/20 p-2 rounded-lg border border-red-200 dark:border-red-900/40">{error}</p>}
         </div>
       </div>
 
       <button
         onClick={validateAndSubmit}
         disabled={isSubmitting || !urls.trim()}
-        className="w-full h-14 bg-teal-500 hover:bg-teal-600 disabled:bg-gray-300 dark:disabled:bg-gray-700 text-white font-black text-lg uppercase tracking-widest rounded-xl transition-all shadow-lg active:scale-[0.99]"
+        className="group relative w-full h-16 bg-teal-500 hover:bg-teal-600 disabled:bg-gray-200 dark:disabled:bg-gray-800 text-white font-black text-xl uppercase tracking-[0.3em] rounded-2xl transition-all shadow-[0_10px_30px_rgba(20,184,166,0.3)] active:translate-y-1 active:shadow-none overflow-hidden"
       >
-        {isSubmitting ? <span className="flex items-center justify-center"><SpinnerIcon /> {t.submittingButton}</span> : t.submitButton}
+        <div className="relative z-10 flex items-center justify-center gap-3">
+          {isSubmitting ? (
+            <><SpinnerIcon /> {t.submittingButton}</>
+          ) : (
+            <>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+              </svg>
+              {t.submitButton}
+            </>
+          )}
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-teal-400 to-teal-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
       </button>
     </div>
   );

@@ -17,6 +17,8 @@ export interface SubmissionItem {
   url: string;
   status: SubmissionStatus;
   progress: number;
+  completedServices?: number;
+  totalServices?: number;
 }
 
 export interface LogEntry {

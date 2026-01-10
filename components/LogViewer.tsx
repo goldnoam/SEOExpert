@@ -102,12 +102,12 @@ export const LogViewer: React.FC<LogViewerProps> = ({ logs, language, onClear })
               <div className="flex items-start gap-2">
                 <span className="whitespace-pre-wrap flex-grow text-gray-700 dark:text-gray-300">{log.message}</span>
                 {log.siteDescription && (
-                    <div className="relative flex items-center group/tooltip">
+                    <div className="relative flex items-center">
                       <span className="text-teal-500/60 dark:text-teal-400/60 hover:text-teal-500 dark:hover:text-teal-400 mt-0.5 shrink-0 cursor-help transition-colors">
                         <InfoIcon className="w-4 h-4" />
                       </span>
-                      {/* Tooltip Popup */}
-                      <div className="absolute bottom-full right-0 mb-2 w-64 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-2xl opacity-0 group-hover/tooltip:opacity-100 pointer-events-none transition-all duration-200 z-50 border border-gray-700 font-sans backdrop-blur-md">
+                      {/* Tooltip Popup - Triggers on the whole entry group hover */}
+                      <div className="absolute bottom-full right-0 mb-2 w-64 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-2xl opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 z-50 border border-gray-700 font-sans backdrop-blur-md">
                         <p className="font-black mb-1 border-b border-gray-700 pb-1 uppercase tracking-widest text-teal-400 text-[9px]">Site Intel</p>
                         <p className="leading-normal">{log.siteDescription}</p>
                         <div className="absolute top-full right-4 w-3 h-3 bg-gray-900 border-r border-b border-gray-700 rotate-45 -mt-1.5"></div>

@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useEffect } from 'react';
 import { Header } from './components/Header';
 import { UrlInput } from './components/UrlInput';
@@ -82,7 +83,7 @@ function App() {
       }
 
       setSubmissionItems(prev => prev.map(p => 
-        p.id === item.id ? { ...p, status: 'processing', progress: 0 } : p
+        p.id === item.id ? { ...p, status: 'processing', progress: 0, completedServices: 0 } : p
       ));
 
       logUpdateCallback(`\n--- Submitting: ${item.url} ---`);
@@ -92,9 +93,9 @@ function App() {
           item.url, 
           logUpdateCallback,
           (current, total) => {
-            const percentage = Math.round((current / total) * 100);
+            const percentage = total > 0 ? Math.round((current / total) * 100) : 100;
             setSubmissionItems(prev => prev.map(p => 
-                p.id === item.id ? { ...p, progress: percentage } : p
+                p.id === item.id ? { ...p, progress: percentage, completedServices: current, totalServices: total } : p
             ));
           }
         );
@@ -139,7 +140,6 @@ function App() {
     const failedItems = submissionItems.filter(item => item.status === 'failed');
     if (failedItems.length === 0) return;
 
-    // Reset failed items status in UI
     setSubmissionItems(prev => prev.map(p => 
       p.status === 'failed' ? { ...p, status: 'pending', progress: 0 } : p
     ));
@@ -163,10 +163,10 @@ function App() {
       />
       <main className="container mx-auto p-4 sm:p-6 lg:p-8 flex-grow">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl sm:text-4xl font-bold text-center mb-2">
+          <h1 className="text-3xl sm:text-4xl font-black text-center mb-2 tracking-tight">
             SEO<span className="text-teal-500">Expert</span>
           </h1>
-          <p className="text-center text-gray-600 dark:text-gray-400 mb-8">
+          <p className="text-center text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto leading-relaxed">
             {t.appSubtitle}
           </p>
 

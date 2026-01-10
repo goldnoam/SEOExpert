@@ -1,3 +1,4 @@
+
 import { SubmissionSite } from './types';
 
 export const LANGUAGES = [
@@ -9,7 +10,7 @@ export const LANGUAGES = [
   { code: 'ja', name: '日本語' },
 ];
 
-export const ABOUT_TEXT = "© NOAM GOLD AI 2025";
+export const ABOUT_TEXT = "© NOAM GOLD AI 2026";
 
 export const SUBMISSION_DELAY = 2000; // 2 seconds delay between URL submissions
 
@@ -208,5 +209,205 @@ export const SUBMISSION_SITES: SubmissionSite[] = [
     name: "Krozilo",
     description: "Niche content aggregator and ping provider.",
     urlTemplate: "http://krozilo.com/ping?url={URL}",
+  },
+  {
+    name: "Feedshark",
+    description: "Free online tool to ping your blog, website or RSS feed to multiple search engines.",
+    urlTemplate: "https://feedshark.brainbliss.com/ping?url={URL}",
+  },
+  {
+    name: "Ping.in",
+    description: "A service that helps you to ping your blog to different blog directories.",
+    urlTemplate: "http://ping.in/ping.php?url={URL}",
+  },
+  {
+    name: "Useping",
+    description: "Simple and effective ping service for fast indexing.",
+    urlTemplate: "https://useping.com/ping?url={URL}",
+  },
+  {
+    name: "LinkCentaur",
+    description: "Automated backlink indexing and pinging service.",
+    urlTemplate: "https://www.linkcentaur.com/ping?url={URL}",
+  },
+  {
+    name: "Colinkri",
+    description: "Next generation indexing tool for web URLs.",
+    urlTemplate: "https://colinkri.com/ping?url={URL}",
+  },
+  {
+    name: "OneHourIndexing",
+    description: "High-speed URL indexing and notification service.",
+    urlTemplate: "https://onehourindexing.co/ping?url={URL}",
+  },
+  {
+    name: "Backlinkr",
+    description: "Automated search engine notification for new backlinks.",
+    urlTemplate: "https://backlinkr.net/ping?url={URL}",
+  },
+  {
+    name: "PingMyUrl",
+    description: "Submit your URL to multiple search engines with one click.",
+    urlTemplate: "http://pingmyurl.com/ping?url={URL}",
+  },
+  {
+    name: "BulkPing",
+    description: "Mass ping tool for multiple URLs and search engines.",
+    urlTemplate: "https://bulkping.com/ping-tool?url={URL}",
+  },
+  {
+    name: "SmallSEOTools Ping",
+    description: "Comprehensive online tool to ping websites for search engine recognition.",
+    urlTemplate: "https://smallseotools.com/online-ping-website-tool/ping?url={URL}",
+  },
+  {
+    name: "Pingler Pro",
+    description: "Professional grade notification for search indexers.",
+    urlTemplate: "https://pingler.com/ping/?title=SiteUpdate&url={URL}",
+  },
+  {
+    name: "Ping.fm",
+    description: "Content distribution and pinging notification service.",
+    urlTemplate: "http://ping.fm/ping/?url={URL}",
+  },
+  {
+    name: "AutoPing",
+    description: "Automated site recognition and indexing utility.",
+    urlTemplate: "https://autoping.com/submit?url={URL}",
+  },
+  {
+    name: "FastIndexing",
+    description: "Proprietary algorithm for fast crawler notification.",
+    urlTemplate: "https://fastindexing.com/api/ping?url={URL}",
+  },
+  {
+    name: "LinkBox",
+    description: "Backlink monitoring and automated indexing service.",
+    urlTemplate: "https://linkbox.pro/ping?url={URL}",
+  },
+  {
+    name: "GSA Indexer",
+    description: "High-performance search engine submission tool.",
+    urlTemplate: "https://gsa-online.de/indexer/ping?url={URL}",
+  },
+  {
+    name: "Omega Indexer",
+    description: "Cloud-based indexing solution with ping support.",
+    urlTemplate: "https://omegaindexer.com/api/ping?url={URL}",
+  },
+  {
+    name: "Elite Linker",
+    description: "Premium backlink indexing and pinging utility.",
+    urlTemplate: "https://elitelinker.com/ping?url={URL}",
+  },
+  {
+    name: "Indexification",
+    description: "Reliable indexing service for bulk URL processing.",
+    urlTemplate: "https://www.indexification.com/ping?url={URL}",
+  },
+  {
+    name: "LinkProcessor",
+    description: "Automated indexing and search engine pinging.",
+    urlTemplate: "https://linkprocessor.com/ping?url={URL}",
+  },
+  {
+    name: "PingCloud",
+    description: "Distributed ping network for global search engine notification.",
+    urlTemplate: "https://pingcloud.org/ping?url={URL}",
+  },
+  {
+    name: "BlogFlux",
+    description: "Wide-reaching blog directory and update notification service.",
+    urlTemplate: "http://blogflux.com/ping?url={URL}",
+  },
+  {
+    name: "FeedPinger",
+    description: "Specialized service to notify RSS aggregators of site changes.",
+    urlTemplate: "https://feedpinger.com/ping?url={URL}",
+  },
+  {
+    name: "SEOBox",
+    description: "Integrated SEO toolkit offering mass search engine pings.",
+    urlTemplate: "https://seobox.com/ping?url={URL}",
+  },
+  {
+    name: "IndexNow",
+    description: "Open protocol for immediate search engine indexing notification.",
+    urlTemplate: "https://api.indexnow.org/indexnow?url={URL}",
+  },
+  {
+    name: "LinkSentry",
+    description: "Automated monitoring and search engine update utility.",
+    urlTemplate: "https://linksentry.com/ping?url={URL}",
+  },
+  {
+    name: "SiteSubmitter",
+    description: "Comprehensive submission tool for search engines and directories.",
+    urlTemplate: "https://sitesubmitter.net/ping?url={URL}",
+  },
+  {
+    name: "GlobalIndex",
+    description: "High-speed notification service for global search indexes.",
+    urlTemplate: "https://globalindex.org/ping?url={URL}",
+  },
+  {
+    name: "RSSPinger",
+    description: "Focuses on notifying major RSS directories of feed updates.",
+    urlTemplate: "https://rsspinger.com/ping?url={URL}",
+  },
+  {
+    name: "BlogRank",
+    description: "Indexes and pings top-tier blog search results and directories.",
+    urlTemplate: "https://blogrank.com/ping?url={URL}",
+  },
+  {
+    name: "Ping.eu Sitemap",
+    description: "Professional sitemap crawler and search engine notifier.",
+    urlTemplate: "https://ping.eu/ping?url={URL}",
+  },
+  {
+    name: "Baidu RPC Ping",
+    description: "Official programmatic update service for Baidu Search.",
+    urlTemplate: "https://ping.baidu.com/ping/rpc2?url={URL}",
+  },
+  {
+    name: "Naver Search Advisor",
+    description: "Direct notification endpoint for the Naver search index.",
+    urlTemplate: "https://searchadvisor.naver.com/ping?url={URL}",
+  },
+  {
+    name: "Sogou Feedback Ping",
+    description: "Alerts the Sogou search engine of new web content.",
+    urlTemplate: "https://www.sogou.com/feedback/ping?url={URL}",
+  },
+  {
+    name: "Crawler Center",
+    description: "Aggregates crawling requests for multiple data providers.",
+    urlTemplate: "https://crawlercenter.com/ping?url={URL}",
+  },
+  {
+    name: "Index Boom",
+    description: "High-priority indexing notification for search crawlers.",
+    urlTemplate: "https://indexboom.com/ping?url={URL}",
+  },
+  {
+    name: "Bot Notify",
+    description: "Pings various bot networks to initiate immediate crawls.",
+    urlTemplate: "https://botnotify.net/ping?url={URL}",
+  },
+  {
+    name: "Traffic Ping",
+    description: "Notifies search engines and traffic aggregators of site updates.",
+    urlTemplate: "https://trafficping.com/api/ping?url={URL}",
+  },
+  {
+    name: "Global Indexing Network",
+    description: "A wide-reaching network for global search engine alerts.",
+    urlTemplate: "https://globalindexing.net/ping?url={URL}",
+  },
+  {
+    name: "SEO Spider Notification",
+    description: "Simulates bot activity to trigger natural crawling cycles.",
+    urlTemplate: "https://seospider.com/ping?url={URL}",
   },
 ];
