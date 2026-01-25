@@ -44,6 +44,7 @@ export const UrlInput: React.FC<UrlInputProps> = ({
   const t = translations[language] || translations['en'];
   const [error, setError] = useState<string | null>(null);
   const [copyBtnSuccess, setCopyBtnSuccess] = useState(false);
+  const [reportCopySuccess, setReportCopySuccess] = useState(false);
 
   // Counter for valid URLs
   const validUrlCount = useMemo(() => {
@@ -97,12 +98,12 @@ export const UrlInput: React.FC<UrlInputProps> = ({
     fn();
   };
 
-  const copyToClipboard = async () => {
-    if (!urls.trim()) return;
+  const copyToClipboard = async (textToCopy: string, setSuccess: (val: boolean) => void) => {
+    if (!textToCopy.trim()) return;
     try {
-      await navigator.clipboard.writeText(urls);
-      setCopyBtnSuccess(true);
-      setTimeout(() => setCopyBtnSuccess(false), 2000);
+      await navigator.clipboard.writeText(textToCopy);
+      setSuccess(true);
+      setTimeout(() => setSuccess(false), 2000);
     } catch (err) { console.error(err); }
   };
 
@@ -125,7 +126,7 @@ export const UrlInput: React.FC<UrlInputProps> = ({
 
     return (
       <div className="mb-8 bg-white dark:bg-gray-800 border-2 border-teal-500/20 dark:border-teal-400/10 rounded-2xl p-6 shadow-xl space-y-4 animate-fade-in backdrop-blur-sm">
-        <div className="flex justify-between items-center border-b pb-4 dark:border-gray-700/50">
+        <div className="flex justify-between items-start border-b pb-4 dark:border-gray-700/50">
           <div>
             <h2 className="text-xl font-black text-gray-800 dark:text-gray-100 flex items-center gap-2">
               {isSubmitting ? (
@@ -135,11 +136,20 @@ export const UrlInput: React.FC<UrlInputProps> = ({
                  </>
               ) : t.statusSuccess}
             </h2>
-            <p className="text-[10px] font-bold text-teal-600 dark:text-teal-400 mt-1 uppercase tracking-widest bg-teal-50 dark:bg-teal-900/30 px-2 py-0.5 rounded-full inline-block">
-              {t.serviceCount.replace('{count}', (submissionItems[0]?.totalServices || SUBMISSION_SITES.length).toString())}
-            </p>
+            <div className="flex flex-wrap gap-2 mt-2">
+              <p className="text-[10px] font-bold text-teal-600 dark:text-teal-400 uppercase tracking-widest bg-teal-50 dark:bg-teal-900/30 px-2 py-0.5 rounded-full inline-block">
+                {t.serviceCount.replace('{count}', (submissionItems[0]?.totalServices || SUBMISSION_SITES.length).toString())}
+              </p>
+              <button 
+                onClick={() => copyToClipboard(submissionItems.map(i => i.url).join('\n'), setReportCopySuccess)}
+                className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-full inline-flex items-center gap-1 hover:bg-teal-50 dark:hover:bg-teal-900/20 hover:text-teal-600 transition-colors relative"
+              >
+                <CopyIcon className="w-3 h-3" />
+                {reportCopySuccess ? t.urlsCopied : t.copyUrls}
+              </button>
+            </div>
           </div>
-          <div className="text-right">
+          <div className="text-right shrink-0">
             <div className="text-sm font-bold text-gray-600 dark:text-gray-300">
               {t.submissionSummary
                 .replace('{processed}', (successCount + failureCount).toString())
@@ -149,39 +159,59 @@ export const UrlInput: React.FC<UrlInputProps> = ({
             </div>
           </div>
         </div>
+
         <div className="space-y-4 max-h-96 overflow-y-auto pr-3 custom-scrollbar">
           {submissionItems.map((item) => (
-            <div key={item.id} className="bg-gray-50/50 dark:bg-gray-900/40 p-4 rounded-xl border border-gray-100 dark:border-gray-700 transition-all hover:border-teal-500/30">
+            <div key={item.id} className="bg-gray-50/50 dark:bg-gray-900/40 p-4 rounded-xl border border-gray-100 dark:border-gray-700 transition-all hover:border-teal-500/30 group/item">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center space-x-3 rtl:space-x-reverse overflow-hidden">
                   {item.status === 'pending' && <ClockIcon className="w-5 h-5 text-gray-400" />}
                   {item.status === 'processing' && <div className="w-5 h-5 border-2 border-teal-500 border-t-transparent rounded-full animate-spin"></div>}
                   {item.status === 'success' && <CheckCircleIcon className="w-5 h-5 text-green-500" />}
                   {item.status === 'failed' && <XCircleIcon className="w-5 h-5 text-red-500" />}
-                  <div className="flex flex-col">
+                  <div className="flex flex-col min-w-0">
                     <span className="text-sm font-bold truncate text-gray-800 dark:text-gray-200" title={item.url}>{item.url}</span>
-                    <span className="text-[10px] font-semibold text-teal-600 dark:text-teal-400">
-                      {item.status === 'processing' ? (
-                        `Sending to ${item.completedServices || 0} of ${item.totalServices || '?'} sites...`
-                      ) : (
-                        t[`status${item.status.charAt(0).toUpperCase() + item.status.slice(1)}`]
-                      )}
-                    </span>
+                    <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-semibold text-teal-600 dark:text-teal-400 shrink-0">
+                        {item.status === 'processing' ? (
+                            `Sending to ${item.completedServices || 0} of ${item.totalServices || '?'} sites...`
+                        ) : (
+                            t[`status${item.status.charAt(0).toUpperCase() + item.status.slice(1)}`]
+                        )}
+                        </span>
+                        {item.status === 'processing' && item.lastServicePinger && (
+                            <span className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-tighter truncate opacity-0 group-hover/item:opacity-100 transition-opacity">
+                                Last: {item.lastServicePinger}
+                            </span>
+                        )}
+                    </div>
                   </div>
                 </div>
                 <div className="text-xs font-black text-teal-600 dark:text-teal-400 tabular-nums">
                   {item.progress}%
                 </div>
               </div>
-              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 overflow-hidden shadow-inner">
+              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden shadow-inner relative">
                 <div 
-                  className={`h-full transition-all duration-700 ease-out shadow-sm ${item.status === 'failed' ? 'bg-red-500' : 'bg-teal-500'}`}
+                  className={`h-full transition-all duration-700 ease-out shadow-sm relative overflow-hidden ${item.status === 'failed' ? 'bg-red-500' : 'bg-teal-500'}`}
                   style={{ width: `${item.progress}%` }}
-                />
+                >
+                    {item.status === 'processing' && (
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer" style={{ backgroundSize: '200% 100%' }}></div>
+                    )}
+                </div>
+                {item.status === 'processing' && (
+                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <span className="text-[9px] font-black text-white mix-blend-difference uppercase tracking-widest">
+                        {item.completedServices} / {item.totalServices} PINGS
+                      </span>
+                   </div>
+                )}
               </div>
             </div>
           ))}
         </div>
+
         {!isSubmitting && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-4 border-t dark:border-gray-700/50">
              <button 
@@ -194,7 +224,7 @@ export const UrlInput: React.FC<UrlInputProps> = ({
             {failureCount > 0 && (
               <button 
                 onClick={onRetryFailed} 
-                className="py-3 px-4 bg-orange-500 hover:bg-orange-600 text-white font-black uppercase text-xs tracking-widest rounded-xl transition-all shadow-lg active:scale-95"
+                className="py-3 px-4 bg-orange-600 hover:bg-orange-700 text-white font-black uppercase text-xs tracking-widest rounded-xl transition-all shadow-lg active:scale-95 animate-pulse-slow ring-offset-2 ring-orange-500/50 hover:ring-2"
               >
                 {t.retryFailed}
               </button>
@@ -256,14 +286,26 @@ export const UrlInput: React.FC<UrlInputProps> = ({
                 {urls.length} Chars
               </div>
 
-              <div className="flex items-center space-x-1 rtl:space-x-reverse bg-white/90 dark:bg-gray-800/90 p-1.5 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 backdrop-blur-md">
-                <button onClick={handleAction(() => onUrlsChange(''))} className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all" title={t.clearUrls}><TrashIcon className="w-4 h-4" /></button>
-                <button onClick={handleAction(exportToFile)} className="p-2 text-gray-400 hover:text-teal-500 hover:bg-teal-50 dark:hover:bg-teal-900/20 rounded-lg transition-all" title={t.exportUrls}><DownloadIcon className="w-4 h-4" /></button>
-                <button onClick={handleAction(copyToClipboard)} className="relative p-2 text-gray-400 hover:text-teal-500 hover:bg-teal-50 dark:hover:bg-teal-900/20 rounded-lg transition-all" title={t.copyUrls}>
-                  <CopyIcon className="w-4 h-4" />
-                  {copyBtnSuccess && <span className="absolute -top-10 left-1/2 -translate-x-1/2 text-[10px] font-bold bg-gray-900 text-white px-3 py-1 rounded-full shadow-2xl z-30">{t.urlsCopied}</span>}
+              <div className="flex items-center space-x-1 rtl:space-x-reverse bg-white/90 dark:bg-gray-800/90 p-1 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 backdrop-blur-md">
+                <button onClick={handleAction(() => onUrlsChange(''))} className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all group/btn" title={t.clearUrls}>
+                  <div className="flex items-center gap-1.5 px-1">
+                    <TrashIcon className="w-4 h-4" />
+                    <span className="text-[9px] font-black uppercase tracking-widest hidden group-hover/btn:inline-block">Clear</span>
+                  </div>
                 </button>
-                <div className="w-px h-4 bg-gray-200 dark:bg-gray-700 mx-2" />
+                <button onClick={handleAction(exportToFile)} className="p-2 text-gray-400 hover:text-teal-500 hover:bg-teal-50 dark:hover:bg-teal-900/20 rounded-lg transition-all group/btn" title={t.exportUrls}>
+                  <div className="flex items-center gap-1.5 px-1">
+                    <DownloadIcon className="w-4 h-4" />
+                    <span className="text-[9px] font-black uppercase tracking-widest hidden group-hover/btn:inline-block">Save</span>
+                  </div>
+                </button>
+                <button onClick={handleAction(() => copyToClipboard(urls, setCopyBtnSuccess))} className="relative p-2 text-gray-400 hover:text-teal-500 hover:bg-teal-50 dark:hover:bg-teal-900/20 rounded-lg transition-all group/btn" title={t.copyUrls}>
+                  <div className="flex items-center gap-1.5 px-1">
+                    <CopyIcon className="w-4 h-4" />
+                    <span className="text-[9px] font-black uppercase tracking-widest">{copyBtnSuccess ? 'Copied!' : 'Copy All'}</span>
+                  </div>
+                </button>
+                <div className="w-px h-4 bg-gray-200 dark:bg-gray-700 mx-1" />
                 <button onClick={handleAction(() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(urls)}`, '_blank'))} className="p-2 text-gray-400 hover:text-sky-400 hover:bg-sky-50 dark:hover:bg-sky-900/20 rounded-lg transition-all"><TwitterIcon className="w-4 h-4" /></button>
                 <button onClick={handleAction(() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(urls.match(/https?:\/\/[^\s]+/)?.[0] || window.location.href)}`, '_blank'))} className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-all"><FacebookIcon className="w-4 h-4" /></button>
               </div>

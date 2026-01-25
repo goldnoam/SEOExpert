@@ -19,6 +19,7 @@ export interface SubmissionItem {
   progress: number;
   completedServices?: number;
   totalServices?: number;
+  lastServicePinger?: string;
 }
 
 export interface LogEntry {

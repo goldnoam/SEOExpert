@@ -6,6 +6,7 @@ import { LogViewer } from './components/LogViewer';
 import { AboutModal } from './components/AboutModal';
 import { ManualSubmissionLinks } from './components/ManualSubmissionLinks';
 import { Footer } from './components/Footer';
+import { AdBanner } from './components/AdBanner';
 import { Theme, SubmissionItem, LogEntry, SubmissionSite } from './types';
 import { performSubmissions } from './services/submissionService';
 import { translations } from './translations';
@@ -92,10 +93,16 @@ function App() {
         await performSubmissions(
           item.url, 
           logUpdateCallback,
-          (current, total) => {
+          (current, total, lastSite) => {
             const percentage = total > 0 ? Math.round((current / total) * 100) : 100;
             setSubmissionItems(prev => prev.map(p => 
-                p.id === item.id ? { ...p, progress: percentage, completedServices: current, totalServices: total } : p
+                p.id === item.id ? { 
+                  ...p, 
+                  progress: percentage, 
+                  completedServices: current, 
+                  totalServices: total,
+                  lastServicePinger: lastSite || p.lastServicePinger
+                } : p
             ));
           }
         );
@@ -163,6 +170,8 @@ function App() {
       />
       <main className="container mx-auto p-4 sm:p-6 lg:p-8 flex-grow">
         <div className="max-w-4xl mx-auto">
+          <AdBanner slot="top-horizontal" className="mb-6" />
+
           <h1 className="text-3xl sm:text-4xl font-black text-center mb-2 tracking-tight">
             SEO<span className="text-teal-500">Expert</span>
           </h1>
@@ -182,9 +191,13 @@ function App() {
             onRetryFailed={handleRetryFailed}
           />
 
+          <AdBanner slot="middle-feed" className="my-8" />
+
           <LogViewer logs={logs} language={language} onClear={clearLogs} />
 
           <ManualSubmissionLinks language={language} />
+          
+          <AdBanner slot="bottom-horizontal" className="mt-8" />
         </div>
       </main>
 

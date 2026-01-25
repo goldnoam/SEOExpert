@@ -6,7 +6,7 @@ import { getSubmissionSites } from './geminiService';
 export const performSubmissions = async (
   url: string, 
   logUpdateCallback: (message: string, site?: SubmissionSite) => void,
-  onProgress?: (current: number, total: number) => void
+  onProgress?: (current: number, total: number, lastSiteName?: string) => void
 ): Promise<void> => {
   let submissionSites: SubmissionSite[] = [];
   
@@ -71,7 +71,7 @@ export const performSubmissions = async (
       console.error(`Error submitting to ${endpoint.name}:`, error);
     } finally {
         completed++;
-        if (onProgress) onProgress(completed, totalSites);
+        if (onProgress) onProgress(completed, totalSites, endpoint.name);
     }
   });
 
