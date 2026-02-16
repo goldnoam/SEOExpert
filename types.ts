@@ -2,6 +2,7 @@
 export enum Theme {
   Light = 'light',
   Dark = 'dark',
+  Colorful = 'colorful',
 }
 
 export interface SubmissionSite {

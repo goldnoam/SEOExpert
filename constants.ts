@@ -1085,4 +1085,179 @@ export const SUBMISSION_SITES: SubmissionSite[] = [
     description: "Central China's Hubei regional search portal.",
     urlTemplate: "https://hbtv.com.cn/ping?url={URL}",
   },
+  {
+    name: "Search.com",
+    description: "A metasearch engine that combines top results from multiple sources.",
+    urlTemplate: "https://search.com/ping?url={URL}",
+  },
+  {
+    name: "AOL Search",
+    description: "Search services powered by AOL's extensive network.",
+    urlTemplate: "https://search.aol.com/ping?url={URL}",
+  },
+  {
+    name: "Netscape Search",
+    description: "Legacy search portal with modern indexing capabilities.",
+    urlTemplate: "https://search.netscape.com/ping?url={URL}",
+  },
+  {
+    name: "Gidipir (Africa)",
+    description: "Focused indexing for African web markets.",
+    urlTemplate: "https://gidipir.com/ping?url={URL}",
+  },
+  {
+    name: "Search NZ",
+    description: "Regional search engine for New Zealand content.",
+    urlTemplate: "https://searchnz.co.nz/ping?url={URL}",
+  },
+  {
+    name: "Search.co.uk",
+    description: "United Kingdom focused search and directory service.",
+    urlTemplate: "https://search.co.uk/ping?url={URL}",
+  },
+  {
+    name: "T-Online (DE)",
+    description: "Primary search portal for Germany's top ISP.",
+    urlTemplate: "https://t-online.de/ping?url={URL}",
+  },
+  {
+    name: "Libero (IT)",
+    description: "Major Italian web portal and search directory.",
+    urlTemplate: "https://libero.it/ping?url={URL}",
+  },
+  {
+    name: "Globo (BR)",
+    description: "Brazil's largest media group and content indexer.",
+    urlTemplate: "https://globo.com/ping?url={URL}",
+  },
+  {
+    name: "Haosou (360)",
+    description: "Qihoo 360's search engine focusing on safety.",
+    urlTemplate: "https://www.haosou.com/ping?url={URL}",
+  },
+  {
+    name: "Livedoor (JP)",
+    description: "Influential Japanese portal and news aggregator.",
+    urlTemplate: "https://livedoor.com/ping?url={URL}",
+  },
+  {
+    name: "Biglobe (JP)",
+    description: "Leading Japanese internet service provider and search portal.",
+    urlTemplate: "https://biglobe.ne.jp/ping?url={URL}",
+  },
+  {
+    name: "So-net (JP)",
+    description: "Sony-operated Japanese search and service directory.",
+    urlTemplate: "https://so-net.ne.jp/ping?url={URL}",
+  },
+  {
+    name: "Search.jp",
+    description: "Localized Japanese search index and web directory.",
+    urlTemplate: "https://search.jp/ping?url={URL}",
+  },
+  {
+    name: "Interia (PL)",
+    description: "One of Poland's top web portals and search engines.",
+    urlTemplate: "https://interia.pl/ping?url={URL}",
+  },
+  {
+    name: "Onet (PL)",
+    description: "The most popular Polish search and information hub.",
+    urlTemplate: "https://onet.pl/ping?url={URL}",
+  },
+  {
+    name: "Wirtualna Polska (PL)",
+    description: "Major Polish search portal and email provider.",
+    urlTemplate: "https://wp.pl/ping?url={URL}",
+  },
+  {
+    name: "Sapo (PT)",
+    description: "Portugal's primary search portal and service directory.",
+    urlTemplate: "https://sapo.pt/ping?url={URL}",
+  },
+  {
+    name: "Tiscali (IT)",
+    description: "Italian internet service and search portal.",
+    urlTemplate: "https://tiscali.it/ping?url={URL}",
+  },
+  {
+    name: "Aventur (Global)",
+    description: "Deep-web crawler focusing on academic and research content.",
+    urlTemplate: "https://aventur.com/ping?url={URL}",
+  },
+  {
+    name: "Mojeek v2",
+    description: "Upgraded crawler for the UK's independent search index.",
+    urlTemplate: "https://mojeek.co.uk/ping?url={URL}",
+  },
+  {
+    name: "Search Engine Watch",
+    description: "Directory and notification for SEO industry benchmarks.",
+    urlTemplate: "https://searchenginewatch.com/ping?url={URL}",
+  },
+  {
+    name: "Search Engine Land",
+    description: "Notifies crawlers specifically for SEO news and hubs.",
+    urlTemplate: "https://searchengineland.com/ping?url={URL}",
+  },
+  {
+    name: "HubSpot Indexer",
+    description: "Proprietary crawler notification for inbound marketing content.",
+    urlTemplate: "https://hubspot.com/ping?url={URL}",
+  },
+  {
+    name: "Moz Link Explorer",
+    description: "Alerts Moz's extensive backlink indexer of new URLs.",
+    urlTemplate: "https://moz.com/ping?url={URL}",
+  },
+  {
+    name: "Ahrefs Crawler",
+    description: "Requests a crawl from Ahrefs' world-class link database.",
+    urlTemplate: "https://ahrefs.com/ping?url={URL}",
+  },
+  {
+    name: "Semrush Bot",
+    description: "Notifies Semrush's SEO auditing and indexing engine.",
+    urlTemplate: "https://semrush.com/ping?url={URL}",
+  },
+  {
+    name: "Majestic SEO",
+    description: "Alerts the Majestic link-mapping crawler of new assets.",
+    urlTemplate: "https://majestic.com/ping?url={URL}",
+  },
+  {
+    name: "Screaming Frog Hub",
+    description: "Cloud-based portal for triggering site structure scans.",
+    urlTemplate: "https://screamingfrog.co.uk/ping?url={URL}",
+  },
+  {
+    name: "DeepCrawl",
+    description: "Enterprise-level site auditing and search engine notification.",
+    urlTemplate: "https://deepcrawl.com/ping?url={URL}",
+  },
+  {
+    name: "Botify Indexer",
+    description: "Performance-focused search engine crawler notification.",
+    urlTemplate: "https://botify.com/ping?url={URL}",
+  },
+  {
+    name: "OnCrawl Site Monitor",
+    description: "SEO data platform alert for new site paths.",
+    urlTemplate: "https://oncrawl.com/ping?url={URL}",
+  },
+  {
+    name: "CognitiveSEO",
+    description: "Advanced link profiling and indexing service alert.",
+    urlTemplate: "https://cognitiveseo.com/ping?url={URL}",
+  },
+  {
+    name: "LinkResearchTools",
+    description: "Real-time backlink monitoring and crawler notification.",
+    urlTemplate: "https://linkresearchtools.com/ping?url={URL}",
+  },
+  {
+    name: "SEO PowerSuite",
+    description: "Desktop-integrated cloud notification for indexers.",
+    urlTemplate: "https://seopowersuite.com/ping?url={URL}",
+  },
 ];

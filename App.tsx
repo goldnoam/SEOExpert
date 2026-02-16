@@ -6,6 +6,7 @@ import { LogViewer } from './components/LogViewer';
 import { AboutModal } from './components/AboutModal';
 import { ManualSubmissionLinks } from './components/ManualSubmissionLinks';
 import { Footer } from './components/Footer';
+import { AdBanner } from './components/AdBanner';
 import { Theme, SubmissionItem, LogEntry, SubmissionSite } from './types';
 import { performSubmissions } from './services/submissionService';
 import { translations } from './translations';
@@ -21,10 +22,14 @@ function App() {
   const [submissionItems, setSubmissionItems] = useState<SubmissionItem[]>([]);
 
   useEffect(() => {
-    if (theme === Theme.Dark) {
-      document.documentElement.classList.add('dark');
+    const html = document.documentElement;
+    html.classList.remove('light', 'dark', 'colorful');
+    html.classList.add(theme);
+    
+    if (theme === Theme.Dark || theme === Theme.Colorful) {
+        html.classList.add('dark');
     } else {
-      document.documentElement.classList.remove('dark');
+        html.classList.remove('dark');
     }
   }, [theme]);
 
@@ -37,7 +42,11 @@ function App() {
   }, [language]);
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === Theme.Light ? Theme.Dark : Theme.Light));
+    setTheme((prevTheme) => {
+        if (prevTheme === Theme.Light) return Theme.Dark;
+        if (prevTheme === Theme.Dark) return Theme.Colorful;
+        return Theme.Light;
+    });
   };
 
   const handleLanguageChange = (lang: string) => {
@@ -171,7 +180,11 @@ function App() {
   const t = translations[language] || translations['en'];
 
   return (
-    <div className="bg-gray-100 dark:bg-gray-900 min-h-screen text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300 flex flex-col">
+    <div className={`min-h-screen font-sans transition-colors duration-500 flex flex-col
+      ${theme === Theme.Light ? 'bg-gray-100 text-gray-900' : ''}
+      ${theme === Theme.Dark ? 'bg-gray-900 text-gray-100' : ''}
+      ${theme === Theme.Colorful ? 'bg-[#0f172a] bg-gradient-to-br from-[#1e1b4b] via-[#312e81] to-[#1e1b4b] text-white' : ''}
+    `}>
       <Header
         theme={theme}
         toggleTheme={toggleTheme}
@@ -181,10 +194,14 @@ function App() {
       />
       <main className="container mx-auto p-4 sm:p-6 lg:p-8 flex-grow">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl sm:text-4xl font-black text-center mb-2 tracking-tight">
-            SEO<span className="text-teal-500">Expert</span>
+          <h1 className="text-4xl sm:text-5xl font-black text-center mb-2 tracking-tighter">
+            <span className={theme === Theme.Colorful ? 'bg-clip-text text-transparent bg-gradient-to-r from-teal-400 via-pink-500 to-yellow-500' : ''}>
+                SEO<span className="text-teal-500">Expert</span>
+            </span>
           </h1>
-          <p className="text-center text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto leading-relaxed">
+          <p className={`text-center mb-8 max-w-2xl mx-auto leading-relaxed
+            ${theme === Theme.Colorful ? 'text-gray-300' : 'text-gray-600 dark:text-gray-400'}
+          `}>
             {t.appSubtitle}
           </p>
 
@@ -200,7 +217,11 @@ function App() {
             onRetryFailed={handleRetryFailed}
           />
 
-          <LogViewer logs={logs} language={language} onClear={clearLogs} />
+          <AdBanner slot="TOP_BANNER_1" />
+
+          <div className={theme === Theme.Colorful ? 'glass-effect p-1 rounded-2xl shadow-2xl' : ''}>
+            <LogViewer logs={logs} language={language} onClear={clearLogs} />
+          </div>
 
           <ManualSubmissionLinks language={language} />
         </div>
@@ -213,6 +234,18 @@ function App() {
       />
 
       <Footer language={language} />
+
+      <style dangerouslySetInnerHTML={{ __html: `
+        .glass-effect {
+          background: rgba(255, 255, 255, 0.03);
+          backdrop-filter: blur(12px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .colorful .glass-effect {
+           background: rgba(49, 46, 129, 0.4);
+           border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+      `}} />
     </div>
   );
 }

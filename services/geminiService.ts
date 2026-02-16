@@ -5,7 +5,7 @@ import { SubmissionSite } from '../types';
 const getGenAIClient = () => {
   if (!process.env.API_KEY) {
     throw new Error(
-      "API_KEY_MISSING: Your Gemini API key is not configured. Please ensure it is set up in your environment variables."
+      "API_KEY_MISSING: Your Gemini API key is not configured. Please ensure it is set up in your environment variables to enable dynamic site discovery."
     );
   }
   return new GoogleGenAI({ apiKey: process.env.API_KEY });
@@ -67,7 +67,7 @@ A valid example is: 'https://www.google.com/ping?sitemap={URL}'.`,
 
     const jsonString = response.text?.trim();
     if (!jsonString) {
-      throw new Error("EMPTY_RESPONSE: The AI returned an empty response.");
+      throw new Error("EMPTY_RESPONSE: The AI returned an empty response. This might be a temporary glitch.");
     }
 
     const parsedResponse = JSON.parse(jsonString);
@@ -75,7 +75,7 @@ A valid example is: 'https://www.google.com/ping?sitemap={URL}'.`,
     if (parsedResponse && Array.isArray(parsedResponse.sites)) {
         return parsedResponse.sites as SubmissionSite[];
     } else {
-        throw new Error("INVALID_FORMAT: The AI response was not in the expected format.");
+        throw new Error("INVALID_FORMAT: The AI response was not in the expected JSON format.");
     }
   } catch (error: any) {
     console.error("Error calling Gemini API:", error);
@@ -86,11 +86,22 @@ A valid example is: 'https://www.google.com/ping?sitemap={URL}'.`,
     if (errorMessage.startsWith('API_KEY_MISSING')) {
       throw error;
     }
-    
-    if (errorMessage.includes("429") || lowerMessage.includes("quota") || lowerMessage.includes("rate limit")) {
-      throw new Error("QUOTA_EXCEEDED: You've reached your Gemini API usage limit.");
+
+    // Handle Authentication Errors (401/403)
+    if (lowerMessage.includes("401") || lowerMessage.includes("403") || lowerMessage.includes("unauthorized") || lowerMessage.includes("invalid api key")) {
+        throw new Error("AUTHENTICATION_ERROR: Your Gemini API key appears to be invalid or expired. Please check your credentials in the environment settings.");
     }
     
-    throw new Error(`API_ERROR: Failed to connect to Gemini. Using local fallback list instead.`);
+    // Handle Rate Limiting (429)
+    if (errorMessage.includes("429") || lowerMessage.includes("quota") || lowerMessage.includes("rate limit")) {
+      throw new Error("QUOTA_EXCEEDED: Gemini API rate limit reached. We'll automatically switch to our built-in backup list of 215+ engines to keep things moving.");
+    }
+
+    // Handle Safety Filters
+    if (lowerMessage.includes("safety") || lowerMessage.includes("blocked")) {
+        throw new Error("SAFETY_BLOCKED: The request was blocked by Gemini's safety filters. Using local fallback list instead.");
+    }
+    
+    throw new Error(`API_ERROR: Failed to connect to Gemini. Don't worry, we're using our high-performance local backup list instead.`);
   }
 };

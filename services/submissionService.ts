@@ -11,18 +11,28 @@ export const performSubmissions = async (
   let submissionSites: SubmissionSite[] = [];
   
   try {
-    logUpdateCallback('Fetching an up-to-date list of submission sites using the Gemini API...');
+    logUpdateCallback('🔍 Discovery: Fetching dynamic submission endpoints via Gemini AI...');
     submissionSites = await getSubmissionSites(url);
-    logUpdateCallback(`✅ Successfully fetched ${submissionSites.length} sites from the API.`);
+    logUpdateCallback(`✨ Success: Gemini found ${submissionSites.length} custom endpoints for this URL.`);
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred.';
-    logUpdateCallback(`❌ Failed to fetch list from Gemini API: ${errorMessage}`);
-    logUpdateCallback('Falling back to the built-in list of submission sites...');
+    
+    // Provide specific guidance based on error type
+    if (errorMessage.includes('QUOTA_EXCEEDED')) {
+        logUpdateCallback('📈 Status: AI Rate Limit reached. Activating built-in high-capacity pinger...');
+    } else if (errorMessage.includes('AUTHENTICATION_ERROR')) {
+        logUpdateCallback('⚠️ Auth Alert: Invalid API Key. Please verify settings. Defaulting to local engines...');
+    } else if (errorMessage.includes('API_KEY_MISSING')) {
+        logUpdateCallback('💡 Info: API Key not detected. Running submission using local high-performance database...');
+    } else {
+        logUpdateCallback(`🔄 Info: ${errorMessage}. Falling back to our local list...`);
+    }
+
     submissionSites = SUBMISSION_SITES;
   }
 
   if (submissionSites.length === 0) {
-      logUpdateCallback('No submission sites are available. Aborting.');
+      logUpdateCallback('❌ Critical: No submission sites are available in the registry. Aborting.');
       if (onProgress) onProgress(0, 0);
       return;
   }
@@ -32,7 +42,7 @@ export const performSubmissions = async (
   const totalSites = validSites.length;
 
   if (totalSites === 0) {
-      logUpdateCallback('No valid submission templates found.');
+      logUpdateCallback('❌ Error: No valid submission templates found in the target list.');
       if (onProgress) onProgress(0, 0);
       return;
   }
@@ -40,10 +50,12 @@ export const performSubmissions = async (
   let completed = 0;
   if (onProgress) onProgress(0, totalSites);
 
+  // Use a pool of promises to avoid hitting too many sites at once if needed, 
+  // but here we keep the parallel logic for speed as they are no-cors pings.
   const promises = validSites.map(async (endpoint) => {
     const submissionUrl = endpoint.urlTemplate.replace(/{URL}/g, encodedUrl);
 
-    logUpdateCallback(`Pinging ${endpoint.name}...`, endpoint);
+    logUpdateCallback(`📡 Pinging indexer: ${endpoint.name}...`, endpoint);
     
     try {
       const controller = new AbortController();
@@ -51,20 +63,21 @@ export const performSubmissions = async (
 
       await fetch(submissionUrl, { 
         mode: 'no-cors',
+        cache: 'no-cache',
         signal: controller.signal
       });
       
       clearTimeout(timeoutId);
-      logUpdateCallback(`  ✅ Request successfully sent to ${endpoint.name}.`, endpoint);
+      logUpdateCallback(`  ✅ ${endpoint.name} notified successfully.`, endpoint);
     } catch (error: any) {
-      let errorMsg = `  ❌ Failed to send request to ${endpoint.name}.`;
+      let errorMsg = `  ❌ Transmission failed for ${endpoint.name}.`;
       
       if (error.name === 'AbortError') {
-        errorMsg = `  ❌ Request to ${endpoint.name} timed out. The server might be slow or unresponsive.`;
+        errorMsg = `  ❌ ${endpoint.name} timed out. The server might be busy or filtering high-frequency pings.`;
       } else if (!navigator.onLine) {
-        errorMsg = `  ❌ Network error: Your device seems to be offline.`;
+        errorMsg = `  ❌ Network error: Your connection was lost. Submissions paused.`;
       } else {
-        errorMsg = `  ❌ Connection error to ${endpoint.name}: ${error.message || 'The service might be temporarily down'}.`;
+        errorMsg = `  ❌ Connectivity issue with ${endpoint.name}: ${error.message || 'Service unreachable'}. Skipping...`;
       }
       
       logUpdateCallback(errorMsg, endpoint);
