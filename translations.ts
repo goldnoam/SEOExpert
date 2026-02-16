@@ -1,7 +1,7 @@
 
 export const translations: { [key: string]: { [key: string]: string } } = {
   en: {
-    appSubtitle: 'Enter one or more URLs to submit to over 115 major search engine ping services for faster indexing.',
+    appSubtitle: 'Enter one or more URLs to submit to over 155 major search engine ping services for faster indexing.',
     submitButton: 'Submit URL(s) to Search Engines',
     submittingButton: 'Submitting...',
     logTitle: 'Submission Log',
@@ -38,10 +38,10 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     submissionSummary: 'Processed: {processed}/{total} • Success: {success} • Failed: {failed}',
     clearSuccessful: 'Clear Successful Items',
     retryFailed: 'Retry Failed',
-    serviceCount: 'Sending to 115+ major services per URL',
+    serviceCount: 'Sending to 155+ major services per URL',
   },
   he: {
-    appSubtitle: 'הזן כתובת URL אחת או יותר לשליחה ליותר מ-115 שירותי פינג של מנועי חיפוש לאינדוקס מהיר יותר.',
+    appSubtitle: 'הזן כתובת URL אחת או יותר לשליחה ליותר מ-155 שירותי פינג של מנועי חיפוש לאינדוקס מהיר יותר.',
     submitButton: 'שלח כתובות URL למנועי חיפוש',
     submittingButton: 'שולח...',
     logTitle: 'יומן שליחות',
@@ -78,10 +78,10 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     submissionSummary: 'עובדו: {processed}/{total} • הצליחו: {success} • נכשלו: {failed}',
     clearSuccessful: 'נקה פריטים שהצליחו',
     retryFailed: 'נסה שוב נכשלים',
-    serviceCount: 'שולח ל-115+ שירותים לכל URL',
+    serviceCount: 'שולח ל-155+ שירותים לכל URL',
   },
   es: {
-    appSubtitle: 'Ingrese una o más URLs para enviarlas a más de 115 servicios de ping de motores de búsqueda para una indexación más rápida.',
+    appSubtitle: 'Ingrese una o más URLs para enviarlas a más de 155 servicios de ping de motores de búsqueda para una indexación más rápida.',
     submitButton: 'Enviar URL(s) a los motores de búsqueda',
     submittingButton: 'Enviando...',
     logTitle: 'Registro de envíos',
@@ -118,10 +118,10 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     submissionSummary: 'Procesados: {processed}/{total} • Éxito: {success} • Fallido: {failed}',
     clearSuccessful: 'Limpiar elementos exitosos',
     retryFailed: 'Reintentar fallidos',
-    serviceCount: 'Enviando a 115+ servicios por URL',
+    serviceCount: 'Enviando a 155+ servicios por URL',
   },
   fr: {
-    appSubtitle: 'Entrez une ou plusieurs URL à soumettre à plus de 115 services de ping des moteurs de recherche pour une indexation plus rapide.',
+    appSubtitle: 'Entrez une ou plusieurs URL à soumettre à plus de 155 services de ping des moteurs de recherche pour une indexation plus rapide.',
     submitButton: 'Soumettre les URL aux moteurs de recherche',
     submittingButton: 'Soumission en cours...',
     logTitle: 'Journal de soumission',
@@ -158,10 +158,10 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     submissionSummary: 'Traités : {processed}/{total} • Succès : {success} • Échec : {failed}',
     clearSuccessful: 'Effacer les éléments réussis',
     retryFailed: 'Réessayer les échecs',
-    serviceCount: 'Envoi à 115+ services par URL',
+    serviceCount: 'Envoi à 155+ services par URL',
   },
   de: {
-    appSubtitle: 'Geben Sie URLs ein, um sie zur schnelleren Indizierung an über 115 Suchmaschinen-Ping-Dienste zu senden.',
+    appSubtitle: 'Geben Sie URLs ein, um sie zur schnelleren Indizierung an über 155 Suchmaschinen-Ping-Dienste zu senden.',
     submitButton: 'URL(s) an Suchmaschinen senden',
     submittingButton: 'Wird gesendet...',
     logTitle: 'Übermittlungsprotokoll',
@@ -198,10 +198,10 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     submissionSummary: 'Verarbeitet: {processed}/{total} • Erfolg: {success} • Fehler: {failed}',
     clearSuccessful: 'Erfolgreiche Elemente löschen',
     retryFailed: 'Fehlgeschlagene wiederholen',
-    serviceCount: 'Sendet an 115+ Dienste pro URL',
+    serviceCount: 'Sendet an 155+ Dienste pro URL',
   },
   ja: {
-    appSubtitle: 'インデックス登録を高速化するために、115以上の主要な検索エンジンのpingサービスにURLを送信します。',
+    appSubtitle: 'インデックス登録を高速化するために、155以上の主要な検索エンジンのpingサービスにURLを送信します。',
     submitButton: '検索エンジンにURLを送信',
     submittingButton: '送信中...',
     logTitle: '送信ログ',
@@ -238,6 +238,6 @@ export const translations: { [key: string]: { [key: string]: string } } = {
     submissionSummary: '処理済み: {processed}/{total} • 成功: {success} • 失敗: {failed}',
     clearSuccessful: '成功した項目をクリア',
     retryFailed: '失敗した項目を再試行',
-    serviceCount: 'URLあたり115個以上のサービスに送信中',
+    serviceCount: 'URLあたり155個以上のサービスに送信中',
   },
 };

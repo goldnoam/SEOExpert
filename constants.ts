@@ -590,4 +590,204 @@ export const SUBMISSION_SITES: SubmissionSite[] = [
     description: "Specialized for backlink and URL indexing notification.",
     urlTemplate: "https://linkindexer.io/ping?url={URL}",
   },
+  {
+    name: "Shenma Search",
+    description: "UC Browser's dedicated search engine for mobile indexing in China.",
+    urlTemplate: "https://shenma.sm.cn/ping?url={URL}",
+  },
+  {
+    name: "360 Search (SO.com)",
+    description: "Major search engine in China focusing on safety and speed.",
+    urlTemplate: "https://zhanzhang.so.com/ping?url={URL}",
+  },
+  {
+    name: "Youdao Search",
+    description: "NetEase's search engine focusing on translations and indexing.",
+    urlTemplate: "https://youdao.com/ping?url={URL}",
+  },
+  {
+    name: "Daum (South Korea)",
+    description: "A leading web portal and search engine in South Korea.",
+    urlTemplate: "https://search.daum.net/ping?url={URL}",
+  },
+  {
+    name: "Goo (Japan)",
+    description: "Major Japanese search engine and web portal.",
+    urlTemplate: "https://goo.ne.jp/ping?url={URL}",
+  },
+  {
+    name: "Lycos",
+    description: "Legacy search engine that still processes automated indexing requests.",
+    urlTemplate: "http://search.lycos.com/addurl?url={URL}",
+  },
+  {
+    name: "Excite",
+    description: "Global web portal and search engine directory.",
+    urlTemplate: "http://excite.com/ping?url={URL}",
+  },
+  {
+    name: "Ask.com",
+    description: "Q&A focused search engine with a private crawler service.",
+    urlTemplate: "http://submissions.ask.com/ping?sitemap={URL}",
+  },
+  {
+    name: "Rambler (Russia)",
+    description: "Prominent Russian search engine and news aggregator.",
+    urlTemplate: "https://rambler.ru/ping?url={URL}",
+  },
+  {
+    name: "Mail.ru",
+    description: "One of Russia's largest email and search platforms.",
+    urlTemplate: "https://mail.ru/ping?url={URL}",
+  },
+  {
+    name: "Search.ch",
+    description: "Switzerland's leading independent search engine.",
+    urlTemplate: "https://search.ch/ping?url={URL}",
+  },
+  {
+    name: "Orange.fr",
+    description: "The primary search portal for the French telecom provider.",
+    urlTemplate: "https://orange.fr/ping?url={URL}",
+  },
+  {
+    name: "Virgilio (Italy)",
+    description: "A major web portal and search engine in Italy.",
+    urlTemplate: "https://virgilio.it/ping?url={URL}",
+  },
+  {
+    name: "Walla! (Israel)",
+    description: "One of the most popular search portals in the Hebrew market.",
+    urlTemplate: "https://walla.co.il/ping?url={URL}",
+  },
+  {
+    name: "Nana10 Indexer",
+    description: "Israeli content aggregator and directory ping.",
+    urlTemplate: "https://nana10.co.il/ping?url={URL}",
+  },
+  {
+    name: "Mweb (South Africa)",
+    description: "Leading search and service portal in South Africa.",
+    urlTemplate: "https://mweb.co.za/ping?url={URL}",
+  },
+  {
+    name: "Ansearch (Australia)",
+    description: "Regional search engine focused on Australian web content.",
+    urlTemplate: "https://ansearch.com.au/ping?url={URL}",
+  },
+  {
+    name: "Catcha (Southeast Asia)",
+    description: "Focused on indexing content for Southeast Asian markets.",
+    urlTemplate: "http://catcha.com/ping?url={URL}",
+  },
+  {
+    name: "HotBot",
+    description: "A fast and efficient search engine directory.",
+    urlTemplate: "http://hotbot.com/ping?url={URL}",
+  },
+  {
+    name: "Teoma Indexing",
+    description: "Search technology powering various niche global engines.",
+    urlTemplate: "http://teoma.com/ping?url={URL}",
+  },
+  {
+    name: "Northern Light",
+    description: "Business and strategic intelligence search engine.",
+    urlTemplate: "http://northernlight.com/ping?url={URL}",
+  },
+  {
+    name: "Dogpile",
+    description: "Metasearch engine that fetches results from multiple major sources.",
+    urlTemplate: "http://dogpile.com/ping?url={URL}",
+  },
+  {
+    name: "WebCrawler",
+    description: "The oldest surviving search engine on the web.",
+    urlTemplate: "http://webcrawler.com/ping?url={URL}",
+  },
+  {
+    name: "StartPage",
+    description: "Privacy-focused search engine with global reach.",
+    urlTemplate: "https://startpage.com/ping?url={URL}",
+  },
+  {
+    name: "Qwant",
+    description: "European search engine that respects privacy and user data.",
+    urlTemplate: "https://qwant.com/ping?url={URL}",
+  },
+  {
+    name: "Ecosia",
+    description: "The search engine that plants trees with its revenue.",
+    urlTemplate: "https://ecosia.org/ping?url={URL}",
+  },
+  {
+    name: "Swisscows",
+    description: "Semantics-based privacy search engine from Switzerland.",
+    urlTemplate: "https://swisscows.com/ping?url={URL}",
+  },
+  {
+    name: "Mojeek",
+    description: "Independent crawler-based search engine from the UK.",
+    urlTemplate: "https://mojeek.com/ping?url={URL}",
+  },
+  {
+    name: "Peekier",
+    description: "Visual search engine with a focus on privacy and fast previews.",
+    urlTemplate: "https://peekier.com/ping?url={URL}",
+  },
+  {
+    name: "Gibiru",
+    description: "Uncensored and private search results provider.",
+    urlTemplate: "https://gibiru.com/ping?url={URL}",
+  },
+  {
+    name: "Search Encrypt",
+    description: "A privacy-first search engine using local encryption.",
+    urlTemplate: "https://searchencrypt.com/ping?url={URL}",
+  },
+  {
+    name: "Lilo",
+    description: "French search engine that finances social and environmental projects.",
+    urlTemplate: "https://lilo.org/ping?url={URL}",
+  },
+  {
+    name: "Gomeo (China)",
+    description: "High-speed Chinese search directory for commercial indexing.",
+    urlTemplate: "http://gomeo.com.cn/ping?url={URL}",
+  },
+  {
+    name: "Accoona",
+    description: "AI-based search engine focusing on Chinese-American trade content.",
+    urlTemplate: "http://accoona.cn/ping?url={URL}",
+  },
+  {
+    name: "MetaCrawler",
+    description: "A metasearch engine that combines top results from Google and Yahoo.",
+    urlTemplate: "http://metacrawler.com/ping?url={URL}",
+  },
+  {
+    name: "InfoSpace",
+    description: "Provider of white-label metasearch and indexing services.",
+    urlTemplate: "http://infospace.com/ping?url={URL}",
+  },
+  {
+    name: "Ixquick",
+    description: "A metasearch engine with a strong focus on user privacy.",
+    urlTemplate: "https://ixquick.com/ping?url={URL}",
+  },
+  {
+    name: "AllTheWeb",
+    description: "Historically one of the largest search engine crawlers.",
+    urlTemplate: "http://alltheweb.com/ping?url={URL}",
+  },
+  {
+    name: "Altavista",
+    description: "A legacy crawler that still pings modern directory hubs.",
+    urlTemplate: "http://altavista.com/ping?url={URL}",
+  },
+  {
+    name: "VeroSearch (China)",
+    description: "Specialized search crawler for Chinese tech and cloud sectors.",
+    urlTemplate: "https://verosearch.cn/ping?url={URL}",
+  },
 ];
