@@ -15,7 +15,6 @@ import { ClockIcon } from './icons/ClockIcon';
 import { SubmissionItem } from '../types';
 import { SUBMISSION_SITES } from '../constants';
 
-// Robust URL regex: Ensures http or https prefix and valid characters
 const URL_REGEX = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/;
 
 interface UrlInputProps {
@@ -46,7 +45,6 @@ export const UrlInput: React.FC<UrlInputProps> = ({
   const [copyBtnSuccess, setCopyBtnSuccess] = useState(false);
   const [reportCopySuccess, setReportCopySuccess] = useState(false);
 
-  // Counter for valid URLs
   const validUrlCount = useMemo(() => {
     return urls.split('\n')
       .map(u => u.trim())
@@ -118,7 +116,6 @@ export const UrlInput: React.FC<UrlInputProps> = ({
     URL.revokeObjectURL(url);
   };
 
-  // RENDER: Progress View
   if (submissionItems.length > 0) {
     const successCount = submissionItems.filter(i => i.status === 'success').length;
     const failureCount = submissionItems.filter(i => i.status === 'failed').length;
@@ -165,10 +162,13 @@ export const UrlInput: React.FC<UrlInputProps> = ({
             <div key={item.id} className="bg-gray-50/50 dark:bg-gray-900/40 p-4 rounded-xl border border-gray-100 dark:border-gray-700 transition-all hover:border-teal-500/30 group/item">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center space-x-3 rtl:space-x-reverse overflow-hidden">
-                  {item.status === 'pending' && <ClockIcon className="w-5 h-5 text-gray-400" />}
-                  {item.status === 'processing' && <div className="w-5 h-5 border-2 border-teal-500 border-t-transparent rounded-full animate-spin"></div>}
-                  {item.status === 'success' && <CheckCircleIcon className="w-5 h-5 text-green-500" />}
-                  {item.status === 'failed' && <XCircleIcon className="w-5 h-5 text-red-500" />}
+                  <div className="shrink-0 relative">
+                    {item.favicon ? (
+                      <img src={item.favicon} alt="" className="w-5 h-5 rounded-sm shadow-sm" onError={(e) => (e.currentTarget.style.display = 'none')} />
+                    ) : (
+                      <div className="w-5 h-5 bg-gray-200 dark:bg-gray-700 rounded-sm"></div>
+                    )}
+                  </div>
                   <div className="flex flex-col min-w-0">
                     <span className="text-sm font-bold truncate text-gray-800 dark:text-gray-200" title={item.url}>{item.url}</span>
                     <div className="flex items-center gap-2">
@@ -187,11 +187,17 @@ export const UrlInput: React.FC<UrlInputProps> = ({
                     </div>
                   </div>
                 </div>
-                <div className="text-xs font-black text-teal-600 dark:text-teal-400 tabular-nums">
-                  {item.progress}%
+                <div className="flex items-center gap-2">
+                  {item.status === 'pending' && <ClockIcon className="w-4 h-4 text-gray-400" />}
+                  {item.status === 'processing' && <div className="w-4 h-4 border-2 border-teal-500 border-t-transparent rounded-full animate-spin"></div>}
+                  {item.status === 'success' && <CheckCircleIcon className="w-4 h-4 text-green-500" />}
+                  {item.status === 'failed' && <XCircleIcon className="w-4 h-4 text-red-500" />}
+                  <div className="text-xs font-black text-teal-600 dark:text-teal-400 tabular-nums">
+                    {item.progress}%
+                  </div>
                 </div>
               </div>
-              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden shadow-inner relative">
+              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 overflow-hidden shadow-inner relative">
                 <div 
                   className={`h-full transition-all duration-700 ease-out shadow-sm relative overflow-hidden ${item.status === 'failed' ? 'bg-red-500' : 'bg-teal-500'}`}
                   style={{ width: `${item.progress}%` }}
@@ -200,13 +206,6 @@ export const UrlInput: React.FC<UrlInputProps> = ({
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer" style={{ backgroundSize: '200% 100%' }}></div>
                     )}
                 </div>
-                {item.status === 'processing' && (
-                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <span className="text-[9px] font-black text-white mix-blend-difference uppercase tracking-widest">
-                        {item.completedServices} / {item.totalServices} PINGS
-                      </span>
-                   </div>
-                )}
               </div>
             </div>
           ))}
@@ -241,13 +240,11 @@ export const UrlInput: React.FC<UrlInputProps> = ({
     );
   }
 
-  // RENDER: Input View
   const dropzoneStyles = `relative group border-2 border-dashed rounded-3xl p-6 mb-6 transition-all duration-500 ease-out
-    ${isDragActive ? 'border-teal-500 bg-teal-50/50 dark:bg-teal-900/10 scale-[1.01]' : error ? 'border-red-500 bg-red-50/20' : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-xl'}`;
+    ${isDragActive ? 'border-teal-500 bg-teal-50/80 dark:bg-teal-900/20 ring-4 ring-teal-500/10 scale-[1.02]' : error ? 'border-red-500 bg-red-50/20' : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-xl'}`;
 
   return (
     <div className="mb-8">
-      {/* Prominent URL counter */}
       <div className="flex items-center justify-between mb-3 px-1">
         <div className="flex items-center gap-2">
            <div className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2 shadow-sm border ${validUrlCount > 0 ? 'bg-teal-100 text-teal-700 border-teal-200 dark:bg-teal-900/40 dark:text-teal-300 dark:border-teal-800' : 'bg-gray-100 text-gray-500 border-gray-200 dark:bg-gray-800 dark:text-gray-500 dark:border-gray-700'}`}>
@@ -261,9 +258,11 @@ export const UrlInput: React.FC<UrlInputProps> = ({
         <input {...getInputProps()} />
         
         {isDragActive && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-teal-500/10 backdrop-blur-[4px] z-20 rounded-3xl">
-            <UploadIcon className="w-16 h-16 text-teal-500 mb-3 animate-bounce" />
-            <p className="text-xl font-black text-teal-600 dark:text-teal-400 uppercase tracking-widest">{t.dragActiveHint}</p>
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-teal-500/20 backdrop-blur-[2px] z-20 rounded-3xl animate-pulse">
+            <div className="p-4 bg-teal-500 rounded-full shadow-2xl mb-3">
+              <UploadIcon className="w-12 h-12 text-white" />
+            </div>
+            <p className="text-xl font-black text-teal-600 dark:text-teal-400 uppercase tracking-widest drop-shadow-sm">{t.dragActiveHint}</p>
           </div>
         )}
 
@@ -279,9 +278,7 @@ export const UrlInput: React.FC<UrlInputProps> = ({
               disabled={isSubmitting}
             />
             
-            {/* Inner Bottom Controls */}
             <div className="absolute bottom-3 left-4 right-4 flex justify-between items-center">
-              {/* Character Counter */}
               <div className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-tighter bg-gray-100/50 dark:bg-gray-800/50 px-2 py-1 rounded-lg backdrop-blur-sm">
                 {urls.length} Chars
               </div>

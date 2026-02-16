@@ -20,6 +20,7 @@ export interface SubmissionItem {
   completedServices?: number;
   totalServices?: number;
   lastServicePinger?: string;
+  favicon?: string;
 }
 
 export interface LogEntry {
@@ -27,4 +28,5 @@ export interface LogEntry {
   timestamp: number;
   message: string;
   siteDescription?: string;
+  urlFavicon?: string;
 }

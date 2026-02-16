@@ -45,14 +45,24 @@ function App() {
     setLanguage(lang);
   };
 
-  const logUpdateCallback = useCallback((message: string, site?: SubmissionSite) => {
+  const getFavicon = (url: string) => {
+    try {
+      const domain = new URL(url).hostname;
+      return `https://www.google.com/s2/favicons?sz=64&domain_url=${domain}`;
+    } catch {
+      return undefined;
+    }
+  };
+
+  const logUpdateCallback = useCallback((message: string, site?: SubmissionSite, urlFavicon?: string) => {
     setLogs((prevLogs) => [
       ...prevLogs, 
       { 
         id: Math.random().toString(36).substr(2, 9),
         timestamp: Date.now(),
         message,
-        siteDescription: site?.description 
+        siteDescription: site?.description,
+        urlFavicon
       }
     ]);
   }, []);
@@ -78,6 +88,7 @@ function App() {
 
     for (let i = 0; i < itemsToSubmit.length; i++) {
       const item = itemsToSubmit[i];
+      const favicon = getFavicon(item.url);
       
       if (i > 0) {
          await new Promise(resolve => setTimeout(resolve, SUBMISSION_DELAY));
@@ -87,12 +98,12 @@ function App() {
         p.id === item.id ? { ...p, status: 'processing', progress: 0, completedServices: 0 } : p
       ));
 
-      logUpdateCallback(`\n--- Submitting: ${item.url} ---`);
+      logUpdateCallback(`\n--- Submitting: ${item.url} ---`, undefined, favicon);
       
       try {
         await performSubmissions(
           item.url, 
-          logUpdateCallback,
+          (msg, site) => logUpdateCallback(msg, site, favicon),
           (current, total, lastSite) => {
             const percentage = total > 0 ? Math.round((current / total) * 100) : 100;
             setSubmissionItems(prev => prev.map(p => 
@@ -112,7 +123,7 @@ function App() {
         ));
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred.';
-        logUpdateCallback(`❌ Error submitting ${item.url}: ${errorMessage}`);
+        logUpdateCallback(`❌ Error submitting ${item.url}: ${errorMessage}`, undefined, favicon);
         
         setSubmissionItems(prev => prev.map(p => 
             p.id === item.id ? { ...p, status: 'failed', progress: 100 } : p
@@ -137,6 +148,7 @@ function App() {
       url,
       status: 'pending',
       progress: 0,
+      favicon: getFavicon(url)
     }));
     
     setSubmissionItems(newItems);
