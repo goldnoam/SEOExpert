@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { translations } from '../translations';
 
@@ -11,7 +12,7 @@ export const Footer: React.FC<FooterProps> = ({ language }) => {
   return (
     <footer className="text-center p-4 mt-auto border-t border-gray-200 dark:border-gray-700">
       <p className="text-sm text-gray-500 dark:text-gray-400">
-        © NOAM GOLD AI 2025 |{' '}
+        © NOAM GOLD AI 2026 |{' '}
         <a
           href="mailto:goldnoamai@gmail.com?subject=SEOExpert%20Feedback"
           className="text-teal-600 dark:text-teal-400 hover:underline"

@@ -116,6 +116,15 @@ export const UrlInput: React.FC<UrlInputProps> = ({
     URL.revokeObjectURL(url);
   };
 
+  const getDomainInitial = (url: string) => {
+    try {
+      const host = new URL(url).hostname.replace('www.', '');
+      return host.charAt(0).toUpperCase();
+    } catch {
+      return '?';
+    }
+  };
+
   if (submissionItems.length > 0) {
     const successCount = submissionItems.filter(i => i.status === 'success').length;
     const failureCount = submissionItems.filter(i => i.status === 'failed').length;
@@ -163,11 +172,22 @@ export const UrlInput: React.FC<UrlInputProps> = ({
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center space-x-3 rtl:space-x-reverse overflow-hidden">
                   <div className="shrink-0 relative">
-                    {item.favicon ? (
-                      <img src={item.favicon} alt="" className="w-5 h-5 rounded-sm shadow-sm" onError={(e) => (e.currentTarget.style.display = 'none')} />
-                    ) : (
-                      <div className="w-5 h-5 bg-gray-200 dark:bg-gray-700 rounded-sm"></div>
-                    )}
+                    <div className="w-6 h-6 rounded-md bg-gray-100 dark:bg-gray-700 flex items-center justify-center overflow-hidden border border-gray-200 dark:border-gray-600">
+                        {item.favicon ? (
+                            <img 
+                                src={item.favicon} 
+                                alt="" 
+                                className="w-full h-full object-cover" 
+                                onError={(e) => {
+                                    e.currentTarget.style.display = 'none';
+                                    e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                                }} 
+                            />
+                        ) : null}
+                        <span className={`text-[10px] font-black text-teal-600 dark:text-teal-400 ${item.favicon ? 'hidden' : ''}`}>
+                            {getDomainInitial(item.url)}
+                        </span>
+                    </div>
                   </div>
                   <div className="flex flex-col min-w-0">
                     <span className="text-sm font-bold truncate text-gray-800 dark:text-gray-200" title={item.url}>{item.url}</span>
@@ -240,8 +260,8 @@ export const UrlInput: React.FC<UrlInputProps> = ({
     );
   }
 
-  const dropzoneStyles = `relative group border-2 border-dashed rounded-3xl p-6 mb-6 transition-all duration-500 ease-out
-    ${isDragActive ? 'border-teal-500 bg-teal-50/80 dark:bg-teal-900/20 ring-4 ring-teal-500/10 scale-[1.02]' : error ? 'border-red-500 bg-red-50/20' : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-xl'}`;
+  const dropzoneStyles = `relative group border-4 border-dashed rounded-3xl p-6 mb-6 transition-all duration-500 ease-out overflow-hidden
+    ${isDragActive ? 'border-teal-500 bg-teal-50/90 dark:bg-teal-900/40 ring-8 ring-teal-500/10 scale-[1.03] shadow-2xl' : error ? 'border-red-500 bg-red-50/20' : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-xl'}`;
 
   return (
     <div className="mb-8">
@@ -258,15 +278,20 @@ export const UrlInput: React.FC<UrlInputProps> = ({
         <input {...getInputProps()} />
         
         {isDragActive && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-teal-500/20 backdrop-blur-[2px] z-20 rounded-3xl animate-pulse">
-            <div className="p-4 bg-teal-500 rounded-full shadow-2xl mb-3">
-              <UploadIcon className="w-12 h-12 text-white" />
+          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none">
+            {/* Animated Scanner Bar */}
+            <div className="absolute inset-0 bg-teal-500/5 animate-pulse"></div>
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-teal-400 to-transparent animate-scan"></div>
+            
+            <div className="p-6 bg-teal-500 text-white rounded-full shadow-[0_0_50px_rgba(20,184,166,0.5)] mb-4 animate-bounce-slow">
+              <UploadIcon className="w-14 h-14" />
             </div>
-            <p className="text-xl font-black text-teal-600 dark:text-teal-400 uppercase tracking-widest drop-shadow-sm">{t.dragActiveHint}</p>
+            <p className="text-2xl font-black text-teal-600 dark:text-teal-300 uppercase tracking-[0.2em] drop-shadow-md">{t.dragActiveHint}</p>
+            <p className="mt-2 text-[10px] font-bold text-teal-500/70 uppercase tracking-widest">Supports .txt files and paste</p>
           </div>
         )}
 
-        <div className={isDragActive ? 'opacity-20 blur-sm pointer-events-none' : ''}>
+        <div className={isDragActive ? 'opacity-0 blur-xl scale-95 transition-all duration-300' : 'transition-all duration-300'}>
           <p className="text-center text-gray-400 dark:text-gray-500 text-xs mb-5 font-black uppercase tracking-[0.2em]">{t.dropzoneHint}</p>
           <div className="relative group/field">
             <textarea
@@ -331,6 +356,21 @@ export const UrlInput: React.FC<UrlInputProps> = ({
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-teal-400 to-teal-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
       </button>
+
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes scan {
+          0% { top: 0%; opacity: 0; }
+          5% { opacity: 1; }
+          95% { opacity: 1; }
+          100% { top: 100%; opacity: 0; }
+        }
+        .animate-scan {
+          animation: scan 1.5s linear infinite;
+        }
+        .animate-bounce-slow {
+          animation: bounce 2s infinite;
+        }
+      `}} />
     </div>
   );
 };

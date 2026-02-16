@@ -17,13 +17,19 @@ export const getSubmissionSites = async (url: string): Promise<SubmissionSite[]>
 
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
-      contents: `Generate a list of the top 10-15 major search engine *programmatic ping services* for submitting a URL for indexing. The endpoints provided MUST be callable directly from a web browser's 'fetch' API in 'no-cors' mode.
+      contents: `Generate a highly comprehensive list of the top 25-30 major search engine *programmatic ping services* or indexing endpoints for submitting a URL for SEO. 
 
-For each service, provide its name, a brief one-sentence description, and the exact ping URL template. The template must be a direct API endpoint for automated submissions and contain '{URL}' as a placeholder for the URL to be submitted.
+The endpoints provided MUST be callable directly from a web browser using 'fetch' in 'no-cors' mode.
+For each service, provide:
+1. 'name': The name of the search engine or service.
+2. 'description': A brief one-sentence explanation of its SEO value.
+3. 'urlTemplate': The direct HTTPS API ping URL containing '{URL}' as a placeholder.
 
-**Crucially, all endpoints MUST use the HTTPS protocol.** Do NOT include any HTTP URLs.
-Endpoints should ideally respond to a simple GET request without requiring a request body or complex headers.
-Do NOT include links to web pages, user dashboards, sitemap submission forms, or any URL that requires manual user interaction.
+**Rules:**
+- ONLY include HTTPS endpoints.
+- NO manual forms or HTML pages.
+- Focus on global search engines (Google, Bing, Baidu, Yandex, etc.), major blog aggregators, and real-time indexing hubs.
+- Ensure the list is as diverse as possible to maximize indexing speed across different regions.
 
 A valid example is: 'https://www.google.com/ping?sitemap={URL}'.`,
       config: {
@@ -33,21 +39,21 @@ A valid example is: 'https://www.google.com/ping?sitemap={URL}'.`,
           properties: {
             sites: {
               type: Type.ARRAY,
-              description: "A list of SEO submission sites.",
+              description: "A large list of SEO submission sites.",
               items: {
                 type: Type.OBJECT,
                 properties: {
                   name: {
                     type: Type.STRING,
-                    description: "The name of the search engine or service.",
+                    description: "The name of the service.",
                   },
                   description: {
                     type: Type.STRING,
-                    description: "A brief one-sentence description of the service.",
+                    description: "What the service does.",
                   },
                   urlTemplate: {
                     type: Type.STRING,
-                    description: "The ping service URL template with a {URL} placeholder.",
+                    description: "The ping URL with {URL} placeholder.",
                   },
                 },
                 required: ["name", "description", "urlTemplate"],
@@ -81,23 +87,10 @@ A valid example is: 'https://www.google.com/ping?sitemap={URL}'.`,
       throw error;
     }
     
-    // Differentiate between common Gemini error codes
     if (errorMessage.includes("429") || lowerMessage.includes("quota") || lowerMessage.includes("rate limit")) {
-      throw new Error("QUOTA_EXCEEDED: You've reached your Gemini API usage limit. Please wait a few minutes or switch to a paid plan.");
+      throw new Error("QUOTA_EXCEEDED: You've reached your Gemini API usage limit.");
     }
     
-    if (errorMessage.includes("403") || lowerMessage.includes("api key not valid") || lowerMessage.includes("unauthorized")) {
-      throw new Error("INVALID_KEY: The Gemini API key provided is invalid or has expired. Please check your API key settings.");
-    }
-
-    if (errorMessage.includes("500") || errorMessage.includes("503") || lowerMessage.includes("internal error") || lowerMessage.includes("overloaded")) {
-      throw new Error("SERVER_ERROR: Google's AI servers are currently experiencing issues or are overloaded. Please try again later.");
-    }
-
-    if (lowerMessage.includes("fetch")) {
-      throw new Error("NETWORK_ERROR: Unable to reach Gemini servers. Please check your internet connection.");
-    }
-
-    throw new Error(`API_ERROR: Failed to connect to Gemini (${errorMessage}). Using local fallback list instead.`);
+    throw new Error(`API_ERROR: Failed to connect to Gemini. Using local fallback list instead.`);
   }
 };

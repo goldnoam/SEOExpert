@@ -410,4 +410,184 @@ export const SUBMISSION_SITES: SubmissionSite[] = [
     description: "Simulates bot activity to trigger natural crawling cycles.",
     urlTemplate: "https://seospider.com/ping?url={URL}",
   },
+  {
+    name: "MyPagerank Ping",
+    description: "SEO utility to ping your new content to major directories.",
+    urlTemplate: "http://www.mypagerank.net/ping_website.php?url={URL}",
+  },
+  {
+    name: "LinkPinger.com",
+    description: "Free automated search engine submission tool.",
+    urlTemplate: "http://linkpinger.com/ping.php?url={URL}",
+  },
+  {
+    name: "SubmitExpress Ping",
+    description: "Wide-reaching submission tool for faster web indexing.",
+    urlTemplate: "https://www.submitexpress.com/free-submission.html?url={URL}",
+  },
+  {
+    name: "Pingler.net",
+    description: "A free service to alert search engines that your site has been updated.",
+    urlTemplate: "https://pingler.com/ping/?url={URL}",
+  },
+  {
+    name: "Backlink Watch Ping",
+    description: "Indexes new backlinks and pages by pinging crawlers.",
+    urlTemplate: "http://www.backlinkwatch.com/ping.php?url={URL}",
+  },
+  {
+    name: "PingCrawl Indexer",
+    description: "Niche service for notifying crawlers about new site paths.",
+    urlTemplate: "https://pingcrawl.com/ping?url={URL}",
+  },
+  {
+    name: "Express Indexer Pro",
+    description: "High-performance backlink indexing service.",
+    urlTemplate: "https://expressindexer.solutions/ping?url={URL}",
+  },
+  {
+    name: "FastIndex.top",
+    description: "Automated search engine notification for instant indexing.",
+    urlTemplate: "https://fastindex.top/ping?url={URL}",
+  },
+  {
+    name: "Instant Link Indexer",
+    description: "Cloud-based indexing solution for bulk URL lists.",
+    urlTemplate: "https://instantlinkindexer.com/api/ping?url={URL}",
+  },
+  {
+    name: "Backlink Indexer",
+    description: "Specialized tool to get your links indexed in Google.",
+    urlTemplate: "https://backlinkindexer.net/ping?url={URL}",
+  },
+  {
+    name: "Turbo Indexer",
+    description: "Fastest way to get your content seen by search bots.",
+    urlTemplate: "https://turboindexer.com/ping?url={URL}",
+  },
+  {
+    name: "Magic Indexer",
+    description: "Automated submission tool for search engines and directories.",
+    urlTemplate: "https://magicindexer.com/ping?url={URL}",
+  },
+  {
+    name: "AddMe Submission",
+    description: "One of the oldest free site submission services.",
+    urlTemplate: "https://www.addme.com/submission.htm?url={URL}",
+  },
+  {
+    name: "SubmitURL.org",
+    description: "Simple ping service for new web pages.",
+    urlTemplate: "http://submiturl.org/ping?url={URL}",
+  },
+  {
+    name: "PingDirect.net",
+    description: "Direct-to-crawler notification for rapid indexing.",
+    urlTemplate: "https://pingdirect.net/ping?url={URL}",
+  },
+  {
+    name: "IndexSpeed.io",
+    description: "Maximizes indexing speed via distributed pinging.",
+    urlTemplate: "https://indexspeed.io/ping?url={URL}",
+  },
+  {
+    name: "WebMaster.coffee Ping",
+    description: "SEO tool suite for webmasters and blog owners.",
+    urlTemplate: "https://webmaster.coffee/ping?url={URL}",
+  },
+  {
+    name: "AuditMyPc Indexer",
+    description: "Specialized crawler notification for site structure changes.",
+    urlTemplate: "http://www.auditmypc.com/ping?url={URL}",
+  },
+  {
+    name: "LinkCentaur v2",
+    description: "Upgraded indexing service for modern web URLs.",
+    urlTemplate: "https://www.linkcentaur.com/ping-v2?url={URL}",
+  },
+  {
+    name: "Colinkri Indexing",
+    description: "Automated search engine recognition for backlink profiles.",
+    urlTemplate: "https://colinkri.com/api/ping?url={URL}",
+  },
+  {
+    name: "Indexer.pro",
+    description: "Professional URL indexing and pinging utility.",
+    urlTemplate: "https://indexer.pro/ping?url={URL}",
+  },
+  {
+    name: "Google News Hub",
+    description: "Specific notification for Google's news discovery service.",
+    urlTemplate: "https://www.google.com/ping?url={URL}&type=news",
+  },
+  {
+    name: "BulkPing.cc",
+    description: "High-volume pinging for large-scale content updates.",
+    urlTemplate: "https://bulkping.cc/ping?url={URL}",
+  },
+  {
+    name: "Indexer.pw",
+    description: "Efficient URL notification for rapid search engine pings.",
+    urlTemplate: "https://indexer.pw/api/ping?url={URL}",
+  },
+  {
+    name: "RapidIndexing.com",
+    description: "Accelerated crawling notification for new web assets.",
+    urlTemplate: "https://rapidindexing.com/ping?url={URL}",
+  },
+  {
+    name: "SEO-Ping.com",
+    description: "Dedicated SEO service for alerting indexers of site updates.",
+    urlTemplate: "https://seo-ping.com/ping?url={URL}",
+  },
+  {
+    name: "LinkVibe Indexer",
+    description: "Notifies social and search crawlers about new link activity.",
+    urlTemplate: "https://linkvibe.net/ping?url={URL}",
+  },
+  {
+    name: "Pingo.io",
+    description: "Modern, low-latency ping service for web developers.",
+    urlTemplate: "https://pingo.io/api/ping?url={URL}",
+  },
+  {
+    name: "PingAll.net",
+    description: "Universal pinging solution covering major search directories.",
+    urlTemplate: "https://pingall.net/ping?url={URL}",
+  },
+  {
+    name: "CrawlMe.link",
+    description: "Direct crawler request service for new page discovery.",
+    urlTemplate: "https://crawlme.link/ping?url={URL}",
+  },
+  {
+    name: "SiteNotifier.org",
+    description: "Alerts search engines and aggregators of site changes.",
+    urlTemplate: "https://sitenotifier.org/ping?url={URL}",
+  },
+  {
+    name: "Webmaster.io Ping",
+    description: "Webmaster tool for initiating search engine crawls.",
+    urlTemplate: "https://webmaster.io/ping?url={URL}",
+  },
+  {
+    name: "Pingler.biz",
+    description: "Alternative entry point for search engine notifications.",
+    urlTemplate: "https://pingler.biz/ping?url={URL}",
+  },
+  {
+    name: "SeoPingler.com",
+    description: "Dedicated portal for mass search engine submissions.",
+    urlTemplate: "https://seopingler.com/ping?url={URL}",
+  },
+  {
+    name: "IndexCrawl.xyz",
+    description: "Niche indexing service for diverse web content.",
+    urlTemplate: "https://indexcrawl.xyz/ping?url={URL}",
+  },
+  {
+    name: "LinkIndexer.io",
+    description: "Specialized for backlink and URL indexing notification.",
+    urlTemplate: "https://linkindexer.io/ping?url={URL}",
+  },
 ];
