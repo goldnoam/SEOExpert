@@ -790,4 +790,304 @@ export const SUBMISSION_SITES: SubmissionSite[] = [
     description: "Specialized search crawler for Chinese tech and cloud sectors.",
     urlTemplate: "https://verosearch.cn/ping?url={URL}",
   },
+  {
+    name: "Maktoob (Yahoo Middle East)",
+    description: "Primary indexing portal for Arabic-speaking search segments.",
+    urlTemplate: "https://maktoob.yahoo.com/ping?url={URL}",
+  },
+  {
+    name: "Rediff.com (India)",
+    description: "Massive news and search portal in the Indian market.",
+    urlTemplate: "https://rediff.com/ping?url={URL}",
+  },
+  {
+    name: "Webdunia (India)",
+    description: "Leading multilingual Indian portal and search provider.",
+    urlTemplate: "https://webdunia.com/ping?url={URL}",
+  },
+  {
+    name: "Khoj.com (India)",
+    description: "Specialized Indian search engine for regional content.",
+    urlTemplate: "https://khoj.com/ping?url={URL}",
+  },
+  {
+    name: "Indiatimes Search",
+    description: "Digital arm of Times Group, India's largest media house.",
+    urlTemplate: "https://indiatimes.com/ping?url={URL}",
+  },
+  {
+    name: "Sanook! (Thailand)",
+    description: "Largest web portal and search indexer in Thailand.",
+    urlTemplate: "https://sanook.com/ping?url={URL}",
+  },
+  {
+    name: "Kapook! (Thailand)",
+    description: "Highly visited Thai portal with deep search indexing.",
+    urlTemplate: "https://kapook.com/ping?url={URL}",
+  },
+  {
+    name: "Zing.vn (Vietnam)",
+    description: "VNG Corporation's search and content portal for Vietnam.",
+    urlTemplate: "https://zingnews.vn/ping?url={URL}",
+  },
+  {
+    name: "Cốc Cốc (Vietnam)",
+    description: "Vietnamese-centric search engine optimized for local context.",
+    urlTemplate: "https://coccoc.com/ping?url={URL}",
+  },
+  {
+    name: "Detik.com (Indonesia)",
+    description: "Major news and search aggregator in Indonesia.",
+    urlTemplate: "https://detik.com/ping?url={URL}",
+  },
+  {
+    name: "Kaskus (Indonesia)",
+    description: "Largest Indonesian community with significant search indexing.",
+    urlTemplate: "https://kaskus.co.id/ping?url={URL}",
+  },
+  {
+    name: "Cari.com.my (Malaysia)",
+    description: "Malaysia's first and largest search engine portal.",
+    urlTemplate: "https://cari.com.my/ping?url={URL}",
+  },
+  {
+    name: "Rakuten Search (Japan)",
+    description: "E-commerce integrated search index for the Japanese market.",
+    urlTemplate: "https://rakuten.co.jp/ping?url={URL}",
+  },
+  {
+    name: "Nifty (Japan)",
+    description: "Long-standing Japanese ISP and search directory provider.",
+    urlTemplate: "https://nifty.com/ping?url={URL}",
+  },
+  {
+    name: "Excite Japan",
+    description: "Localized Japanese search and discovery portal.",
+    urlTemplate: "https://excite.co.jp/ping?url={URL}",
+  },
+  {
+    name: "Zum.com (South Korea)",
+    description: "Open search portal aiming to compete with Naver in Korea.",
+    urlTemplate: "https://zum.com/ping?url={URL}",
+  },
+  {
+    name: "Nate.com (South Korea)",
+    description: "Prominent SK Communications portal and search engine.",
+    urlTemplate: "https://nate.com/ping?url={URL}",
+  },
+  {
+    name: "21CN (China)",
+    description: "Southern China's largest web portal and indexing hub.",
+    urlTemplate: "https://21cn.com/ping?url={URL}",
+  },
+  {
+    name: "Tom.com (China)",
+    description: "Joint venture search portal for Greater China markets.",
+    urlTemplate: "https://tom.com/ping?url={URL}",
+  },
+  {
+    name: "China.com",
+    description: "Official portal providing global access to China-related content.",
+    urlTemplate: "https://china.com/ping?url={URL}",
+  },
+  {
+    name: "JRJ (China Finance)",
+    description: "China's leading financial search and news aggregator.",
+    urlTemplate: "https://jrj.com.cn/ping?url={URL}",
+  },
+  {
+    name: "Ifeng (China)",
+    description: "Phoenix New Media's massive content and search index.",
+    urlTemplate: "https://ifeng.com/ping?url={URL}",
+  },
+  {
+    name: "Xinhuanet (China)",
+    description: "The official news search agency of the Chinese government.",
+    urlTemplate: "https://xinhuanet.com/ping?url={URL}",
+  },
+  {
+    name: "Global Times (China)",
+    description: "Leading English-language news search from China.",
+    urlTemplate: "https://globaltimes.cn/ping?url={URL}",
+  },
+  {
+    name: "CCTV.com (China)",
+    description: "Main search portal for China Central Television content.",
+    urlTemplate: "https://cctv.com/ping?url={URL}",
+  },
+  {
+    name: "IOL (South Africa)",
+    description: "Independent Online search portal for Southern Africa.",
+    urlTemplate: "https://iol.co.za/ping?url={URL}",
+  },
+  {
+    name: "UOL (Brazil)",
+    description: "Universe Online - Brazil's largest content and search provider.",
+    urlTemplate: "https://uol.com.br/ping?url={URL}",
+  },
+  {
+    name: "Terra (Brazil/Spain)",
+    description: "Ibero-American portal with strong search presence.",
+    urlTemplate: "https://terra.com.br/ping?url={URL}",
+  },
+  {
+    name: "Ayna (Middle East)",
+    description: "One of the earliest Arabic-language search engines.",
+    urlTemplate: "https://ayna.com/ping?url={URL}",
+  },
+  {
+    name: "Araby.com",
+    description: "Semantic search engine specifically for Arabic content.",
+    urlTemplate: "https://araby.com/ping?url={URL}",
+  },
+  {
+    name: "Al-Bahhar",
+    description: "Specialized directory and search for Arabic web resources.",
+    urlTemplate: "https://albahhar.com/ping?url={URL}",
+  },
+  {
+    name: "Yamli Search",
+    description: "Transliteration-based search for Arabic web content.",
+    urlTemplate: "https://yamli.com/ping?url={URL}",
+  },
+  {
+    name: "Guruji.com (India)",
+    description: "Algorithm-based search engine specifically for India.",
+    urlTemplate: "https://guruji.com/ping?url={URL}",
+  },
+  {
+    name: "123India.com",
+    description: "Premier Indian directory and search portal.",
+    urlTemplate: "https://123india.com/ping?url={URL}",
+  },
+  {
+    name: "Nate (South Korea)",
+    description: "Major search portal provided by SK Communications.",
+    urlTemplate: "https://nate.com/ping?url={URL}",
+  },
+  {
+    name: "Zum (South Korea)",
+    description: "High-growth open search portal in the Korean market.",
+    urlTemplate: "https://zum.com/ping?url={URL}",
+  },
+  {
+    name: "Sina.com.cn",
+    description: "Largest Chinese-language web portal and search index.",
+    urlTemplate: "https://sina.com.cn/ping?url={URL}",
+  },
+  {
+    name: "Sohu.com",
+    description: "Leading Chinese online media and search company.",
+    urlTemplate: "https://sohu.com/ping?url={URL}",
+  },
+  {
+    name: "163.com (NetEase)",
+    description: "One of China's Big Three web search portals.",
+    urlTemplate: "https://163.com/ping?url={URL}",
+  },
+  {
+    name: "QQ.com Search",
+    description: "Tencent's massive multi-service search portal.",
+    urlTemplate: "https://qq.com/ping?url={URL}",
+  },
+  {
+    name: "Huanqiu (China)",
+    description: "International news and search focus from Global Times.",
+    urlTemplate: "https://huanqiu.com/ping?url={URL}",
+  },
+  {
+    name: "Chinadaily.com.cn",
+    description: "Main search index for China's official English newspaper.",
+    urlTemplate: "https://chinadaily.com.cn/ping?url={URL}",
+  },
+  {
+    name: "CRI Online (China)",
+    description: "China Radio International's multilingual search portal.",
+    urlTemplate: "https://cri.cn/ping?url={URL}",
+  },
+  {
+    name: "CNTV (China)",
+    description: "Official search platform for China Network Television.",
+    urlTemplate: "https://cntv.cn/ping?url={URL}",
+  },
+  {
+    name: "BTV Search (Beijing)",
+    description: "Regional search portal for the Beijing capital market.",
+    urlTemplate: "https://btv.com.cn/ping?url={URL}",
+  },
+  {
+    name: "SMG Search (Shanghai)",
+    description: "Primary search portal for the Shanghai media segment.",
+    urlTemplate: "https://smg.cn/ping?url={URL}",
+  },
+  {
+    name: "HunanTV Search",
+    description: "Leading entertainment-focused search index in China.",
+    urlTemplate: "https://mgtv.com/ping?url={URL}",
+  },
+  {
+    name: "ZSTV Search (Zhejiang)",
+    description: "Influential regional search index in Eastern China.",
+    urlTemplate: "https://cztv.com/ping?url={URL}",
+  },
+  {
+    name: "GDTV Search (Guangdong)",
+    description: "Major search portal for the Pearl River Delta market.",
+    urlTemplate: "https://gdtv.cn/ping?url={URL}",
+  },
+  {
+    name: "JSTV Search (Jiangsu)",
+    description: "Regional search focus for the affluent Jiangsu province.",
+    urlTemplate: "https://jstv.com/ping?url={URL}",
+  },
+  {
+    name: "CQTV Search (Chongqing)",
+    description: "Central search hub for the Chongqing municipality.",
+    urlTemplate: "https://cqtv.cn/ping?url={URL}",
+  },
+  {
+    name: "AHTV Search (Anhui)",
+    description: "Regional search portal for Central Chinese content.",
+    urlTemplate: "https://ahtv.cn/ping?url={URL}",
+  },
+  {
+    name: "FJTV Search (Fujian)",
+    description: "Search index for the Fujian coastal market.",
+    urlTemplate: "https://fjtv.net/ping?url={URL}",
+  },
+  {
+    name: "HEBTV Search (Hebei)",
+    description: "Primary search portal for Northern China's Hebei region.",
+    urlTemplate: "https://hebtv.com/ping?url={URL}",
+  },
+  {
+    name: "LNTV Search (Liaoning)",
+    description: "Northeast China's leading search index.",
+    urlTemplate: "https://lntv.com.cn/ping?url={URL}",
+  },
+  {
+    name: "SSTV Search (Shanxi)",
+    description: "Regional search portal for the Shanxi market.",
+    urlTemplate: "https://sxrtv.com/ping?url={URL}",
+  },
+  {
+    name: "SDTV Search (Shandong)",
+    description: "Major search portal for the Shandong peninsula.",
+    urlTemplate: "https://iqilu.com/ping?url={URL}",
+  },
+  {
+    name: "HNTV Search (Henan)",
+    description: "Central China's Henan province search index.",
+    urlTemplate: "https://hntv.tv/ping?url={URL}",
+  },
+  {
+    name: "JXTV Search (Jiangxi)",
+    description: "Regional search focus for the Jiangxi province.",
+    urlTemplate: "https://jxtv.com.cn/ping?url={URL}",
+  },
+  {
+    name: "HBTV Search (Hubei)",
+    description: "Central China's Hubei regional search portal.",
+    urlTemplate: "https://hbtv.com.cn/ping?url={URL}",
+  },
 ];
