@@ -271,11 +271,6 @@ export const SUBMISSION_SITES: SubmissionSite[] = [
     urlTemplate: "http://ping.fm/ping/?url={URL}",
   },
   {
-    name: "AutoPing",
-    description: "Automated site recognition and indexing utility.",
-    urlTemplate: "https://autoping.com/submit?url={URL}",
-  },
-  {
     name: "FastIndexing",
     description: "Proprietary algorithm for fast crawler notification.",
     urlTemplate: "https://fastindexing.com/api/ping?url={URL}",
