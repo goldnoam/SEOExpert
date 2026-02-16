@@ -100,9 +100,23 @@ export const LogViewer: React.FC<LogViewerProps> = ({ logs, language, onClear })
           logs.map((log) => (
             <div key={log.id} className="rtl:text-right group relative flex flex-col mb-2 pb-2 border-b border-gray-200/40 dark:border-gray-700/40 last:border-0 hover:bg-white dark:hover:bg-gray-800/50 transition-colors rounded-md p-2">
               <div className="flex items-start gap-2">
-                {log.urlFavicon && (
-                  <img src={log.urlFavicon} alt="" className="w-4 h-4 mt-0.5 shrink-0 rounded-sm" />
-                )}
+                <div className="w-5 h-5 mt-0.5 shrink-0 rounded-sm bg-gray-200/50 dark:bg-gray-700/50 flex items-center justify-center overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm">
+                   {log.urlFavicon ? (
+                      <img 
+                        src={log.urlFavicon} 
+                        alt="" 
+                        className="w-full h-full object-cover" 
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                          const placeholder = e.currentTarget.parentElement?.querySelector('.log-fallback');
+                          if (placeholder) placeholder.classList.remove('hidden');
+                        }} 
+                      />
+                   ) : null}
+                   <div className={`log-fallback ${log.urlFavicon ? 'hidden' : ''} text-[10px] text-gray-400 dark:text-gray-500 font-black`}>
+                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
+                   </div>
+                </div>
                 <span className="whitespace-pre-wrap flex-grow text-gray-700 dark:text-gray-300">{log.message}</span>
                 {log.siteDescription && (
                     <div className="relative flex items-center">

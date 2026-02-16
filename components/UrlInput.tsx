@@ -143,12 +143,12 @@ export const UrlInput: React.FC<UrlInputProps> = ({
               ) : t.statusSuccess}
             </h2>
             <div className="flex flex-wrap gap-2 mt-2">
-              <p className="text-[10px] font-bold text-teal-600 dark:text-teal-400 uppercase tracking-widest bg-teal-50 dark:bg-teal-900/30 px-2 py-0.5 rounded-full inline-block">
+              <p className="text-[10px] font-bold text-teal-600 dark:text-teal-400 uppercase tracking-widest bg-teal-50 dark:bg-teal-900/30 px-2 py-0.5 rounded-full inline-block border border-teal-100 dark:border-teal-800">
                 {t.serviceCount.replace('{count}', (submissionItems[0]?.totalServices || SUBMISSION_SITES.length).toString())}
               </p>
               <button 
                 onClick={() => copyToClipboard(submissionItems.map(i => i.url).join('\n'), setReportCopySuccess)}
-                className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-full inline-flex items-center gap-1 hover:bg-teal-50 dark:hover:bg-teal-900/20 hover:text-teal-600 transition-colors relative"
+                className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-full inline-flex items-center gap-1 hover:bg-teal-50 dark:hover:bg-teal-900/20 hover:text-teal-600 transition-colors relative border border-gray-200 dark:border-gray-600"
               >
                 <CopyIcon className="w-3 h-3" />
                 {reportCopySuccess ? t.urlsCopied : t.copyUrls}
@@ -172,7 +172,7 @@ export const UrlInput: React.FC<UrlInputProps> = ({
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center space-x-3 rtl:space-x-reverse overflow-hidden">
                   <div className="shrink-0 relative">
-                    <div className="w-6 h-6 rounded-md bg-gray-100 dark:bg-gray-700 flex items-center justify-center overflow-hidden border border-gray-200 dark:border-gray-600">
+                    <div className="w-7 h-7 rounded-md bg-white dark:bg-gray-700 flex items-center justify-center overflow-hidden border border-gray-200 dark:border-gray-600 shadow-sm group-hover/item:scale-110 transition-transform">
                         {item.favicon ? (
                             <img 
                                 src={item.favicon} 
@@ -180,7 +180,8 @@ export const UrlInput: React.FC<UrlInputProps> = ({
                                 className="w-full h-full object-cover" 
                                 onError={(e) => {
                                     e.currentTarget.style.display = 'none';
-                                    e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                                    const next = e.currentTarget.nextElementSibling;
+                                    if (next) next.classList.remove('hidden');
                                 }} 
                             />
                         ) : null}
