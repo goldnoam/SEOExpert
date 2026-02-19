@@ -67,7 +67,7 @@ export const UrlInput: React.FC<UrlInputProps> = ({
     onDrop, 
     noClick: true, 
     noKeyboard: true 
-  });
+  } as any);
 
   const validateAndSubmit = () => {
     const rawLines = urls.split('\n').map((u) => u.trim()).filter(Boolean);

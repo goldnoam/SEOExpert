@@ -1,35 +1,13 @@
 
 import { SUBMISSION_SITES } from '../constants';
 import { SubmissionSite } from '../types';
-import { getSubmissionSites } from './geminiService';
 
 export const performSubmissions = async (
   url: string, 
   logUpdateCallback: (message: string, site?: SubmissionSite) => void,
   onProgress?: (current: number, total: number, lastSiteName?: string) => void
 ): Promise<void> => {
-  let submissionSites: SubmissionSite[] = [];
-  
-  try {
-    logUpdateCallback('🔍 Discovery: Fetching dynamic submission endpoints via Gemini AI...');
-    submissionSites = await getSubmissionSites(url);
-    logUpdateCallback(`✨ Success: Gemini found ${submissionSites.length} custom endpoints for this URL.`);
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred.';
-    
-    // Provide specific guidance based on error type
-    if (errorMessage.includes('QUOTA_EXCEEDED')) {
-        logUpdateCallback('📈 Status: AI Rate Limit reached. Activating built-in high-capacity pinger...');
-    } else if (errorMessage.includes('AUTHENTICATION_ERROR')) {
-        logUpdateCallback('⚠️ Auth Alert: Invalid API Key. Please verify settings. Defaulting to local engines...');
-    } else if (errorMessage.includes('API_KEY_MISSING')) {
-        logUpdateCallback('💡 Info: API Key not detected. Running submission using local high-performance database...');
-    } else {
-        logUpdateCallback(`🔄 Info: ${errorMessage}. Falling back to our local list...`);
-    }
-
-    submissionSites = SUBMISSION_SITES;
-  }
+  const submissionSites = SUBMISSION_SITES;
 
   if (submissionSites.length === 0) {
       logUpdateCallback('❌ Critical: No submission sites are available in the registry. Aborting.');

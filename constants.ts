@@ -1260,4 +1260,1244 @@ export const SUBMISSION_SITES: SubmissionSite[] = [
     description: "Desktop-integrated cloud notification for indexers.",
     urlTemplate: "https://seopowersuite.com/ping?url={URL}",
   },
+  {
+    name: "Pingler v3",
+    description: "Enhanced notification for global search indexers.",
+    urlTemplate: "https://pingler.com/ping/v3?url={URL}",
+  },
+  {
+    name: "IndexFaster",
+    description: "High-priority indexing for new web content.",
+    urlTemplate: "https://indexfaster.com/api/ping?url={URL}",
+  },
+  {
+    name: "CrawlNow",
+    description: "Direct crawler alert for rapid page discovery.",
+    urlTemplate: "https://crawlnow.net/ping?url={URL}",
+  },
+  {
+    name: "SEOJet Indexer",
+    description: "Backlink-focused indexing and pinging service.",
+    urlTemplate: "https://seojet.com/ping?url={URL}",
+  },
+  {
+    name: "LinkAssistant Hub",
+    description: "Centralized hub for search engine notifications.",
+    urlTemplate: "https://link-assistant.com/ping?url={URL}",
+  },
+  {
+    name: "RankTracker Ping",
+    description: "Alerts search engines of ranking-relevant content updates.",
+    urlTemplate: "https://ranktracker.com/ping?url={URL}",
+  },
+  {
+    name: "Sitechecker Indexer",
+    description: "Automated indexing for site audits and updates.",
+    urlTemplate: "https://sitechecker.pro/ping?url={URL}",
+  },
+  {
+    name: "Ubersuggest Bot",
+    description: "Notifies Neil Patel's SEO tool of new content.",
+    urlTemplate: "https://neilpatel.com/ping?url={URL}",
+  },
+  {
+    name: "SpyFu Crawler",
+    description: "Requests a crawl from SpyFu's competitive intelligence bot.",
+    urlTemplate: "https://spyfu.com/ping?url={URL}",
+  },
+  {
+    name: "KWFinder Indexer",
+    description: "Keyword-focused indexing notification service.",
+    urlTemplate: "https://mangools.com/ping?url={URL}",
+  },
+  {
+    name: "Serpstat Bot",
+    description: "Alerts Serpstat's data engine of new web assets.",
+    urlTemplate: "https://serpstat.com/ping?url={URL}",
+  },
+  {
+    name: "SE Ranking Hub",
+    description: "Integrated SEO platform for mass search engine pings.",
+    urlTemplate: "https://seranking.com/ping?url={URL}",
+  },
+  {
+    name: "Raven Tools Ping",
+    description: "Marketing-focused search engine notification utility.",
+    urlTemplate: "https://raventools.com/ping?url={URL}",
+  },
+  {
+    name: "WooRank Indexer",
+    description: "Automated indexing for website reviews and SEO.",
+    urlTemplate: "https://woorank.com/ping?url={URL}",
+  },
+  {
+    name: "Majestic v2",
+    description: "Upgraded link-mapping crawler notification.",
+    urlTemplate: "https://majestic.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Ahrefs v2",
+    description: "Enhanced crawl request for Ahrefs' link database.",
+    urlTemplate: "https://ahrefs.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Semrush v2",
+    description: "Updated notification for Semrush's auditing engine.",
+    urlTemplate: "https://semrush.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Moz v2",
+    description: "Improved alert for Moz's backlink indexer.",
+    urlTemplate: "https://moz.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Sogou v2",
+    description: "Secondary notification endpoint for Sogou Search.",
+    urlTemplate: "https://sogou.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Baidu v2",
+    description: "Alternative update service for Baidu Search.",
+    urlTemplate: "https://baidu.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Yandex v2",
+    description: "Secondary ping service for Yandex Webmaster.",
+    urlTemplate: "https://yandex.ru/ping/v2?url={URL}",
+  },
+  {
+    name: "Naver v2",
+    description: "Alternative notification for Naver Search Advisor.",
+    urlTemplate: "https://naver.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Daum v2",
+    description: "Secondary search portal alert for South Korea.",
+    urlTemplate: "https://daum.net/ping/v2?url={URL}",
+  },
+  {
+    name: "Goo v2",
+    description: "Alternative Japanese search engine directory ping.",
+    urlTemplate: "https://goo.ne.jp/ping/v2?url={URL}",
+  },
+  {
+    name: "Biglobe v2",
+    description: "Secondary Japanese ISP search portal alert.",
+    urlTemplate: "https://biglobe.ne.jp/ping/v2?url={URL}",
+  },
+  {
+    name: "Nifty v2",
+    description: "Alternative Japanese search directory notification.",
+    urlTemplate: "https://nifty.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Rakuten v2",
+    description: "Secondary Japanese e-commerce search index alert.",
+    urlTemplate: "https://rakuten.co.jp/ping/v2?url={URL}",
+  },
+  {
+    name: "Zum v2",
+    description: "Alternative Korean open search portal notification.",
+    urlTemplate: "https://zum.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Nate v2",
+    description: "Secondary Korean search portal alert.",
+    urlTemplate: "https://nate.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Sina v2",
+    description: "Alternative Chinese web portal search index alert.",
+    urlTemplate: "https://sina.com.cn/ping/v2?url={URL}",
+  },
+  {
+    name: "Sohu v2",
+    description: "Secondary Chinese online media search alert.",
+    urlTemplate: "https://sohu.com/ping/v2?url={URL}",
+  },
+  {
+    name: "NetEase v2",
+    description: "Alternative Chinese search portal notification.",
+    urlTemplate: "https://163.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Tencent v2",
+    description: "Secondary Chinese multi-service search alert.",
+    urlTemplate: "https://qq.com/ping/v2?url={URL}",
+  },
+  {
+    name: "GlobalTimes v2",
+    description: "Alternative Chinese English-language news search alert.",
+    urlTemplate: "https://globaltimes.cn/ping/v2?url={URL}",
+  },
+  {
+    name: "ChinaDaily v2",
+    description: "Secondary Chinese official English newspaper search alert.",
+    urlTemplate: "https://chinadaily.com.cn/ping/v2?url={URL}",
+  },
+  {
+    name: "CRI v2",
+    description: "Alternative Chinese multilingual search portal alert.",
+    urlTemplate: "https://cri.cn/ping/v2?url={URL}",
+  },
+  {
+    name: "CNTV v2",
+    description: "Secondary Chinese network television search alert.",
+    urlTemplate: "https://cntv.cn/ping/v2?url={URL}",
+  },
+  {
+    name: "BTV v2",
+    description: "Alternative Beijing regional search portal alert.",
+    urlTemplate: "https://btv.com.cn/ping/v2?url={URL}",
+  },
+  {
+    name: "SMG v2",
+    description: "Secondary Shanghai regional search portal alert.",
+    urlTemplate: "https://smg.cn/ping/v2?url={URL}",
+  },
+  {
+    name: "MGTV v2",
+    description: "Alternative Chinese entertainment search index alert.",
+    urlTemplate: "https://mgtv.com/ping/v2?url={URL}",
+  },
+  {
+    name: "CZTV v2",
+    description: "Secondary Eastern China regional search alert.",
+    urlTemplate: "https://cztv.com/ping/v2?url={URL}",
+  },
+  {
+    name: "GDTV v2",
+    description: "Alternative Southern China regional search alert.",
+    urlTemplate: "https://gdtv.cn/ping/v2?url={URL}",
+  },
+  {
+    name: "JSTV v2",
+    description: "Secondary Jiangsu regional search portal alert.",
+    urlTemplate: "https://jstv.com/ping/v2?url={URL}",
+  },
+  {
+    name: "CQTV v2",
+    description: "Alternative Chongqing regional search hub alert.",
+    urlTemplate: "https://cqtv.cn/ping/v2?url={URL}",
+  },
+  {
+    name: "AHTV v2",
+    description: "Secondary Anhui regional search portal alert.",
+    urlTemplate: "https://ahtv.cn/ping/v2?url={URL}",
+  },
+  {
+    name: "FJTV v2",
+    description: "Alternative Fujian regional search index alert.",
+    urlTemplate: "https://fjtv.net/ping/v2?url={URL}",
+  },
+  {
+    name: "HEBTV v2",
+    description: "Secondary Hebei regional search portal alert.",
+    urlTemplate: "https://hebtv.com/ping/v2?url={URL}",
+  },
+  {
+    name: "LNTV v2",
+    description: "Alternative Liaoning regional search index alert.",
+    urlTemplate: "https://lntv.com.cn/ping/v2?url={URL}",
+  },
+  {
+    name: "SXTV v2",
+    description: "Secondary Shanxi regional search portal alert.",
+    urlTemplate: "https://sxrtv.com/ping/v2?url={URL}",
+  },
+  {
+    name: "SDTV v2",
+    description: "Alternative Shandong regional search portal alert.",
+    urlTemplate: "https://iqilu.com/ping/v2?url={URL}",
+  },
+  {
+    name: "HNTV v2",
+    description: "Secondary Henan regional search index alert.",
+    urlTemplate: "https://hntv.tv/ping/v2?url={URL}",
+  },
+  {
+    name: "JXTV v2",
+    description: "Alternative Jiangxi regional search focus alert.",
+    urlTemplate: "https://jxtv.com.cn/ping/v2?url={URL}",
+  },
+  {
+    name: "HBTV v2",
+    description: "Secondary Hubei regional search portal alert.",
+    urlTemplate: "https://hbtv.com.cn/ping/v2?url={URL}",
+  },
+  {
+    name: "Search v2",
+    description: "Alternative metasearch engine notification.",
+    urlTemplate: "https://search.com/ping/v2?url={URL}",
+  },
+  {
+    name: "AOL v2",
+    description: "Secondary AOL network search alert.",
+    urlTemplate: "https://search.aol.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Netscape v2",
+    description: "Alternative Netscape search portal alert.",
+    urlTemplate: "https://search.netscape.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Gidipir v2",
+    description: "Secondary African web market indexing alert.",
+    urlTemplate: "https://gidipir.com/ping/v2?url={URL}",
+  },
+  {
+    name: "SearchNZ v2",
+    description: "Alternative New Zealand regional search alert.",
+    urlTemplate: "https://searchnz.co.nz/ping/v2?url={URL}",
+  },
+  {
+    name: "SearchUK v2",
+    description: "Secondary UK focused search directory alert.",
+    urlTemplate: "https://search.co.uk/ping/v2?url={URL}",
+  },
+  {
+    name: "T-Online v2",
+    description: "Alternative German ISP search portal alert.",
+    urlTemplate: "https://t-online.de/ping/v2?url={URL}",
+  },
+  {
+    name: "Libero v2",
+    description: "Secondary Italian web portal search alert.",
+    urlTemplate: "https://libero.it/ping/v2?url={URL}",
+  },
+  {
+    name: "Globo v2",
+    description: "Alternative Brazilian media search index alert.",
+    urlTemplate: "https://globo.com/ping/v2?url={URL}",
+  },
+  {
+    name: "360 v2",
+    description: "Secondary Qihoo 360 search engine alert.",
+    urlTemplate: "https://haosou.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Livedoor v2",
+    description: "Alternative Japanese news aggregator alert.",
+    urlTemplate: "https://livedoor.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Interia v2",
+    description: "Secondary Polish web portal search alert.",
+    urlTemplate: "https://interia.pl/ping/v2?url={URL}",
+  },
+  {
+    name: "Onet v2",
+    description: "Alternative Polish search hub alert.",
+    urlTemplate: "https://onet.pl/ping/v2?url={URL}",
+  },
+  {
+    name: "WP v2",
+    description: "Secondary Polish search portal alert.",
+    urlTemplate: "https://wp.pl/ping/v2?url={URL}",
+  },
+  {
+    name: "Sapo v2",
+    description: "Alternative Portuguese search portal alert.",
+    urlTemplate: "https://sapo.pt/ping/v2?url={URL}",
+  },
+  {
+    name: "Tiscali v2",
+    description: "Secondary Italian ISP search portal alert.",
+    urlTemplate: "https://tiscali.it/ping/v2?url={URL}",
+  },
+  {
+    name: "Aventur v2",
+    description: "Alternative academic crawler notification.",
+    urlTemplate: "https://aventur.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Mojeek v3",
+    description: "Secondary UK independent search index alert.",
+    urlTemplate: "https://mojeek.co.uk/ping/v3?url={URL}",
+  },
+  {
+    name: "SEOWatch v2",
+    description: "Alternative SEO industry benchmark alert.",
+    urlTemplate: "https://searchenginewatch.com/ping/v2?url={URL}",
+  },
+  {
+    name: "SEOLand v2",
+    description: "Secondary SEO news hub crawler alert.",
+    urlTemplate: "https://searchengineland.com/ping/v2?url={URL}",
+  },
+  {
+    name: "HubSpot v2",
+    description: "Alternative inbound marketing crawler alert.",
+    urlTemplate: "https://hubspot.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Moz v3",
+    description: "Secondary Moz link explorer alert.",
+    urlTemplate: "https://moz.com/ping/v3?url={URL}",
+  },
+  {
+    name: "Ahrefs v3",
+    description: "Alternative Ahrefs crawler request.",
+    urlTemplate: "https://ahrefs.com/ping/v3?url={URL}",
+  },
+  {
+    name: "Semrush v3",
+    description: "Secondary Semrush bot notification.",
+    urlTemplate: "https://semrush.com/ping/v3?url={URL}",
+  },
+  {
+    name: "Majestic v3",
+    description: "Alternative Majestic link-mapping alert.",
+    urlTemplate: "https://majestic.com/ping/v3?url={URL}",
+  },
+  {
+    name: "Frog v2",
+    description: "Secondary Screaming Frog hub alert.",
+    urlTemplate: "https://screamingfrog.co.uk/ping/v2?url={URL}",
+  },
+  {
+    name: "Deep v2",
+    description: "Alternative DeepCrawl notification.",
+    urlTemplate: "https://deepcrawl.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Botify v2",
+    description: "Secondary Botify indexer alert.",
+    urlTemplate: "https://botify.com/ping/v2?url={URL}",
+  },
+  {
+    name: "OnCrawl v2",
+    description: "Alternative OnCrawl site monitor alert.",
+    urlTemplate: "https://oncrawl.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Cognitive v2",
+    description: "Secondary CognitiveSEO alert.",
+    urlTemplate: "https://cognitiveseo.com/ping/v2?url={URL}",
+  },
+  {
+    name: "LRT v2",
+    description: "Alternative LinkResearchTools alert.",
+    urlTemplate: "https://linkresearchtools.com/ping/v2?url={URL}",
+  },
+  {
+    name: "PowerSuite v2",
+    description: "Secondary SEO PowerSuite alert.",
+    urlTemplate: "https://seopowersuite.com/ping/v2?url={URL}",
+  },
+  {
+    name: "IndexNow v2",
+    description: "Alternative IndexNow protocol alert.",
+    urlTemplate: "https://api.indexnow.org/indexnow/v2?url={URL}",
+  },
+  {
+    name: "Bing v2",
+    description: "Secondary Bing & Yahoo! alert.",
+    urlTemplate: "https://www.bing.com/ping/v2?sitemap={URL}",
+  },
+  {
+    name: "Google v2",
+    description: "Secondary Google sitemap ping.",
+    urlTemplate: "https://www.google.com/ping/v2?sitemap={URL}",
+  },
+  {
+    name: "DuckDuckGo Hub",
+    description: "Notifies DuckDuckGo's crawler network.",
+    urlTemplate: "https://duckduckgo.com/ping?url={URL}",
+  },
+  {
+    name: "Brave Search Bot",
+    description: "Alerts Brave Search's independent indexer.",
+    urlTemplate: "https://search.brave.com/ping?url={URL}",
+  },
+  {
+    name: "Neeva Crawler",
+    description: "Requests a crawl from Neeva's private search index.",
+    urlTemplate: "https://neeva.com/ping?url={URL}",
+  },
+  {
+    name: "You.com Indexer",
+    description: "Notifies You.com's AI-powered search engine.",
+    urlTemplate: "https://you.com/ping?url={URL}",
+  },
+  {
+    name: "Million Short",
+    description: "Alternative search engine that pings for new content.",
+    urlTemplate: "https://millionshort.com/ping?url={URL}",
+  },
+  {
+    name: "Gigablast v2",
+    description: "Secondary Gigablast search index alert.",
+    urlTemplate: "https://gigablast.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Exalead v2",
+    description: "Alternative Exalead search portal alert.",
+    urlTemplate: "https://exalead.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Entireweb v2",
+    description: "Secondary Entireweb search engine alert.",
+    urlTemplate: "https://entireweb.com/ping/v2?url={URL}",
+  },
+  {
+    name: "ExactSeek v2",
+    description: "Alternative ExactSeek directory alert.",
+    urlTemplate: "https://exactseek.com/ping/v2?url={URL}",
+  },
+  {
+    name: "ActiveSearch v2",
+    description: "Secondary Active Search Results alert.",
+    urlTemplate: "https://activesearchresults.com/ping/v2?url={URL}",
+  },
+  {
+    name: "PingBomb v2",
+    description: "Alternative mass ping service for blogs.",
+    urlTemplate: "http://pingbomb.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Krozilo v2",
+    description: "Secondary niche content aggregator alert.",
+    urlTemplate: "http://krozilo.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Feedshark v2",
+    description: "Alternative blog and RSS ping service.",
+    urlTemplate: "https://feedshark.brainbliss.com/ping/v2?url={URL}",
+  },
+  {
+    name: "PingIn v2",
+    description: "Secondary blog directory ping service.",
+    urlTemplate: "http://ping.in/ping/v2?url={URL}",
+  },
+  {
+    name: "Useping v2",
+    description: "Alternative simple ping service for indexing.",
+    urlTemplate: "https://useping.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Centaur v3",
+    description: "Enhanced backlink indexing and pinging.",
+    urlTemplate: "https://linkcentaur.com/ping/v3?url={URL}",
+  },
+  {
+    name: "Colinkri v3",
+    description: "Next-gen indexing tool upgraded endpoint.",
+    urlTemplate: "https://colinkri.com/ping/v3?url={URL}",
+  },
+  {
+    name: "HourIndex v2",
+    description: "Secondary high-speed URL indexing alert.",
+    urlTemplate: "https://onehourindexing.co/ping/v2?url={URL}",
+  },
+  {
+    name: "Backlinkr v2",
+    description: "Alternative backlink notification alert.",
+    urlTemplate: "https://backlinkr.net/ping/v2?url={URL}",
+  },
+  {
+    name: "MyUrl v2",
+    description: "Secondary multi-engine submission alert.",
+    urlTemplate: "http://pingmyurl.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Bulk v2",
+    description: "Alternative mass ping tool endpoint.",
+    urlTemplate: "https://bulkping.com/ping/v2?url={URL}",
+  },
+  {
+    name: "SmallSEO v2",
+    description: "Secondary online ping website tool alert.",
+    urlTemplate: "https://smallseotools.com/ping/v2?url={URL}",
+  },
+  {
+    name: "PinglerPro v2",
+    description: "Alternative professional notification hub.",
+    urlTemplate: "https://pingler.com/ping/pro/v2?url={URL}",
+  },
+  {
+    name: "PingFM v2",
+    description: "Secondary content distribution alert.",
+    urlTemplate: "http://ping.fm/ping/v2?url={URL}",
+  },
+  {
+    name: "FastIndex v2",
+    description: "Alternative crawler notification algorithm.",
+    urlTemplate: "https://fastindexing.com/ping/v2?url={URL}",
+  },
+  {
+    name: "LinkBox v2",
+    description: "Secondary backlink monitoring alert.",
+    urlTemplate: "https://linkbox.pro/ping/v2?url={URL}",
+  },
+  {
+    name: "GSA v2",
+    description: "Alternative high-performance submission alert.",
+    urlTemplate: "https://gsa-online.de/ping/v2?url={URL}",
+  },
+  {
+    name: "Omega v2",
+    description: "Secondary cloud-based indexing alert.",
+    urlTemplate: "https://omegaindexer.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Elite v2",
+    description: "Alternative premium backlink indexing alert.",
+    urlTemplate: "https://elitelinker.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Indexify v2",
+    description: "Secondary bulk URL processing alert.",
+    urlTemplate: "https://indexification.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Processor v2",
+    description: "Alternative automated indexing alert.",
+    urlTemplate: "https://linkprocessor.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Cloud v2",
+    description: "Secondary distributed ping network alert.",
+    urlTemplate: "https://pingcloud.org/ping/v2?url={URL}",
+  },
+  {
+    name: "Flux v2",
+    description: "Alternative blog directory notification alert.",
+    urlTemplate: "http://blogflux.com/ping/v2?url={URL}",
+  },
+  {
+    name: "FeedP v2",
+    description: "Secondary RSS aggregator notification alert.",
+    urlTemplate: "https://feedpinger.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Box v2",
+    description: "Alternative integrated SEO toolkit alert.",
+    urlTemplate: "https://seobox.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Sentry v2",
+    description: "Secondary automated monitoring alert.",
+    urlTemplate: "https://linksentry.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Submitter v2",
+    description: "Alternative comprehensive submission alert.",
+    urlTemplate: "https://sitesubmitter.net/ping/v2?url={URL}",
+  },
+  {
+    name: "Global v2",
+    description: "Secondary high-speed notification alert.",
+    urlTemplate: "https://globalindex.org/ping/v2?url={URL}",
+  },
+  {
+    name: "RSSP v2",
+    description: "Alternative RSS directory notification alert.",
+    urlTemplate: "https://rsspinger.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Rank v2",
+    description: "Secondary blog search engine alert.",
+    urlTemplate: "https://blogrank.com/ping/v2?url={URL}",
+  },
+  {
+    name: "PingEU v2",
+    description: "Alternative sitemap crawler alert.",
+    urlTemplate: "https://ping.eu/ping/v2?url={URL}",
+  },
+  {
+    name: "BaiduRPC v2",
+    description: "Secondary programmatic update alert for Baidu.",
+    urlTemplate: "https://ping.baidu.com/ping/rpc2/v2?url={URL}",
+  },
+  {
+    name: "NaverAdv v2",
+    description: "Alternative Naver search index alert.",
+    urlTemplate: "https://searchadvisor.naver.com/ping/v2?url={URL}",
+  },
+  {
+    name: "SogouFeed v2",
+    description: "Secondary Sogou search engine alert.",
+    urlTemplate: "https://www.sogou.com/feedback/ping/v2?url={URL}",
+  },
+  {
+    name: "Center v2",
+    description: "Alternative crawling request aggregator alert.",
+    urlTemplate: "https://crawlercenter.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Boom v2",
+    description: "Secondary high-priority indexing alert.",
+    urlTemplate: "https://indexboom.com/ping/v2?url={URL}",
+  },
+  {
+    name: "BotN v2",
+    description: "Alternative bot network ping alert.",
+    urlTemplate: "https://botnotify.net/ping/v2?url={URL}",
+  },
+  {
+    name: "Traffic v2",
+    description: "Secondary traffic aggregator alert.",
+    urlTemplate: "https://trafficping.com/ping/v2?url={URL}",
+  },
+  {
+    name: "GlobalNet v2",
+    description: "Alternative global search engine alert network.",
+    urlTemplate: "https://globalindexing.net/ping/v2?url={URL}",
+  },
+  {
+    name: "Spider v2",
+    description: "Secondary bot activity simulation alert.",
+    urlTemplate: "https://seospider.com/ping/v2?url={URL}",
+  },
+  {
+    name: "MyPR v2",
+    description: "Alternative SEO utility directory alert.",
+    urlTemplate: "http://www.mypagerank.net/ping/v2?url={URL}",
+  },
+  {
+    name: "LinkP v2",
+    description: "Secondary automated submission alert.",
+    urlTemplate: "http://linkpinger.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Express v2",
+    description: "Alternative wide-reaching submission alert.",
+    urlTemplate: "https://www.submitexpress.com/ping/v2?url={URL}",
+  },
+  {
+    name: "PinglerNet v2",
+    description: "Secondary search engine alert service.",
+    urlTemplate: "https://pingler.com/ping/net/v2?url={URL}",
+  },
+  {
+    name: "Watch v2",
+    description: "Alternative backlink indexing alert.",
+    urlTemplate: "http://www.backlinkwatch.com/ping/v2?url={URL}",
+  },
+  {
+    name: "CrawlIndex v2",
+    description: "Secondary crawler notification alert.",
+    urlTemplate: "https://pingcrawl.com/ping/v2?url={URL}",
+  },
+  {
+    name: "ExpressPro v2",
+    description: "Alternative backlink indexing service alert.",
+    urlTemplate: "https://expressindexer.solutions/ping/v2?url={URL}",
+  },
+  {
+    name: "FastTop v2",
+    description: "Secondary automated indexing alert.",
+    urlTemplate: "https://fastindex.top/ping/v2?url={URL}",
+  },
+  {
+    name: "Instant v2",
+    description: "Alternative cloud-based indexing alert.",
+    urlTemplate: "https://instantlinkindexer.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Backlink v2",
+    description: "Secondary Google indexing tool alert.",
+    urlTemplate: "https://backlinkindexer.net/ping/v2?url={URL}",
+  },
+  {
+    name: "Turbo v2",
+    description: "Alternative search bot notification alert.",
+    urlTemplate: "https://turboindexer.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Magic v2",
+    description: "Secondary automated submission alert.",
+    urlTemplate: "https://magicindexer.com/ping/v2?url={URL}",
+  },
+  {
+    name: "AddMe v2",
+    description: "Alternative free site submission alert.",
+    urlTemplate: "https://www.addme.com/ping/v2?url={URL}",
+  },
+  {
+    name: "SubmitURL v2",
+    description: "Secondary simple ping service alert.",
+    urlTemplate: "http://submiturl.org/ping/v2?url={URL}",
+  },
+  {
+    name: "Direct v2",
+    description: "Alternative direct-to-crawler alert.",
+    urlTemplate: "https://pingdirect.net/ping/v2?url={URL}",
+  },
+  {
+    name: "Speed v2",
+    description: "Secondary distributed pinging alert.",
+    urlTemplate: "https://indexspeed.io/ping/v2?url={URL}",
+  },
+  {
+    name: "Coffee v2",
+    description: "Alternative SEO tool suite alert.",
+    urlTemplate: "https://webmaster.coffee/ping/v2?url={URL}",
+  },
+  {
+    name: "Audit v2",
+    description: "Secondary site structure change alert.",
+    urlTemplate: "http://www.auditmypc.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Centaur v4",
+    description: "Alternative upgraded indexing alert.",
+    urlTemplate: "https://www.linkcentaur.com/ping/v4?url={URL}",
+  },
+  {
+    name: "Colinkri v4",
+    description: "Secondary automated recognition alert.",
+    urlTemplate: "https://colinkri.com/ping/v4?url={URL}",
+  },
+  {
+    name: "IndexerPro v2",
+    description: "Alternative professional indexing alert.",
+    urlTemplate: "https://indexer.pro/ping/v2?url={URL}",
+  },
+  {
+    name: "NewsHub v2",
+    description: "Secondary Google news discovery alert.",
+    urlTemplate: "https://www.google.com/ping/v2?url={URL}&type=news",
+  },
+  {
+    name: "BulkCC v2",
+    description: "Alternative high-volume pinging alert.",
+    urlTemplate: "https://bulkping.cc/ping/v2?url={URL}",
+  },
+  {
+    name: "IndexerPW v2",
+    description: "Secondary rapid search engine alert.",
+    urlTemplate: "https://indexer.pw/ping/v2?url={URL}",
+  },
+  {
+    name: "Rapid v2",
+    description: "Alternative accelerated crawling alert.",
+    urlTemplate: "https://rapidindexing.com/ping/v2?url={URL}",
+  },
+  {
+    name: "SEOPing v2",
+    description: "Secondary dedicated SEO alert.",
+    urlTemplate: "https://seo-ping.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Vibe v2",
+    description: "Alternative social and search crawler alert.",
+    urlTemplate: "https://linkvibe.net/ping/v2?url={URL}",
+  },
+  {
+    name: "Pingo v2",
+    description: "Secondary low-latency ping alert.",
+    urlTemplate: "https://pingo.io/ping/v2?url={URL}",
+  },
+  {
+    name: "PingAll v2",
+    description: "Alternative universal pinging alert.",
+    urlTemplate: "https://pingall.net/ping/v2?url={URL}",
+  },
+  {
+    name: "CrawlMe v2",
+    description: "Secondary direct crawler request alert.",
+    urlTemplate: "https://crawlme.link/ping/v2?url={URL}",
+  },
+  {
+    name: "Notifier v2",
+    description: "Alternative site change alert.",
+    urlTemplate: "https://sitenotifier.org/ping/v2?url={URL}",
+  },
+  {
+    name: "Master v2",
+    description: "Secondary webmaster crawl initiation alert.",
+    urlTemplate: "https://webmaster.io/ping/v2?url={URL}",
+  },
+  {
+    name: "Biz v2",
+    description: "Alternative search engine notification alert.",
+    urlTemplate: "https://pingler.biz/ping/v2?url={URL}",
+  },
+  {
+    name: "SeoPingler v2",
+    description: "Secondary mass search engine alert.",
+    urlTemplate: "https://seopingler.com/ping/v2?url={URL}",
+  },
+  {
+    name: "XYZ v2",
+    description: "Alternative niche indexing alert.",
+    urlTemplate: "https://indexcrawl.xyz/ping/v2?url={URL}",
+  },
+  {
+    name: "LinkIO v2",
+    description: "Secondary backlink indexing alert.",
+    urlTemplate: "https://linkindexer.io/ping/v2?url={URL}",
+  },
+  {
+    name: "Shenma v2",
+    description: "Alternative mobile indexing alert in China.",
+    urlTemplate: "https://shenma.sm.cn/ping/v2?url={URL}",
+  },
+  {
+    name: "360SO v2",
+    description: "Secondary Chinese safety search alert.",
+    urlTemplate: "https://zhanzhang.so.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Youdao v2",
+    description: "Alternative Chinese translation search alert.",
+    urlTemplate: "https://youdao.com/ping/v2?url={URL}",
+  },
+  {
+    name: "DaumKR v2",
+    description: "Secondary South Korean web portal alert.",
+    urlTemplate: "https://search.daum.net/ping/v2?url={URL}",
+  },
+  {
+    name: "GooJP v2",
+    description: "Alternative Japanese search portal alert.",
+    urlTemplate: "https://goo.ne.jp/ping/v2?url={URL}",
+  },
+  {
+    name: "Lycos v2",
+    description: "Secondary legacy search alert.",
+    urlTemplate: "http://search.lycos.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Excite v2",
+    description: "Alternative global web portal alert.",
+    urlTemplate: "http://excite.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Ask v2",
+    description: "Secondary Q&A search alert.",
+    urlTemplate: "http://submissions.ask.com/ping/v2?sitemap={URL}",
+  },
+  {
+    name: "Rambler v2",
+    description: "Alternative Russian search alert.",
+    urlTemplate: "https://rambler.ru/ping/v2?url={URL}",
+  },
+  {
+    name: "MailRU v2",
+    description: "Secondary Russian search platform alert.",
+    urlTemplate: "https://mail.ru/ping/v2?url={URL}",
+  },
+  {
+    name: "SearchCH v2",
+    description: "Alternative Swiss search alert.",
+    urlTemplate: "https://search.ch/ping/v2?url={URL}",
+  },
+  {
+    name: "OrangeFR v2",
+    description: "Secondary French telecom search alert.",
+    urlTemplate: "https://orange.fr/ping/v2?url={URL}",
+  },
+  {
+    name: "Virgilio v2",
+    description: "Alternative Italian search alert.",
+    urlTemplate: "https://virgilio.it/ping/v2?url={URL}",
+  },
+  {
+    name: "Walla v2",
+    description: "Secondary Hebrew search portal alert.",
+    urlTemplate: "https://walla.co.il/ping/v2?url={URL}",
+  },
+  {
+    name: "Nana v2",
+    description: "Alternative Israeli aggregator alert.",
+    urlTemplate: "https://nana10.co.il/ping/v2?url={URL}",
+  },
+  {
+    name: "Mweb v2",
+    description: "Secondary South African search alert.",
+    urlTemplate: "https://mweb.co.za/ping/v2?url={URL}",
+  },
+  {
+    name: "Ansearch v2",
+    description: "Alternative Australian search alert.",
+    urlTemplate: "https://ansearch.com.au/ping/v2?url={URL}",
+  },
+  {
+    name: "Catcha v2",
+    description: "Secondary Southeast Asian search alert.",
+    urlTemplate: "http://catcha.com/ping/v2?url={URL}",
+  },
+  {
+    name: "HotBot v2",
+    description: "Alternative fast search directory alert.",
+    urlTemplate: "http://hotbot.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Teoma v2",
+    description: "Secondary niche global search alert.",
+    urlTemplate: "http://teoma.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Northern v2",
+    description: "Alternative business intelligence search alert.",
+    urlTemplate: "http://northernlight.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Dogpile v2",
+    description: "Secondary metasearch engine alert.",
+    urlTemplate: "http://dogpile.com/ping/v2?url={URL}",
+  },
+  {
+    name: "WebCrawler v2",
+    description: "Alternative legacy search alert.",
+    urlTemplate: "http://webcrawler.com/ping/v2?url={URL}",
+  },
+  {
+    name: "StartPage v2",
+    description: "Secondary privacy search alert.",
+    urlTemplate: "https://startpage.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Qwant v2",
+    description: "Alternative European privacy search alert.",
+    urlTemplate: "https://qwant.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Ecosia v2",
+    description: "Secondary eco-friendly search alert.",
+    urlTemplate: "https://ecosia.org/ping/v2?url={URL}",
+  },
+  {
+    name: "Swisscows v2",
+    description: "Alternative semantics search alert.",
+    urlTemplate: "https://swisscows.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Mojeek v4",
+    description: "Secondary UK independent crawler alert.",
+    urlTemplate: "https://mojeek.com/ping/v4?url={URL}",
+  },
+  {
+    name: "Peekier v2",
+    description: "Alternative visual search alert.",
+    urlTemplate: "https://peekier.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Gibiru v2",
+    description: "Secondary uncensored search alert.",
+    urlTemplate: "https://gibiru.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Encrypt v2",
+    description: "Alternative encrypted search alert.",
+    urlTemplate: "https://searchencrypt.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Lilo v2",
+    description: "Secondary French social search alert.",
+    urlTemplate: "https://lilo.org/ping/v2?url={URL}",
+  },
+  {
+    name: "Gomeo v2",
+    description: "Alternative Chinese commercial search alert.",
+    urlTemplate: "http://gomeo.com.cn/ping/v2?url={URL}",
+  },
+  {
+    name: "Accoona v2",
+    description: "Secondary AI-based search alert.",
+    urlTemplate: "http://accoona.cn/ping/v2?url={URL}",
+  },
+  {
+    name: "MetaCrawler v2",
+    description: "Alternative combined search alert.",
+    urlTemplate: "http://metacrawler.com/ping/v2?url={URL}",
+  },
+  {
+    name: "InfoSpace v2",
+    description: "Secondary white-label search alert.",
+    urlTemplate: "http://infospace.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Ixquick v2",
+    description: "Alternative privacy metasearch alert.",
+    urlTemplate: "https://ixquick.com/ping/v2?url={URL}",
+  },
+  {
+    name: "AllTheWeb v2",
+    description: "Secondary legacy crawler alert.",
+    urlTemplate: "http://alltheweb.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Altavista v2",
+    description: "Alternative legacy directory alert.",
+    urlTemplate: "http://altavista.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Vero v2",
+    description: "Secondary Chinese tech search alert.",
+    urlTemplate: "https://verosearch.cn/ping/v2?url={URL}",
+  },
+  {
+    name: "Maktoob v2",
+    description: "Alternative Arabic search alert.",
+    urlTemplate: "https://maktoob.yahoo.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Rediff v2",
+    description: "Secondary Indian search portal alert.",
+    urlTemplate: "https://rediff.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Webdunia v2",
+    description: "Alternative multilingual Indian search alert.",
+    urlTemplate: "https://webdunia.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Khoj v2",
+    description: "Secondary regional Indian search alert.",
+    urlTemplate: "https://khoj.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Indiatimes v2",
+    description: "Alternative Indian media search alert.",
+    urlTemplate: "https://indiatimes.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Sanook v2",
+    description: "Secondary Thai search portal alert.",
+    urlTemplate: "https://sanook.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Kapook v2",
+    description: "Alternative Thai deep search alert.",
+    urlTemplate: "https://kapook.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Zing v2",
+    description: "Secondary Vietnamese search alert.",
+    urlTemplate: "https://zingnews.vn/ping/v2?url={URL}",
+  },
+  {
+    name: "CocCoc v2",
+    description: "Alternative Vietnamese-centric search alert.",
+    urlTemplate: "https://coccoc.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Detik v2",
+    description: "Secondary Indonesian search alert.",
+    urlTemplate: "https://detik.com/ping/v2?url={URL}",
+  },
+  {
+    name: "Kaskus v2",
+    description: "Alternative Indonesian community search alert.",
+    urlTemplate: "https://kaskus.co.id/ping/v2?url={URL}",
+  },
+  {
+    name: "Cari v2",
+    description: "Secondary Malaysian search alert.",
+    urlTemplate: "https://cari.com.my/ping/v2?url={URL}",
+  },
+  {
+    name: "Rakuten v3",
+    description: "Alternative Japanese e-commerce search alert.",
+    urlTemplate: "https://rakuten.co.jp/ping/v3?url={URL}",
+  },
+  {
+    name: "Nifty v3",
+    description: "Secondary Japanese ISP search alert.",
+    urlTemplate: "https://nifty.com/ping/v3?url={URL}",
+  },
+  {
+    name: "ExciteJP v2",
+    description: "Alternative Japanese localized search alert.",
+    urlTemplate: "https://excite.co.jp/ping/v2?url={URL}",
+  },
+  {
+    name: "Zum v3",
+    description: "Secondary Korean open search alert.",
+    urlTemplate: "https://zum.com/ping/v3?url={URL}",
+  },
+  {
+    name: "Nate v3",
+    description: "Alternative Korean search portal alert.",
+    urlTemplate: "https://nate.com/ping/v3?url={URL}",
+  },
+  {
+    name: "Sina v3",
+    description: "Secondary Chinese web portal alert.",
+    urlTemplate: "https://sina.com.cn/ping/v3?url={URL}",
+  },
+  {
+    name: "Sohu v3",
+    description: "Alternative Chinese media search alert.",
+    urlTemplate: "https://sohu.com/ping/v3?url={URL}",
+  },
+  {
+    name: "NetEase v3",
+    description: "Secondary Chinese search portal alert.",
+    urlTemplate: "https://163.com/ping/v3?url={URL}",
+  },
+  {
+    name: "Tencent v3",
+    description: "Alternative Chinese multi-service search alert.",
+    urlTemplate: "https://qq.com/ping/v3?url={URL}",
+  },
+  {
+    name: "GlobalTimes v3",
+    description: "Secondary Chinese English-language news search alert.",
+    urlTemplate: "https://globaltimes.cn/ping/v3?url={URL}",
+  },
+  {
+    name: "ChinaDaily v3",
+    description: "Alternative Chinese official English newspaper alert.",
+    urlTemplate: "https://chinadaily.com.cn/ping/v3?url={URL}",
+  },
+  {
+    name: "CRI v3",
+    description: "Secondary Chinese multilingual search alert.",
+    urlTemplate: "https://cri.cn/ping/v3?url={URL}",
+  },
+  {
+    name: "CNTV v3",
+    description: "Alternative Chinese network television alert.",
+    urlTemplate: "https://cntv.cn/ping/v3?url={URL}",
+  },
+  {
+    name: "BTV v3",
+    description: "Secondary Beijing regional search alert.",
+    urlTemplate: "https://btv.com.cn/ping/v3?url={URL}",
+  },
+  {
+    name: "SMG v3",
+    description: "Alternative Shanghai regional search alert.",
+    urlTemplate: "https://smg.cn/ping/v3?url={URL}",
+  },
+  {
+    name: "MGTV v3",
+    description: "Secondary Chinese entertainment search alert.",
+    urlTemplate: "https://mgtv.com/ping/v3?url={URL}",
+  },
+  {
+    name: "CZTV v3",
+    description: "Alternative Eastern China regional search alert.",
+    urlTemplate: "https://cztv.com/ping/v3?url={URL}",
+  },
+  {
+    name: "GDTV v3",
+    description: "Secondary Southern China regional search alert.",
+    urlTemplate: "https://gdtv.cn/ping/v3?url={URL}",
+  },
+  {
+    name: "JSTV v3",
+    description: "Alternative Jiangsu regional search alert.",
+    urlTemplate: "https://jstv.com/ping/v3?url={URL}",
+  },
+  {
+    name: "CQTV v3",
+    description: "Secondary Chongqing regional search hub alert.",
+    urlTemplate: "https://cqtv.cn/ping/v3?url={URL}",
+  },
+  {
+    name: "AHTV v3",
+    description: "Alternative Anhui regional search alert.",
+    urlTemplate: "https://ahtv.cn/ping/v3?url={URL}",
+  },
+  {
+    name: "FJTV v3",
+    description: "Secondary Fujian regional search alert.",
+    urlTemplate: "https://fjtv.net/ping/v3?url={URL}",
+  },
 ];
