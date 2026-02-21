@@ -156,12 +156,32 @@ export const UrlInput: React.FC<UrlInputProps> = ({
             </div>
           </div>
           <div className="text-right shrink-0">
-            <div className="text-sm font-bold text-gray-600 dark:text-gray-300">
-              {t.submissionSummary
-                .replace('{processed}', (successCount + failureCount).toString())
-                .replace('{total}', totalCount.toString())
-                .replace('{success}', successCount.toString())
-                .replace('{failed}', failureCount.toString())}
+            <div className="text-sm font-bold text-gray-600 dark:text-gray-300 flex flex-col items-end gap-2">
+              <div>
+                {t.submissionSummary
+                  .replace('{processed}', (successCount + failureCount).toString())
+                  .replace('{total}', totalCount.toString())
+                  .replace('{success}', successCount.toString())
+                  .replace('{failed}', failureCount.toString())}
+              </div>
+              {!isSubmitting && (
+                <div className="flex items-center gap-2">
+                  <button 
+                    onClick={() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`I just indexed my URLs using SEOExpert! 🚀\n\n${submissionItems.map(i => i.url).join('\n')}`)}`, '_blank')}
+                    className="p-1.5 text-gray-400 hover:text-sky-400 hover:bg-sky-50 dark:hover:bg-sky-900/20 rounded-lg transition-all border border-gray-100 dark:border-gray-700"
+                    title={t.shareTwitter}
+                  >
+                    <TwitterIcon className="w-3.5 h-3.5" />
+                  </button>
+                  <button 
+                    onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank')}
+                    className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-all border border-gray-100 dark:border-gray-700"
+                    title={t.shareFacebook}
+                  >
+                    <FacebookIcon className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -195,9 +215,22 @@ export const UrlInput: React.FC<UrlInputProps> = ({
                     <div className="flex items-center gap-2">
                         <span className="text-[10px] font-semibold text-teal-600 dark:text-teal-400 shrink-0">
                         {item.status === 'processing' ? (
-                            `Sending to ${item.completedServices || 0} of ${item.totalServices || '?'} sites...`
+                            <span className="flex items-center gap-1.5">
+                                <span className="relative flex h-2 w-2">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-500"></span>
+                                </span>
+                                {`Pinging: ${item.completedServices || 0} / ${item.totalServices || SUBMISSION_SITES.length}`}
+                            </span>
                         ) : (
-                            t[`status${item.status.charAt(0).toUpperCase() + item.status.slice(1)}`]
+                            <span className="flex items-center gap-1.5">
+                                {t[`status${item.status.charAt(0).toUpperCase() + item.status.slice(1)}`]}
+                                {(item.status === 'success' || item.status === 'failed') && item.totalServices && (
+                                    <span className="text-gray-400 dark:text-gray-500 font-normal">
+                                        ({item.completedServices}/{item.totalServices} sites)
+                                    </span>
+                                )}
+                            </span>
                         )}
                         </span>
                         {item.status === 'processing' && item.lastServicePinger && (

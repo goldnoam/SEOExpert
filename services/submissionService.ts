@@ -28,43 +28,54 @@ export const performSubmissions = async (
   let completed = 0;
   if (onProgress) onProgress(0, totalSites);
 
-  // Use a pool of promises to avoid hitting too many sites at once if needed, 
-  // but here we keep the parallel logic for speed as they are no-cors pings.
-  const promises = validSites.map(async (endpoint) => {
-    const submissionUrl = endpoint.urlTemplate.replace(/{URL}/g, encodedUrl);
+  const CONCURRENCY_LIMIT = 20; // Process 20 sites at a time to avoid network congestion
+  const chunks = [];
+  for (let i = 0; i < validSites.length; i += CONCURRENCY_LIMIT) {
+    chunks.push(validSites.slice(i, i + CONCURRENCY_LIMIT));
+  }
 
-    logUpdateCallback(`📡 Pinging indexer: ${endpoint.name}...`, endpoint);
+  for (let i = 0; i < chunks.length; i++) {
+    const chunk = chunks[i];
     
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 12000); // 12s timeout for opaque responses
-
-      await fetch(submissionUrl, { 
-        mode: 'no-cors',
-        cache: 'no-cache',
-        signal: controller.signal
-      });
-      
-      clearTimeout(timeoutId);
-      logUpdateCallback(`  ✅ ${endpoint.name} notified successfully.`, endpoint);
-    } catch (error: any) {
-      let errorMsg = `  ❌ Transmission failed for ${endpoint.name}.`;
-      
-      if (error.name === 'AbortError') {
-        errorMsg = `  ❌ ${endpoint.name} timed out. The server might be busy or filtering high-frequency pings.`;
-      } else if (!navigator.onLine) {
-        errorMsg = `  ❌ Network error: Your connection was lost. Submissions paused.`;
-      } else {
-        errorMsg = `  ❌ Connectivity issue with ${endpoint.name}: ${error.message || 'Service unreachable'}. Skipping...`;
-      }
-      
-      logUpdateCallback(errorMsg, endpoint);
-      console.error(`Error submitting to ${endpoint.name}:`, error);
-    } finally {
-        completed++;
-        if (onProgress) onProgress(completed, totalSites, endpoint.name);
+    // Add a small delay between chunks to prevent rate limiting
+    if (i > 0) {
+      await new Promise(resolve => setTimeout(resolve, 500));
     }
-  });
 
-  await Promise.all(promises);
+    await Promise.all(chunk.map(async (endpoint) => {
+      const submissionUrl = endpoint.urlTemplate.replace(/{URL}/g, encodedUrl);
+
+      logUpdateCallback(`📡 Pinging indexer: ${endpoint.name}...`, endpoint);
+      
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout for opaque responses
+
+        await fetch(submissionUrl, { 
+          mode: 'no-cors',
+          cache: 'no-cache',
+          signal: controller.signal
+        });
+        
+        clearTimeout(timeoutId);
+        logUpdateCallback(`  ✅ ${endpoint.name} notified successfully.`, endpoint);
+      } catch (error: any) {
+        let errorMsg = `  ❌ Transmission failed for ${endpoint.name}.`;
+        
+        if (error.name === 'AbortError') {
+          errorMsg = `  ❌ ${endpoint.name} timed out. The server might be busy or filtering high-frequency pings.`;
+        } else if (!navigator.onLine) {
+          errorMsg = `  ❌ Network error: Your connection was lost. Submissions paused.`;
+        } else {
+          errorMsg = `  ❌ Connectivity issue with ${endpoint.name}: ${error.message || 'Service unreachable'}. Skipping...`;
+        }
+        
+        logUpdateCallback(errorMsg, endpoint);
+        console.error(`Error submitting to ${endpoint.name}:`, error);
+      } finally {
+          completed++;
+          if (onProgress) onProgress(completed, totalSites, endpoint.name);
+      }
+    }));
+  }
 };
