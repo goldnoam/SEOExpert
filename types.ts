@@ -9,6 +9,7 @@ export interface SubmissionSite {
   name: string;
   description: string;
   urlTemplate: string;
+  quality?: 'High' | 'Medium' | 'Standard';
 }
 
 export type SubmissionStatus = 'pending' | 'processing' | 'success' | 'failed';

@@ -2519,26 +2519,31 @@ export const SUBMISSION_SITES: SubmissionSite[] = [
     name: "Google",
     description: "Google's official sitemap ping service.",
     urlTemplate: "https://www.google.com/ping?sitemap={URL}",
+    quality: 'High',
   },
   {
     name: "Bing & Yahoo!",
     description: "Bing's service also notifies Yahoo!",
     urlTemplate: "https://www.bing.com/ping?sitemap={URL}",
+    quality: 'High',
   },
   {
     name: "Yandex",
     description: "Ping service for the Yandex search engine.",
     urlTemplate: "https://webmaster.yandex.com/ping.xml?sitemap={URL}",
+    quality: 'High',
   },
   {
     name: "Seznam.cz",
     description: "Ping service for the Czech search engine.",
     urlTemplate: "https://search.seznam.cz/ping?sitemap={URL}",
+    quality: 'Medium',
   },
   {
     name: "Internet Archive",
     description: "Saves your page to the Wayback Machine.",
     urlTemplate: "https://web.archive.org/save/{URL}",
+    quality: 'High',
   },
   {
     name: "Moreover",
@@ -4996,3 +5001,37 @@ export const SUBMISSION_SITES: SubmissionSite[] = [
     urlTemplate: "https://fjtv.net/ping/v3?url={URL}",
   },
 ];
+
+export const TRAFFIC_GROWTH_STEPS = [
+  {
+    title: "Content Quality & Depth",
+    description: "Create comprehensive, high-quality content that answers user questions better than anyone else.",
+    icon: "✍️",
+    tips: ["Aim for 1500+ words", "Use original images", "Add expert quotes"]
+  },
+  {
+    title: "On-Page SEO Optimization",
+    description: "Ensure your keywords are in the right places without over-optimizing.",
+    icon: "🔍",
+    tips: ["Title tags & Meta descriptions", "H1-H3 header structure", "Alt text for images"]
+  },
+  {
+    title: "Technical SEO & Speed",
+    description: "A fast, mobile-friendly site is essential for ranking and user experience.",
+    icon: "⚡",
+    tips: ["Optimize image sizes", "Use a CDN", "Check Core Web Vitals"]
+  },
+  {
+    title: "Backlink Building",
+    description: "Get other reputable sites to link to your content to build authority.",
+    icon: "🔗",
+    tips: ["Guest posting", "Broken link building", "Create shareable infographics"]
+  },
+  {
+    title: "Social Media Promotion",
+    description: "Drive immediate traffic by sharing your content on relevant social platforms.",
+    icon: "📱",
+    tips: ["Schedule regular posts", "Engage with communities", "Use eye-catching visuals"]
+  }
+];
+
