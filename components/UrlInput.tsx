@@ -20,6 +20,8 @@ const URL_REGEX = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0
 interface UrlInputProps {
   urls: string;
   onUrlsChange: (urls: string) => void;
+  customPings: string;
+  onCustomPingsChange: (pings: string) => void;
   onSubmit: () => void;
   isSubmitting: boolean;
   language: string;
@@ -32,6 +34,8 @@ interface UrlInputProps {
 export const UrlInput: React.FC<UrlInputProps> = ({ 
   urls, 
   onUrlsChange, 
+  customPings,
+  onCustomPingsChange,
   onSubmit, 
   isSubmitting, 
   language,
@@ -44,6 +48,7 @@ export const UrlInput: React.FC<UrlInputProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [copyBtnSuccess, setCopyBtnSuccess] = useState(false);
   const [reportCopySuccess, setReportCopySuccess] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
   const validUrlCount = useMemo(() => {
     return urls.split('\n')
@@ -369,6 +374,33 @@ export const UrlInput: React.FC<UrlInputProps> = ({
           </div>
           {error && <p className="mt-3 text-[11px] font-black text-red-500 uppercase tracking-wider bg-red-50 dark:bg-red-900/20 p-2 rounded-lg border border-red-200 dark:border-red-900/40">{error}</p>}
         </div>
+      </div>
+
+      <div className="mb-6">
+        <button 
+          onClick={() => setShowAdvanced(!showAdvanced)}
+          className="flex items-center gap-2 text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-teal-500 transition-colors"
+        >
+          <svg className={`w-4 h-4 transition-transform ${showAdvanced ? 'rotate-90' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+          {t.advancedOptions || 'Advanced Options'}
+        </button>
+        
+        {showAdvanced && (
+          <div className="mt-4 animate-fade-in">
+            <label className="block text-xs font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-2">
+              {t.customPingServices || 'Custom Ping Services'}
+            </label>
+            <textarea
+              value={customPings}
+              onChange={(e) => onCustomPingsChange(e.target.value)}
+              placeholder={t.customPingPlaceholder || 'https://custom-indexer.com/ping?url={URL}'}
+              className="w-full h-32 p-4 bg-gray-50/50 dark:bg-gray-900/50 border-2 border-gray-100 dark:border-gray-800 rounded-xl focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 outline-none resize-none transition-all dark:text-gray-100 font-mono text-sm"
+              disabled={isSubmitting}
+            />
+          </div>
+        )}
       </div>
 
       <button

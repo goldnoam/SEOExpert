@@ -16,6 +16,21 @@ const MANUAL_SITES = [
     url: 'https://www.bing.com/webmasters',
     descriptionKey: 'bingDescription',
   },
+  {
+    name: 'Ahrefs Webmaster Tools',
+    url: 'https://ahrefs.com/webmaster-tools',
+    descriptionKey: 'ahrefsDescription',
+  },
+  {
+    name: 'Google Analytics',
+    url: 'https://analytics.google.com/',
+    descriptionKey: 'gaDescription',
+  },
+  {
+    name: 'PageSpeed Insights',
+    url: 'https://pagespeed.web.dev/',
+    descriptionKey: 'pagespeedDescription',
+  },
 ];
 
 export const ManualSubmissionLinks: React.FC<ManualSubmissionLinksProps> = ({ language }) => {

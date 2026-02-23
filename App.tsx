@@ -12,10 +12,14 @@ import { performSubmissions } from './services/submissionService';
 import { translations } from './translations';
 import { SUBMISSION_DELAY } from './constants';
 
+import { TrafficGrowthGuide } from './components/TrafficGrowthGuide';
+import { AdditionalSEOTools } from './components/AdditionalSEOTools';
+
 function App() {
   const [theme, setTheme] = useState<Theme>(Theme.Dark);
   const [language, setLanguage] = useState<string>('en');
   const [urls, setUrls] = useState<string>('');
+  const [customPings, setCustomPings] = useState<string>('');
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState<boolean>(false);
@@ -111,6 +115,7 @@ function App() {
       try {
         await performSubmissions(
           item.url, 
+          customPings,
           (msg, site) => logUpdateCallback(msg, site, favicon),
           (current, total, lastSite) => {
             const percentage = total > 0 ? Math.round((current / total) * 100) : 100;
@@ -208,6 +213,8 @@ function App() {
           <UrlInput
             urls={urls}
             onUrlsChange={setUrls}
+            customPings={customPings}
+            onCustomPingsChange={setCustomPings}
             onSubmit={handleSubmit}
             isSubmitting={isSubmitting}
             language={language}
@@ -224,6 +231,10 @@ function App() {
           </div>
 
           <ManualSubmissionLinks language={language} />
+          
+          <AdditionalSEOTools language={language} />
+
+          <TrafficGrowthGuide language={language} />
         </div>
       </main>
 

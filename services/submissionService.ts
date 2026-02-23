@@ -4,10 +4,21 @@ import { SubmissionSite } from '../types';
 
 export const performSubmissions = async (
   url: string, 
+  customPings: string,
   logUpdateCallback: (message: string, site?: SubmissionSite) => void,
   onProgress?: (current: number, total: number, lastSiteName?: string) => void
 ): Promise<void> => {
-  const submissionSites = SUBMISSION_SITES;
+  const customSites: SubmissionSite[] = customPings
+    .split('\n')
+    .map(line => line.trim())
+    .filter(line => line && line.includes('{URL}'))
+    .map((line, index) => ({
+      name: `Custom Ping ${index + 1}`,
+      description: 'User provided custom ping service',
+      urlTemplate: line
+    }));
+
+  const submissionSites = [...SUBMISSION_SITES, ...customSites];
 
   if (submissionSites.length === 0) {
       logUpdateCallback('❌ Critical: No submission sites are available in the registry. Aborting.');
