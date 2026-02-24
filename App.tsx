@@ -14,6 +14,7 @@ import { SUBMISSION_DELAY } from './constants';
 
 import { TrafficGrowthGuide } from './components/TrafficGrowthGuide';
 import { AdditionalSEOTools } from './components/AdditionalSEOTools';
+import { SubmissionHistory } from './components/SubmissionHistory';
 
 function App() {
   const [theme, setTheme] = useState<Theme>(Theme.Dark);
@@ -24,6 +25,18 @@ function App() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState<boolean>(false);
   const [submissionItems, setSubmissionItems] = useState<SubmissionItem[]>([]);
+  const [history, setHistory] = useState<SubmissionItem[]>(() => {
+    try {
+      const saved = localStorage.getItem('seoexpert_history');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem('seoexpert_history', JSON.stringify(history));
+  }, [history]);
 
   useEffect(() => {
     const html = document.documentElement;
@@ -134,6 +147,10 @@ function App() {
         setSubmissionItems(prev => prev.map(p => 
             p.id === item.id ? { ...p, status: 'success', progress: 100 } : p
         ));
+        setHistory(prev => {
+          const updated = [{ ...item, status: 'success', progress: 100, timestamp: Date.now() }, ...prev];
+          return updated.slice(0, 50); // Keep last 50
+        });
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred.';
         logUpdateCallback(`❌ Error submitting ${item.url}: ${errorMessage}`, undefined, favicon);
@@ -141,6 +158,10 @@ function App() {
         setSubmissionItems(prev => prev.map(p => 
             p.id === item.id ? { ...p, status: 'failed', progress: 100 } : p
         ));
+        setHistory(prev => {
+          const updated = [{ ...item, status: 'failed', progress: 100, timestamp: Date.now() }, ...prev];
+          return updated.slice(0, 50); // Keep last 50
+        });
       }
     }
 
@@ -226,7 +247,14 @@ function App() {
 
           <AdBanner slot="TOP_BANNER_1" />
 
-          <div className={theme === Theme.Colorful ? 'glass-effect p-1 rounded-2xl shadow-2xl' : ''}>
+          {history.length > 0 && (
+            <SubmissionHistory 
+              history={history} 
+              onClearHistory={() => setHistory([])} 
+            />
+          )}
+
+          <div className={theme === Theme.Colorful ? 'glass-effect p-1 rounded-2xl shadow-2xl mt-8' : 'mt-8'}>
             <LogViewer logs={logs} language={language} onClear={clearLogs} />
           </div>
 
