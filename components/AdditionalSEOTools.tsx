@@ -65,6 +65,117 @@ const SEO_TOOLS = [
         description: "See how your site performs, reveal why it's slow and discover optimization opportunities.",
       },
     ]
+  },
+  {
+    category: 'Geo & Domain Tools',
+    requiresInput: true,
+    inputPlaceholder: 'Enter a domain (e.g., example.com)',
+    tools: [
+      {
+        name: 'IP Geolocation',
+        url: 'https://www.iplocation.net/search?q={QUERY}',
+        description: 'Find the geographic location of the server hosting the URL.',
+        queryParam: 'q',
+      },
+      {
+        name: 'WHOIS Lookup',
+        url: 'https://who.is/whois/{QUERY}',
+        description: 'Check domain registration details and ownership information.',
+        queryParam: '',
+      },
+      {
+        name: 'DNS Checker',
+        url: 'https://dnschecker.org/#A/{QUERY}',
+        description: 'Check DNS propagation across multiple global servers.',
+        queryParam: '',
+      },
+    ]
+  },
+  {
+    category: 'Geo & Local SEO',
+    requiresInput: true,
+    inputPlaceholder: 'Enter a location or business',
+    tools: [
+      {
+        name: 'Google Maps',
+        url: 'https://www.google.com/maps/search/{QUERY}',
+        description: 'Check local business listings and map rankings.',
+        queryParam: '',
+      },
+      {
+        name: 'Bing Maps',
+        url: 'https://www.bing.com/maps?q={QUERY}',
+        description: "Verify local presence on Microsoft's mapping service.",
+        queryParam: '',
+      },
+      {
+        name: 'OpenStreetMap',
+        url: 'https://www.openstreetmap.org/search?query={QUERY}',
+        description: 'Open-source map data for geographic verification.',
+        queryParam: '',
+      },
+      {
+        name: 'Yelp Business',
+        url: 'https://www.yelp.com/search?find_desc={QUERY}',
+        description: 'Monitor local reputation and business directory status.',
+        queryParam: '',
+      },
+      {
+        name: 'What3Words',
+        url: 'https://what3words.com/{QUERY}',
+        description: 'Unique 3-word address system for precise location sharing.',
+        queryParam: '',
+      },
+      {
+        name: 'GeoHack',
+        url: 'https://geohack.toolforge.org/geohack.php?params={QUERY}',
+        description: 'Universal map tool for coordinate-based location lookup.',
+        queryParam: '',
+      }
+    ]
+  },
+  {
+    category: 'Search & Webmaster',
+    requiresInput: true,
+    inputPlaceholder: 'Enter a keyword or URL',
+    tools: [
+      {
+        name: 'Bing Webmaster Tools',
+        url: 'https://www.bing.com/webmasters/about',
+        description: "Manage your site's presence on Bing search results.",
+        queryParam: '',
+      },
+      {
+        name: 'Yandex Webmaster',
+        url: 'https://webmaster.yandex.com/',
+        description: "Monitor your site's performance on Yandex search.",
+        queryParam: '',
+      },
+      {
+        name: 'DuckDuckGo Search',
+        url: 'https://duckduckgo.com/?q={QUERY}',
+        description: 'Privacy-focused search engine for SEO checking.',
+        queryParam: 'q',
+      },
+      {
+        name: 'Baidu Search',
+        url: 'https://www.baidu.com/s?wd={QUERY}',
+        description: "Check your rankings on China's largest search engine.",
+        queryParam: 'wd',
+      },
+      {
+        name: 'Naver Search',
+        url: 'https://search.naver.com/search.naver?query={QUERY}',
+        description: "South Korea's leading search engine for regional SEO.",
+        queryParam: 'query',
+      },
+      {
+        name: 'Qwant Search',
+        url: 'https://www.qwant.com/?q={QUERY}',
+        description: 'European privacy-focused search engine.',
+        queryParam: 'q',
+      }
+    ]
   }
 ];
 
@@ -79,11 +190,25 @@ export const AdditionalSEOTools: React.FC<AdditionalSEOToolsProps> = ({ language
   const handleToolClick = (e: React.MouseEvent<HTMLAnchorElement>, toolUrl: string, categoryIdx: number, requiresInput?: boolean) => {
     if (requiresInput && toolUrl.includes('{QUERY}')) {
       e.preventDefault();
-      const query = inputs[categoryIdx]?.trim();
+      let query = inputs[categoryIdx]?.trim();
       if (!query) {
         alert('Please enter a keyword or URL first.');
         return;
       }
+      
+      const category = SEO_TOOLS[categoryIdx].category;
+      
+      // For Domain/Geo tools, if it's a URL, extract the hostname
+      if (category === 'Geo & Domain Tools' || category === 'Backlink Analysis') {
+        try {
+          if (query.startsWith('http')) {
+            query = new URL(query).hostname;
+          }
+        } catch (e) {
+          // fallback to original query if URL parsing fails
+        }
+      }
+
       const finalUrl = toolUrl.replace('{QUERY}', encodeURIComponent(query));
       window.open(finalUrl, '_blank');
     }
@@ -96,11 +221,11 @@ export const AdditionalSEOTools: React.FC<AdditionalSEOToolsProps> = ({ language
           Additional <span className="text-teal-500">SEO Tools</span>
         </h2>
         <p className="text-sm text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-          Take your SEO to the next level with these essential tools for keyword research, backlink analysis, and site auditing.
+          Take your SEO to the next level with these essential tools for keyword research, backlink analysis, site auditing, geographic insights, and local search optimization.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
         {SEO_TOOLS.map((category, idx) => (
           <div key={idx} className="flex flex-col">
             <h3 className="text-sm font-black uppercase tracking-widest text-teal-600 dark:text-teal-400 mb-4 border-b border-gray-100 dark:border-gray-700 pb-2">

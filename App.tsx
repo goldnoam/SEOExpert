@@ -15,6 +15,8 @@ import { SUBMISSION_DELAY } from './constants';
 import { TrafficGrowthGuide } from './components/TrafficGrowthGuide';
 import { AdditionalSEOTools } from './components/AdditionalSEOTools';
 import { SubmissionHistory } from './components/SubmissionHistory';
+import { RankTracker } from './components/RankTracker';
+import { AdvancedSEOMetrics } from './components/AdvancedSEOMetrics';
 
 function App() {
   const [theme, setTheme] = useState<Theme>(Theme.Dark);
@@ -261,6 +263,10 @@ function App() {
           <ManualSubmissionLinks language={language} />
           
           <AdditionalSEOTools language={language} />
+
+          <RankTracker language={language} />
+
+          <AdvancedSEOMetrics language={language} />
 
           <TrafficGrowthGuide language={language} />
         </div>

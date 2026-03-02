@@ -14,6 +14,7 @@ import { XCircleIcon } from './icons/XCircleIcon';
 import { ClockIcon } from './icons/ClockIcon';
 import { SubmissionItem } from '../types';
 import { SUBMISSION_SITES } from '../constants';
+import { PingManager } from './PingManager';
 
 const URL_REGEX = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/;
 
@@ -399,6 +400,7 @@ export const UrlInput: React.FC<UrlInputProps> = ({
               className="w-full h-32 p-4 bg-gray-50/50 dark:bg-gray-900/50 border-2 border-gray-100 dark:border-gray-800 rounded-xl focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 outline-none resize-none transition-all dark:text-gray-100 font-mono text-sm"
               disabled={isSubmitting}
             />
+            <PingManager onSelectUrls={onCustomPingsChange} currentUrls={customPings} />
           </div>
         )}
       </div>
