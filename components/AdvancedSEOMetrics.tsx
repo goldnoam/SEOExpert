@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, Save, BarChart3, MapPin, Brain, Quote, ShieldCheck, Smile, Zap, Search, Layers, Link2 } from 'lucide-react';
+import { Plus, Trash2, Save, BarChart3, MapPin, Brain, Quote, ShieldCheck, Smile, Zap, Search, Layers, Link2, Sparkles, Loader2 } from 'lucide-react';
 import { AdvancedSEOSite, AISEOMetrics, LocalSEOMetrics } from '../types';
+import { analyzeUrlWithGemini } from '../services/geminiService';
 
 interface AdvancedSEOMetricsProps {
   language: string;
@@ -37,6 +38,7 @@ export const AdvancedSEOMetrics: React.FC<AdvancedSEOMetricsProps> = ({ language
 
   const [newUrl, setNewUrl] = useState('');
   const [editingSiteId, setEditingSiteId] = useState<string | null>(null);
+  const [analyzingSiteId, setAnalyzingSiteId] = useState<string | null>(null);
   const [editAiMetrics, setEditAiMetrics] = useState<AISEOMetrics>(DEFAULT_AI_METRICS);
   const [editLocalMetrics, setEditLocalMetrics] = useState<LocalSEOMetrics>(DEFAULT_LOCAL_METRICS);
 
@@ -89,6 +91,25 @@ export const AdvancedSEOMetrics: React.FC<AdvancedSEOMetricsProps> = ({ language
     setEditingSiteId(null);
   };
 
+  const handleAiAnalyze = async (site: AdvancedSEOSite) => {
+    setAnalyzingSiteId(site.id);
+    try {
+      const result = await analyzeUrlWithGemini(site.url);
+      setSites(prev => prev.map(s => 
+        s.id === site.id ? { 
+          ...s, 
+          aiMetrics: result.aiMetrics, 
+          localMetrics: result.localMetrics,
+          lastUpdated: Date.now() 
+        } : s
+      ));
+    } catch (error) {
+      alert('Failed to analyze URL with AI. Please check your API key and try again.');
+    } finally {
+      setAnalyzingSiteId(null);
+    }
+  };
+
   return (
     <div className="mt-8 mb-12 bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 border border-gray-100 dark:border-gray-700">
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
@@ -139,9 +160,23 @@ export const AdvancedSEOMetrics: React.FC<AdvancedSEOMetricsProps> = ({ language
                       <Save className="w-4 h-4" /> Save
                     </button>
                   ) : (
-                    <button onClick={() => startEditing(site)} className="flex items-center gap-2 px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg font-bold text-xs hover:opacity-80 transition-all">
-                      Edit Metrics
-                    </button>
+                    <>
+                      <button 
+                        onClick={() => handleAiAnalyze(site)} 
+                        disabled={analyzingSiteId === site.id}
+                        className="flex items-center gap-2 px-4 py-2 bg-purple-500 text-white rounded-lg font-bold text-xs hover:bg-purple-600 transition-all disabled:opacity-50"
+                      >
+                        {analyzingSiteId === site.id ? (
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                        ) : (
+                          <Sparkles className="w-4 h-4" />
+                        )}
+                        AI Analyze
+                      </button>
+                      <button onClick={() => startEditing(site)} className="flex items-center gap-2 px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg font-bold text-xs hover:opacity-80 transition-all">
+                        Edit Metrics
+                      </button>
+                    </>
                   )}
                   <button onClick={() => deleteSite(site.id)} className="p-2 text-gray-400 hover:text-red-500 transition-colors">
                     <Trash2 className="w-4 h-4" />

@@ -132,11 +132,16 @@ export const LogViewer: React.FC<LogViewerProps> = ({ logs, language, onClear })
                 )}
               </div>
               {log.siteDescription && (
-                <div className="flex items-center gap-1.5 mt-1 opacity-80">
+                <div className="flex items-center gap-1.5 mt-1 opacity-80 group/desc relative">
                   <div className="w-1 h-3 bg-teal-500/30 rounded-full shrink-0"></div>
-                  <span className="text-[11px] italic text-teal-600 dark:text-teal-400/80 font-sans line-clamp-1">
+                  <span className="text-[11px] italic text-teal-600 dark:text-teal-400/80 font-sans line-clamp-1 cursor-help">
                     {log.siteDescription}
                   </span>
+                  <div className="absolute bottom-full left-0 mb-2 w-64 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-2xl opacity-0 group-hover/desc:opacity-100 pointer-events-none transition-all duration-200 z-50 border border-gray-700 font-sans backdrop-blur-md">
+                    <p className="font-black mb-1 border-b border-gray-700 pb-1 uppercase tracking-widest text-teal-400 text-[9px]">Site Details</p>
+                    <p className="leading-normal">{log.siteDescription}</p>
+                    <div className="absolute top-full left-4 w-3 h-3 bg-gray-900 border-r border-b border-gray-700 rotate-45 -mt-1.5"></div>
+                  </div>
                 </div>
               )}
             </div>

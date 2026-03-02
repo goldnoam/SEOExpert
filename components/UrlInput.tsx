@@ -338,7 +338,7 @@ export const UrlInput: React.FC<UrlInputProps> = ({
               value={urls}
               onChange={(e) => handleChange(e.target.value)}
               placeholder={t.urlPlaceholder}
-              className={`w-full h-56 p-6 pb-14 bg-gray-50/50 dark:bg-gray-900/50 border-2 rounded-2xl focus:ring-4 focus:ring-teal-500/20 outline-none resize-none transition-all dark:text-gray-100 font-mono text-sm leading-relaxed
+              className={`w-full h-56 p-6 pb-14 bg-white dark:bg-gray-900 border-2 rounded-2xl focus:ring-4 focus:ring-teal-500/20 outline-none resize-none transition-all text-gray-900 dark:text-gray-100 font-mono text-sm leading-relaxed
               ${error ? 'border-red-500 shadow-[0_0_15px_rgba(239,68,68,0.2)]' : 'border-gray-100 dark:border-gray-800 focus:border-teal-500'}`}
               disabled={isSubmitting}
             />

@@ -48,7 +48,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, language, on
             
             <button
               onClick={onAboutClick}
-              className="p-2 rounded-xl text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-teal-500 transition-all active:scale-95"
+              className="p-2 rounded-xl text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-teal-500 transition-all active:scale-95"
               aria-label="About"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -58,7 +58,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, language, on
 
             <button
               onClick={toggleTheme}
-              className="flex items-center gap-2 p-1.5 pr-3 rounded-xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:border-teal-500 transition-all active:scale-95 group"
+              className="flex items-center gap-2 p-1.5 pr-3 rounded-xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-teal-500 transition-all active:scale-95 group"
               aria-label="Toggle theme"
             >
                 <div className="p-1.5 rounded-lg bg-white dark:bg-gray-900 shadow-sm transition-transform group-hover:rotate-12">
