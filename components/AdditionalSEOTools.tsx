@@ -267,7 +267,7 @@ export const AdditionalSEOTools: React.FC<AdditionalSEOToolsProps> = ({ language
         <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-2 tracking-tight">
           Additional <span className="text-teal-500">SEO Tools</span>
         </h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        <p className="text-sm text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
           Take your SEO to the next level with these essential tools for keyword research, backlink analysis, site auditing, geographic insights, and international search optimization.
         </p>
       </div>
@@ -309,7 +309,7 @@ export const AdditionalSEOTools: React.FC<AdditionalSEOToolsProps> = ({ language
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+                  <p className="text-xs text-gray-500 dark:text-gray-300 leading-relaxed">
                     {tool.description}
                   </p>
                 </a>

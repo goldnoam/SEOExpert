@@ -228,7 +228,7 @@ function App() {
             </span>
           </h1>
           <p className={`text-center mb-8 max-w-2xl mx-auto leading-relaxed
-            ${theme === Theme.Colorful ? 'text-gray-300' : 'text-gray-600 dark:text-gray-400'}
+            ${theme === Theme.Colorful ? 'text-gray-300' : 'text-gray-600 dark:text-gray-300'}
           `}>
             {t.appSubtitle}
           </p>

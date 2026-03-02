@@ -39,7 +39,7 @@ export const ManualSubmissionLinks: React.FC<ManualSubmissionLinksProps> = ({ la
   return (
     <div className="mt-8 bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
       <h2 className="text-lg font-semibold mb-3 border-b border-gray-200 dark:border-gray-700 pb-2 rtl:text-right">{t.manualSubmissionTitle}</h2>
-      <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 rtl:text-right">
+      <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 rtl:text-right">
         {t.manualSubmissionIntro}
       </p>
       <div className="space-y-4">
@@ -51,10 +51,10 @@ export const ManualSubmissionLinks: React.FC<ManualSubmissionLinksProps> = ({ la
                 </svg>
              </div>
             <div className="ml-3 rtl:mr-3 rtl:ml-0">
-              <a href={site.url} target="_blank" rel="noopener noreferrer" className="text-base font-medium text-teal-600 dark:text-teal-400 hover:underline">
+              <a href={site.url} target="_blank" rel="noopener noreferrer" className="text-base font-medium text-teal-600 dark:text-teal-300 hover:underline">
                 {site.name}
               </a>
-              <p className="text-sm text-gray-500 dark:text-gray-400">{t[site.descriptionKey]}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-300">{t[site.descriptionKey]}</p>
             </div>
           </div>
         ))}

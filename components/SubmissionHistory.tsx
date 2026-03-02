@@ -20,7 +20,7 @@ export const SubmissionHistory: React.FC<SubmissionHistoryProps> = ({ history, o
         </h2>
         <button 
           onClick={onClearHistory}
-          className="text-xs font-bold text-gray-500 hover:text-red-500 transition-colors uppercase tracking-widest"
+          className="text-xs font-bold text-gray-500 dark:text-gray-400 hover:text-red-500 transition-colors uppercase tracking-widest"
         >
           Clear History
         </button>
@@ -40,7 +40,7 @@ export const SubmissionHistory: React.FC<SubmissionHistoryProps> = ({ history, o
                   {item.url}
                 </p>
                 {item.timestamp && (
-                  <p className="text-[10px] text-gray-500 dark:text-gray-400">
+                  <p className="text-[10px] text-gray-500 dark:text-gray-300">
                     {new Date(item.timestamp).toLocaleString()}
                   </p>
                 )}
