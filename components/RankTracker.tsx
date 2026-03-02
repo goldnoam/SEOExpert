@@ -73,7 +73,7 @@ export const RankTracker: React.FC<RankTrackerProps> = ({ language }) => {
           <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-2 tracking-tight">
             Rank <span className="text-teal-500">Tracker</span>
           </h2>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <p className="text-sm text-gray-600 dark:text-gray-300">
             Monitor your search engine rankings for target keywords.
           </p>
         </div>
@@ -90,7 +90,7 @@ export const RankTracker: React.FC<RankTrackerProps> = ({ language }) => {
         <div className="mb-8 p-4 bg-gray-50 dark:bg-gray-900/50 rounded-xl border border-gray-100 dark:border-gray-800 animate-fade-in">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div>
-              <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-1">Keyword</label>
+              <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-300 mb-1">Keyword</label>
               <input 
                 type="text" 
                 value={newKeyword}
@@ -100,7 +100,7 @@ export const RankTracker: React.FC<RankTrackerProps> = ({ language }) => {
               />
             </div>
             <div>
-              <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-1">Domain</label>
+              <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-300 mb-1">Domain</label>
               <input 
                 type="text" 
                 value={newDomain}
@@ -123,7 +123,7 @@ export const RankTracker: React.FC<RankTrackerProps> = ({ language }) => {
         {keywords.length === 0 ? (
           <div className="text-center py-12 border-2 border-dashed border-gray-100 dark:border-gray-800 rounded-2xl">
             <History className="w-12 h-12 text-gray-200 dark:text-gray-700 mx-auto mb-4" />
-            <p className="text-gray-400 font-medium">No keywords tracked yet. Add your first one to start monitoring.</p>
+            <p className="text-gray-400 dark:text-gray-500 font-medium">No keywords tracked yet. Add your first one to start monitoring.</p>
           </div>
         ) : (
           keywords.map((k) => (
@@ -136,7 +136,7 @@ export const RankTracker: React.FC<RankTrackerProps> = ({ language }) => {
                       {k.domain}
                     </div>
                   </div>
-                  <div className="flex items-center gap-4 text-xs text-gray-500">
+                  <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
                     <span className="flex items-center gap-1">
                       Last Checked: {k.lastChecked ? new Date(k.lastChecked).toLocaleDateString() : 'Never'}
                     </span>
@@ -153,7 +153,7 @@ export const RankTracker: React.FC<RankTrackerProps> = ({ language }) => {
 
                 <div className="flex items-center gap-8">
                   <div className="text-center min-w-[80px]">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1">Current Rank</p>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-1">Current Rank</p>
                     <div className="flex items-center justify-center gap-2">
                       <span className="text-3xl font-black text-gray-900 dark:text-white">
                         {k.history.length > 0 ? k.history[k.history.length - 1].rank : '-'}
@@ -179,7 +179,7 @@ export const RankTracker: React.FC<RankTrackerProps> = ({ language }) => {
                       </ResponsiveContainer>
                     ) : (
                       <div className="h-full w-full flex items-center justify-center border border-gray-200 dark:border-gray-800 rounded-lg border-dashed">
-                        <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">No Data</span>
+                        <span className="text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase tracking-widest">No Data</span>
                       </div>
                     )}
                   </div>
