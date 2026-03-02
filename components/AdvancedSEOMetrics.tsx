@@ -161,18 +161,20 @@ export const AdvancedSEOMetrics: React.FC<AdvancedSEOMetricsProps> = ({ language
                     </button>
                   ) : (
                     <>
-                      <button 
-                        onClick={() => handleAiAnalyze(site)} 
-                        disabled={analyzingSiteId === site.id}
-                        className="flex items-center gap-2 px-4 py-2 bg-purple-500 text-white rounded-lg font-bold text-xs hover:bg-purple-600 transition-all disabled:opacity-50"
-                      >
-                        {analyzingSiteId === site.id ? (
-                          <Loader2 className="w-4 h-4 animate-spin" />
-                        ) : (
-                          <Sparkles className="w-4 h-4" />
-                        )}
-                        AI Analyze
-                      </button>
+                      {process.env.GEMINI_API_KEY && (
+                        <button 
+                          onClick={() => handleAiAnalyze(site)} 
+                          disabled={analyzingSiteId === site.id}
+                          className="flex items-center gap-2 px-4 py-2 bg-purple-500 text-white rounded-lg font-bold text-xs hover:bg-purple-600 transition-all disabled:opacity-50"
+                        >
+                          {analyzingSiteId === site.id ? (
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                          ) : (
+                            <Sparkles className="w-4 h-4" />
+                          )}
+                          AI Analyze
+                        </button>
+                      )}
                       <button onClick={() => startEditing(site)} className="flex items-center gap-2 px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg font-bold text-xs hover:opacity-80 transition-all">
                         Edit Metrics
                       </button>
@@ -189,7 +191,7 @@ export const AdvancedSEOMetrics: React.FC<AdvancedSEOMetricsProps> = ({ language
                 <div>
                   <div className="flex items-center gap-2 mb-4">
                     <Brain className="w-4 h-4 text-purple-500" />
-                    <h4 className="text-xs font-black uppercase tracking-widest text-gray-500 dark:text-gray-400">AI SEO (SGE) Metrics</h4>
+                    <h4 className="text-xs font-black uppercase tracking-widest text-gray-500 dark:text-gray-300">AI SEO (SGE) Metrics</h4>
                   </div>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     <MetricCard 
@@ -268,7 +270,7 @@ export const AdvancedSEOMetrics: React.FC<AdvancedSEOMetricsProps> = ({ language
                 <div>
                   <div className="flex items-center gap-2 mb-4">
                     <MapPin className="w-4 h-4 text-orange-500" />
-                    <h4 className="text-xs font-black uppercase tracking-widest text-gray-500 dark:text-gray-400">Local SEO (Geo) Metrics</h4>
+                    <h4 className="text-xs font-black uppercase tracking-widest text-gray-500 dark:text-gray-300">Local SEO (Geo) Metrics</h4>
                   </div>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     <MetricCard 

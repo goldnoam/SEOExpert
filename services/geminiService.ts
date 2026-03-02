@@ -1,7 +1,18 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { AISEOMetrics, LocalSEOMetrics } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
+let aiInstance: GoogleGenAI | null = null;
+
+const getAiInstance = () => {
+  if (!aiInstance) {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error("GEMINI_API_KEY is not set. AI features are unavailable.");
+    }
+    aiInstance = new GoogleGenAI({ apiKey });
+  }
+  return aiInstance;
+};
 
 export interface SEOAnalysisResult {
   aiMetrics: AISEOMetrics;
@@ -10,8 +21,10 @@ export interface SEOAnalysisResult {
 
 export const analyzeUrlWithGemini = async (url: string): Promise<SEOAnalysisResult> => {
   try {
+    const ai = getAiInstance();
     const response = await ai.models.generateContent({
       model: "gemini-3.1-pro-preview",
+// ... rest of the file ...
       contents: `Analyze the following URL for SEO and AI search performance metrics: ${url}. 
       Provide realistic estimates for the following metrics in JSON format.
       
