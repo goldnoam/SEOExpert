@@ -5,6 +5,7 @@ import { analyzeUrlWithGemini } from '../services/geminiService';
 
 interface AdvancedSEOMetricsProps {
   language: string;
+  currentUrl: string;
 }
 
 const DEFAULT_AI_METRICS: AISEOMetrics = {
@@ -26,7 +27,7 @@ const DEFAULT_LOCAL_METRICS: LocalSEOMetrics = {
   geogridVisibility: 0,
 };
 
-export const AdvancedSEOMetrics: React.FC<AdvancedSEOMetricsProps> = ({ language }) => {
+export const AdvancedSEOMetrics: React.FC<AdvancedSEOMetricsProps> = ({ language, currentUrl }) => {
   const [sites, setSites] = useState<AdvancedSEOSite[]>(() => {
     try {
       const saved = localStorage.getItem('seoexpert_advanced_sites');
@@ -38,6 +39,14 @@ export const AdvancedSEOMetrics: React.FC<AdvancedSEOMetricsProps> = ({ language
 
   const [newUrl, setNewUrl] = useState('');
   const [editingSiteId, setEditingSiteId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!newUrl && currentUrl) {
+      const firstUrl = currentUrl.split('\n')[0].trim();
+      setNewUrl(firstUrl);
+    }
+  }, [currentUrl, newUrl]);
+
   const [analyzingSiteId, setAnalyzingSiteId] = useState<string | null>(null);
   const [rankingSiteId, setRankingSiteId] = useState<string | null>(null);
   const [editAiMetrics, setEditAiMetrics] = useState<AISEOMetrics>(DEFAULT_AI_METRICS);

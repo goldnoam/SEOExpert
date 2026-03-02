@@ -5,9 +5,10 @@ import { TrackedKeyword } from '../types';
 
 interface RankTrackerProps {
   language: string;
+  currentUrl: string;
 }
 
-export const RankTracker: React.FC<RankTrackerProps> = ({ language }) => {
+export const RankTracker: React.FC<RankTrackerProps> = ({ language, currentUrl }) => {
   const [keywords, setKeywords] = useState<TrackedKeyword[]>(() => {
     try {
       const saved = localStorage.getItem('seoexpert_tracked_keywords');
@@ -20,6 +21,18 @@ export const RankTracker: React.FC<RankTrackerProps> = ({ language }) => {
   const [newKeyword, setNewKeyword] = useState('');
   const [newDomain, setNewDomain] = useState('');
   const [showAdd, setShowAdd] = useState(false);
+
+  useEffect(() => {
+    if (showAdd && !newDomain && currentUrl) {
+      const firstUrl = currentUrl.split('\n')[0].trim();
+      try {
+        const domain = new URL(firstUrl.startsWith('http') ? firstUrl : `https://${firstUrl}`).hostname;
+        setNewDomain(domain);
+      } catch {
+        setNewDomain(firstUrl);
+      }
+    }
+  }, [showAdd, currentUrl, newDomain]);
 
   useEffect(() => {
     localStorage.setItem('seoexpert_tracked_keywords', JSON.stringify(keywords));

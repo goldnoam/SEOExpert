@@ -264,9 +264,9 @@ function App() {
           
           <AdditionalSEOTools language={language} />
 
-          <RankTracker language={language} />
+          <RankTracker language={language} currentUrl={urls} />
 
-          <AdvancedSEOMetrics language={language} />
+          <AdvancedSEOMetrics language={language} currentUrl={urls} />
 
           <TrafficGrowthGuide language={language} />
         </div>
