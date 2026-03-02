@@ -25,6 +25,24 @@ body {
   transition: background-color 0.5s ease, color 0.5s ease;
 }
 
+::selection {
+  background-color: #14b8a6; /* teal-500 */
+  color: white;
+}
+
+.dark ::selection {
+  background-color: #2dd4bf; /* teal-400 */
+  color: #0f172a;
+}
+
+input, textarea, [contenteditable] {
+  caret-color: #14b8a6;
+}
+
+.dark input, .dark textarea, .dark [contenteditable] {
+  caret-color: #2dd4bf;
+}
+
 /* Custom scrollbar for dark themes */
 .dark ::-webkit-scrollbar {
   width: 10px;

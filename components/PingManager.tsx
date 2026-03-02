@@ -60,7 +60,7 @@ export const PingManager: React.FC<PingManagerProps> = ({ onSelectUrls, currentU
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <List className="w-4 h-4 text-teal-500" />
-          <h3 className="text-xs font-black uppercase tracking-widest text-gray-500">Ping List Manager</h3>
+          <h3 className="text-xs font-black uppercase tracking-widest text-gray-500 dark:text-gray-400">Ping List Manager</h3>
         </div>
         <button 
           onClick={() => setShowAdd(!showAdd)}

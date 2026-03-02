@@ -90,7 +90,7 @@ export const RankTracker: React.FC<RankTrackerProps> = ({ language }) => {
         <div className="mb-8 p-4 bg-gray-50 dark:bg-gray-900/50 rounded-xl border border-gray-100 dark:border-gray-800 animate-fade-in">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div>
-              <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Keyword</label>
+              <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-1">Keyword</label>
               <input 
                 type="text" 
                 value={newKeyword}
@@ -100,7 +100,7 @@ export const RankTracker: React.FC<RankTrackerProps> = ({ language }) => {
               />
             </div>
             <div>
-              <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Domain</label>
+              <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-1">Domain</label>
               <input 
                 type="text" 
                 value={newDomain}

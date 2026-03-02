@@ -154,7 +154,7 @@ export const AdvancedSEOMetrics: React.FC<AdvancedSEOMetricsProps> = ({ language
                 <div>
                   <div className="flex items-center gap-2 mb-4">
                     <Brain className="w-4 h-4 text-purple-500" />
-                    <h4 className="text-xs font-black uppercase tracking-widest text-gray-500">AI SEO (SGE) Metrics</h4>
+                    <h4 className="text-xs font-black uppercase tracking-widest text-gray-500 dark:text-gray-400">AI SEO (SGE) Metrics</h4>
                   </div>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     <MetricCard 
@@ -233,7 +233,7 @@ export const AdvancedSEOMetrics: React.FC<AdvancedSEOMetricsProps> = ({ language
                 <div>
                   <div className="flex items-center gap-2 mb-4">
                     <MapPin className="w-4 h-4 text-orange-500" />
-                    <h4 className="text-xs font-black uppercase tracking-widest text-gray-500">Local SEO (Geo) Metrics</h4>
+                    <h4 className="text-xs font-black uppercase tracking-widest text-gray-500 dark:text-gray-400">Local SEO (Geo) Metrics</h4>
                   </div>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     <MetricCard 

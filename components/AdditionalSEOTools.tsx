@@ -176,6 +176,53 @@ const SEO_TOOLS = [
         queryParam: 'q',
       }
     ]
+  },
+  {
+    category: 'International SEO',
+    requiresInput: true,
+    inputPlaceholder: 'Enter a URL or keyword',
+    tools: [
+      {
+        name: 'Baidu Submission',
+        url: 'https://ziyuan.baidu.com/linksubmit/index',
+        description: "Submit your site to China's primary search engine.",
+      },
+      {
+        name: 'Sogou Submission',
+        url: 'https://zhanzhang.sogou.com/index.php/linksubmit/index',
+        description: 'Submit URLs to Sogou search index.',
+      },
+      {
+        name: '360 Search (Haosou)',
+        url: 'https://zhanzhang.so.com/sitetool/link_submit',
+        description: 'Submit your site to Qihoo 360 search.',
+      },
+      {
+        name: 'Shenma Search',
+        url: 'https://zhanzhang.sm.cn/',
+        description: "Mobile-first search engine by Alibaba in China.",
+      },
+      {
+        name: 'Naver Webmaster',
+        url: 'https://searchadvisor.naver.com/',
+        description: "Essential for indexing on South Korea's Naver.",
+      },
+      {
+        name: 'Daum Submission',
+        url: 'https://register.search.daum.net/index.daum',
+        description: 'Submit your site to Daum search engine.',
+      },
+      {
+        name: 'Zum Submission',
+        url: 'https://help.zum.com/submit',
+        description: 'Request indexing on Zum.com.',
+      },
+      {
+        name: 'Nate Search',
+        url: 'https://www.nate.com/',
+        description: 'Major South Korean portal and search service.',
+      }
+    ]
   }
 ];
 
@@ -199,7 +246,7 @@ export const AdditionalSEOTools: React.FC<AdditionalSEOToolsProps> = ({ language
       const category = SEO_TOOLS[categoryIdx].category;
       
       // For Domain/Geo tools, if it's a URL, extract the hostname
-      if (category === 'Geo & Domain Tools' || category === 'Backlink Analysis') {
+      if (category === 'Geo & Domain Tools' || category === 'Backlink Analysis' || category === 'International SEO') {
         try {
           if (query.startsWith('http')) {
             query = new URL(query).hostname;
@@ -221,11 +268,11 @@ export const AdditionalSEOTools: React.FC<AdditionalSEOToolsProps> = ({ language
           Additional <span className="text-teal-500">SEO Tools</span>
         </h2>
         <p className="text-sm text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-          Take your SEO to the next level with these essential tools for keyword research, backlink analysis, site auditing, geographic insights, and local search optimization.
+          Take your SEO to the next level with these essential tools for keyword research, backlink analysis, site auditing, geographic insights, and international search optimization.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-7 gap-6">
         {SEO_TOOLS.map((category, idx) => (
           <div key={idx} className="flex flex-col">
             <h3 className="text-sm font-black uppercase tracking-widest text-teal-600 dark:text-teal-400 mb-4 border-b border-gray-100 dark:border-gray-700 pb-2">

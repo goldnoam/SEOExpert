@@ -43,7 +43,7 @@ export const TrafficGrowthGuide: React.FC<TrafficGrowthGuideProps> = ({ language
               <p className="text-[10px] font-black uppercase tracking-widest text-teal-600 dark:text-teal-400">Pro Tips:</p>
               <ul className="space-y-1.5">
                 {step.tips.map((tip, i) => (
-                  <li key={i} className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-500">
+                  <li key={i} className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-300">
                     <span className="w-1 h-1 rounded-full bg-teal-500"></span>
                     {tip}
                   </li>
